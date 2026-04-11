@@ -1,0 +1,527 @@
+{
+  "description": "Sarah Miller, 57F \u2014 Controlled hypertension only. LOW RISK.",
+  "patient": {
+    "resourceType": "Patient",
+    "id": "patient-b",
+    "name": [
+      {
+        "use": "official",
+        "family": "Miller",
+        "given": [
+          "Sarah"
+        ]
+      }
+    ],
+    "birthDate": "1968-07-22",
+    "gender": "female"
+  },
+  "conditions": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "I10",
+                "display": "Essential (primary) hypertension"
+              }
+            ],
+            "text": "Hypertension"
+          },
+          "onsetDateTime": "2017-04-10"
+        }
+      }
+    ]
+  },
+  "medications": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "amlodipine 5 mg tablet"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "lisinopril 5 mg tablet"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "vitals": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "55284-4",
+                "display": "Blood pressure"
+              }
+            ]
+          },
+          "effectiveDateTime": "2026-01-20",
+          "component": [
+            {
+              "code": {
+                "coding": [
+                  {
+                    "code": "8480-6"
+                  }
+                ]
+              },
+              "valueQuantity": {
+                "value": 126,
+                "unit": "mmHg"
+              }
+            },
+            {
+              "code": {
+                "coding": [
+                  {
+                    "code": "8462-4"
+                  }
+                ]
+              },
+              "valueQuantity": {
+                "value": 78,
+                "unit": "mmHg"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "8867-4",
+                "display": "Heart rate"
+              }
+            ],
+            "text": "Heart rate"
+          },
+          "effectiveDateTime": "2026-01-20",
+          "valueQuantity": {
+            "value": 68,
+            "unit": "bpm"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "59408-5",
+                "display": "Oxygen saturation"
+              }
+            ],
+            "text": "Oxygen saturation"
+          },
+          "effectiveDateTime": "2026-01-20",
+          "valueQuantity": {
+            "value": 99,
+            "unit": "%"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "39156-5",
+                "display": "BMI"
+              }
+            ],
+            "text": "BMI"
+          },
+          "effectiveDateTime": "2026-01-20",
+          "valueQuantity": {
+            "value": 23.1,
+            "unit": "kg/m2"
+          }
+        }
+      }
+    ]
+  },
+  "labs": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "2093-3",
+                "display": "LDL Cholesterol"
+              }
+            ],
+            "text": "LDL Cholesterol"
+          },
+          "effectiveDateTime": "2026-01-18",
+          "valueQuantity": {
+            "value": 108,
+            "unit": "mg/dL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "2085-9",
+                "display": "HDL Cholesterol"
+              }
+            ],
+            "text": "HDL Cholesterol"
+          },
+          "effectiveDateTime": "2026-01-18",
+          "valueQuantity": {
+            "value": 62,
+            "unit": "mg/dL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "2160-0",
+                "display": "Creatinine"
+              }
+            ],
+            "text": "Creatinine"
+          },
+          "effectiveDateTime": "2026-01-18",
+          "valueQuantity": {
+            "value": 0.8,
+            "unit": "mg/dL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "6690-2",
+                "display": "WBC"
+              }
+            ],
+            "text": "WBC"
+          },
+          "effectiveDateTime": "2026-01-18",
+          "valueQuantity": {
+            "value": 6.1,
+            "unit": "10^3/uL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "718-7",
+                "display": "Hemoglobin"
+              }
+            ],
+            "text": "Hemoglobin"
+          },
+          "effectiveDateTime": "2026-01-18",
+          "valueQuantity": {
+            "value": 13.9,
+            "unit": "g/dL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "3016-3",
+                "display": "TSH"
+              }
+            ],
+            "text": "TSH"
+          },
+          "effectiveDateTime": "2026-01-18",
+          "valueQuantity": {
+            "value": 2.2,
+            "unit": "mIU/L"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "2345-7",
+                "display": "Glucose"
+              }
+            ],
+            "text": "Glucose"
+          },
+          "effectiveDateTime": "2026-01-18",
+          "valueQuantity": {
+            "value": 89,
+            "unit": "mg/dL"
+          }
+        }
+      }
+    ]
+  },
+  "documents": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "DocumentReference",
+          "status": "current",
+          "type": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "11506-3",
+                "display": "Progress note"
+              }
+            ]
+          },
+          "category": [
+            {
+              "text": "family medicine"
+            }
+          ],
+          "date": "2026-01-20",
+          "author": [
+            {
+              "display": "Dr. Angela Park, MD"
+            }
+          ],
+          "content": [
+            {
+              "attachment": {
+                "contentType": "text/plain",
+                "data": "UFJPR1JFU1MgTk9URSDigJQgRmFtaWx5IE1lZGljaW5lCkRhdGU6IDIwMjYtMDEtMjAKUGF0aWVudDogU2FyYWggTWlsbGVyLCA1N0YKUHJvdmlkZXI6IERyLiBBbmdlbGEgUGFyaywgTUQKClZJU0lUIFJFQVNPTjogQW5udWFsIHdlbGxuZXNzIGV4YW0gKyBoeXBlcnRlbnNpb24gZm9sbG93LXVwCgpJTlRFUlZBTCBISVNUT1JZOgpNcy4gTWlsbGVyIHByZXNlbnRzIGZvciBoZXIgYW5udWFsIHBoeXNpY2FsLiBTaGUgaGFzIGEgOS15ZWFyIGhpc3Rvcnkgb2YgZXNzZW50aWFsIGh5cGVydGVuc2lvbiBtYW5hZ2VkIHdpdGggYW1sb2RpcGluZSBhbmQgbGlzaW5vcHJpbC4gU2hlIHJlcG9ydHMgZXhjZWxsZW50IG1lZGljYXRpb24gYWRoZXJlbmNlLiBIb21lIGJsb29kIHByZXNzdXJlcyB0aGlzIHBhc3QgbW9udGggYXZlcmFnZWQgMTI04oCTMTMwIHN5c3RvbGljLiBTaGUgZGVuaWVzIGNoZXN0IHBhaW4sIHNob3J0bmVzcyBvZiBicmVhdGgsIHBhbHBpdGF0aW9ucywgaGVhZGFjaGVzLCBvciB2aXN1YWwgY2hhbmdlcy4gU2hlIGV4ZXJjaXNlcyA0IGRheXMvd2VlayAoYnJpc2sgd2Fsa2luZywgeW9nYSkgYW5kIG1haW50YWlucyBhIGxvdy1zb2RpdW0gZGlldC4gTm8gbmV3IGNvbXBsYWludHMgdG9kYXkuCgpNRURJQ0FUSU9OUzoKLSBBbWxvZGlwaW5lIDUgbWcgZGFpbHkKLSBMaXNpbm9wcmlsIDUgbWcgZGFpbHkKClZJVEFMUyAodG9kYXkpOiBCUCAxMjYvNzggbW1IZywgSFIgNjggYnBtLCBSUiAxMywgTzIgU2F0IDk5JSBSQSwgQk1JIDIzLjEKCkVYQU1JTkFUSU9OOgpHZW5lcmFsOiBXZWxsLWFwcGVhcmluZywgbm8gZGlzdHJlc3MKQ2FyZGlvdmFzY3VsYXI6IFJlZ3VsYXIgcmF0ZSBhbmQgcmh5dGhtLCBubyBtdXJtdXJzLCBubyBwZXJpcGhlcmFsIGVkZW1hClJlc3BpcmF0b3J5OiBDbGVhciBiaWxhdGVyYWxseQpCcmVhc3QvcGVsdmljOiBEZWZlcnJlZCB0byBHWU4KCkxBQlMgKDIwMjYtMDEtMTgsIGZhc3RpbmcpOgpUb3RhbCBjaG9sZXN0ZXJvbCAxOTIsIExETCAxMDgsIEhETCA2MiwgVEcgMTEwCkJNUDogTmEgMTQwLCBLIDQuMCwgQ3IgMC44LCBHbHVjb3NlIDg5CkNCQzogV0JDIDYuMSwgSGdiIDEzLjksIFBsdCAyNjgg4oCUIGFsbCBub3JtYWwKVFNIOiAyLjIgKG5vcm1hbCkKRmFzdGluZyBnbHVjb3NlIDg5IOKAlCBubyBjb25jZXJuIGZvciBkaWFiZXRlcwoKQ0FOQ0VSIFNDUkVFTklORzoKTWFtbW9ncmFtIDIwMjUg4oCUIG5vcm1hbC4gQ29sb25vc2NvcHkgMjAyMyDigJQgMSBzbWFsbCB0dWJ1bGFyIGFkZW5vbWEgcmVtb3ZlZCwgbmV4dCBpbiA1IHllYXJzICgyMDI4KS4gUGFwIHNtZWFyIDIwMjQg4oCUIG5lZ2F0aXZlLgoKQVNTRVNTTUVOVCBBTkQgUExBTjoKMS4gSHlwZXJ0ZW5zaW9uOiBXZWxsLWNvbnRyb2xsZWQgb24gY3VycmVudCByZWdpbWVuLiBCUCAxMjYvNzguIENvbnRpbnVlIGFtbG9kaXBpbmUgNSBtZyArIGxpc2lub3ByaWwgNSBtZy4gTm8gY2hhbmdlcyBuZWVkZWQuCjIuIExpcGlkczogVG90YWwgY2hvbGVzdGVyb2wgMTkyLCBMREwgMTA4LiBObyBzdGF0aW4gaW5kaWNhdGVkIGF0IHRoaXMgdGltZSAoMTAteWVhciBBU0NWRCByaXNrIDwgNSUpLiBSZWluZm9yY2UgZGlldC4KMy4gUHJldmVudGl2ZSBjYXJlOiBGbHUgdmFjY2luZSBhZG1pbmlzdGVyZWQgdG9kYXkuIENPVklEIGJvb3N0ZXIgdXAgdG8gZGF0ZS4gUmVjb21tZW5kIGFnZS1hcHByb3ByaWF0ZSBib25lIGRlbnNpdHkgc2NyZWVuaW5nIGF0IDYwLgo0LiBPdmVyYWxsOiBFeGNlbGxlbnQgaGVhbHRoLiBObyBjaHJvbmljIGRpc2Vhc2UgYnVyZGVuLiBDb250aW51ZSBjdXJyZW50IGxpZmVzdHlsZS4KClJldHVybjogMTIgbW9udGhzIGZvciBhbm51YWwgd2VsbG5lc3MuCuKAlCBEci4gQW5nZWxhIFBhcmssIE1ELCBGYW1pbHkgTWVkaWNpbmUK"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "encounters": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Family medicine visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2026-01-20",
+            "end": "2026-01-20"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Family medicine visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2025-01-15",
+            "end": "2025-01-15"
+          }
+        }
+      }
+    ]
+  },
+  "procedures": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": []
+  },
+  "allergies": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": []
+  }
+}

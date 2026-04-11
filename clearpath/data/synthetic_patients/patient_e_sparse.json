@@ -1,0 +1,653 @@
+{
+  "description": "Robert Kim, 69M \u2014 COPD moderate-severe, HTN, hyperlipidemia. Borderline O2 92% at rest. MODERATE RISK.",
+  "patient": {
+    "resourceType": "Patient",
+    "id": "patient-e",
+    "name": [
+      {
+        "use": "official",
+        "family": "Kim",
+        "given": [
+          "Robert"
+        ]
+      }
+    ],
+    "birthDate": "1955-11-03",
+    "gender": "male"
+  },
+  "conditions": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "J44.1",
+                "display": "Chronic obstructive pulmonary disease with acute exacerbation"
+              }
+            ],
+            "text": "COPD moderate-severe"
+          },
+          "onsetDateTime": "2018-09-01"
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "I10",
+                "display": "Essential (primary) hypertension"
+              }
+            ],
+            "text": "Hypertension"
+          },
+          "onsetDateTime": "2016-03-01"
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "E78.5",
+                "display": "Hyperlipidemia, unspecified"
+              }
+            ],
+            "text": "Hyperlipidemia"
+          },
+          "onsetDateTime": "2019-01-01"
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "D75.1",
+                "display": "Secondary polycythemia"
+              }
+            ],
+            "text": "Secondary polycythemia"
+          },
+          "onsetDateTime": "2022-01-01"
+        }
+      }
+    ]
+  },
+  "medications": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "tiotropium 18 mcg inhaler"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "fluticasone/salmeterol 250/50 mcg inhaler"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "albuterol 90 mcg inhaler"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "lisinopril 10 mg tablet"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "atorvastatin 20 mg tablet"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "vitals": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "55284-4",
+                "display": "Blood pressure"
+              }
+            ]
+          },
+          "effectiveDateTime": "2026-03-10",
+          "component": [
+            {
+              "code": {
+                "coding": [
+                  {
+                    "code": "8480-6"
+                  }
+                ]
+              },
+              "valueQuantity": {
+                "value": 138,
+                "unit": "mmHg"
+              }
+            },
+            {
+              "code": {
+                "coding": [
+                  {
+                    "code": "8462-4"
+                  }
+                ]
+              },
+              "valueQuantity": {
+                "value": 84,
+                "unit": "mmHg"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "8867-4",
+                "display": "Heart rate"
+              }
+            ],
+            "text": "Heart rate"
+          },
+          "effectiveDateTime": "2026-03-10",
+          "valueQuantity": {
+            "value": 80,
+            "unit": "bpm"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "59408-5",
+                "display": "Oxygen saturation"
+              }
+            ],
+            "text": "Oxygen saturation"
+          },
+          "effectiveDateTime": "2026-03-10",
+          "valueQuantity": {
+            "value": 92,
+            "unit": "%"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "39156-5",
+                "display": "BMI"
+              }
+            ],
+            "text": "BMI"
+          },
+          "effectiveDateTime": "2026-03-10",
+          "valueQuantity": {
+            "value": 27.6,
+            "unit": "kg/m2"
+          }
+        }
+      }
+    ]
+  },
+  "labs": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "718-7",
+                "display": "Hemoglobin"
+              }
+            ],
+            "text": "Hemoglobin"
+          },
+          "effectiveDateTime": "2026-02-28",
+          "valueQuantity": {
+            "value": 15.6,
+            "unit": "g/dL"
+          },
+          "interpretation": [
+            {
+              "coding": [
+                {
+                  "code": "H"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "777-3",
+                "display": "Platelets"
+              }
+            ],
+            "text": "Platelets"
+          },
+          "effectiveDateTime": "2026-02-28",
+          "valueQuantity": {
+            "value": 192,
+            "unit": "10^3/uL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "2160-0",
+                "display": "Creatinine"
+              }
+            ],
+            "text": "Creatinine"
+          },
+          "effectiveDateTime": "2026-02-28",
+          "valueQuantity": {
+            "value": 1.0,
+            "unit": "mg/dL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "2093-3",
+                "display": "LDL Cholesterol"
+              }
+            ],
+            "text": "LDL Cholesterol"
+          },
+          "effectiveDateTime": "2026-02-28",
+          "valueQuantity": {
+            "value": 96,
+            "unit": "mg/dL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "6690-2",
+                "display": "WBC"
+              }
+            ],
+            "text": "WBC"
+          },
+          "effectiveDateTime": "2026-02-28",
+          "valueQuantity": {
+            "value": 7.8,
+            "unit": "10^3/uL"
+          }
+        }
+      }
+    ]
+  },
+  "documents": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "DocumentReference",
+          "status": "current",
+          "type": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "11506-3",
+                "display": "Progress note"
+              }
+            ]
+          },
+          "category": [
+            {
+              "text": "internal medicine"
+            }
+          ],
+          "date": "2026-03-10",
+          "author": [
+            {
+              "display": "Dr. Kevin Nguyen, MD"
+            }
+          ],
+          "content": [
+            {
+              "attachment": {
+                "contentType": "text/plain",
+                "data": "UFJPR1JFU1MgTk9URSDigJQgSW50ZXJuYWwgTWVkaWNpbmUKRGF0ZTogMjAyNi0wMy0xMApQYXRpZW50OiBSb2JlcnQgS2ltLCA2OU0KUHJvdmlkZXI6IERyLiBLZXZpbiBOZ3V5ZW4sIE1ECgpWSVNJVCBSRUFTT046IFF1YXJ0ZXJseSBmb2xsb3ctdXAg4oCUIENPUEQsIGh5cGVydGVuc2lvbiwgaHlwZXJsaXBpZGVtaWEKCklOVEVSVkFMIEhJU1RPUlk6Ck1yLiBLaW0gcHJlc2VudHMgZm9yIGhpcyBzY2hlZHVsZWQgcXVhcnRlcmx5IHZpc2l0LiBIZSBoYXMgbW9kZXJhdGUgQ09QRCAoR09MRCBTdGFnZSAyLTMpLCBmb3JtZXIgc21va2VyIChxdWl0IDIwMTgsIDM1IHBhY2steWVhcnMpLiBIZSByZXBvcnRzIHN0YWJsZSByZXNwaXJhdG9yeSBzeW1wdG9tcyBvdmVyIHRoZSBwYXN0IDMgbW9udGhzIOKAlCBvY2Nhc2lvbmFsIG1vcm5pbmcgY291Z2ggd2l0aCBjbGVhciBzcHV0dW0sIG5vIGFjdXRlIGV4YWNlcmJhdGlvbnMgcmVxdWlyaW5nIG9yYWwgc3Rlcm9pZHMgb3IgaG9zcGl0YWxpemF0aW9uLiBTaG9ydG5lc3Mgb2YgYnJlYXRoIG9uIGV4ZXJ0aW9uIGF0IDHigJMyIGNpdHkgYmxvY2tzLiBIZSBpcyBhZGhlcmVudCB3aXRoIGhpcyBpbmhhbGVycy4gTm8gY2hlc3QgcGFpbiwgaGVtb3B0eXNpcywgb3IgbG93ZXIgZXh0cmVtaXR5IHN3ZWxsaW5nLiBCbG9vZCBwcmVzc3VyZXMgYXQgaG9tZSBhdmVyYWdpbmcgMTM44oCTMTQ0IHN5c3RvbGljLgoKTUVESUNBVElPTlM6Ci0gVGlvdHJvcGl1bSAxOCBtY2cgaW5oYWxlciBkYWlseQotIEZsdXRpY2Fzb25lL3NhbG1ldGVyb2wgMjUwLzUwIG1jZyBpbmhhbGVyIHR3aWNlIGRhaWx5Ci0gQWxidXRlcm9sIDkwIG1jZyBpbmhhbGVyIGFzIG5lZWRlZCAodXNpbmcgMuKAkzN4IHBlciB3ZWVrKQotIExpc2lub3ByaWwgMTAgbWcgZGFpbHkKLSBBdG9ydmFzdGF0aW4gMjAgbWcgZGFpbHkKClZJVEFMUyAodG9kYXkpOiBCUCAxMzgvODQgbW1IZywgSFIgODAgYnBtLCBSUiAxOCwgTzIgU2F0IDkyJSBSQSAocmVzdGluZyksIEJNSSAyNy42CgpFWEFNSU5BVElPTjoKR2VuZXJhbDogTm8gYWN1dGUgZGlzdHJlc3MuIE1pbGRseSBiYXJyZWwtY2hlc3RlZC4KUmVzcGlyYXRvcnk6IERpZmZ1c2UgZXhwaXJhdG9yeSB3aGVlemUgYmlsYXRlcmFsbHksIHByb2xvbmdlZCBleHBpcmF0b3J5IHBoYXNlLiBObyBjcmFja2xlcy4KQ2FyZGlvdmFzY3VsYXI6IFJlZ3VsYXIgcmF0ZSBhbmQgcmh5dGhtLCBubyBtdXJtdXJzLgpFeHRyZW1pdGllczogTm8gY2x1YmJpbmcsIG5vIGVkZW1hLgoKTEFCUyAoMjAyNi0wMi0yOCk6CkNCQzogV0JDIDcuOCwgSGdiIDE1LjYgKGVsZXZhdGVkIOKAlCBsaWtlbHkgc2Vjb25kYXJ5IHBvbHljeXRoZW1pYSksIFBsdCAxOTIKQk1QOiBDciAxLjAsIEsgNC4xLCBOYSAxMzksIG5vcm1hbApMRlRzOiBOb3JtYWwKTERMOiA5NiBtZy9kTAoKQVNTRVNTTUVOVCBBTkQgUExBTjoKMS4gQ09QRCAoR09MRCAyLTMpOiBTdGFibGUuIE8yIHNhdCA5MiUgYXQgcmVzdCDigJQgYm9yZGVybGluZS4gUmVzdGluZyBoeXBveGVtaWEgd2FycmFudHMgb25nb2luZyBtb25pdG9yaW5nLiBDb25maXJtIHdpdGggcHVsbW9ub2xvZ3kgKERyLiBXYWxzaCkgd2hldGhlciBzdXBwbGVtZW50YWwgTzIgaXMgaW5kaWNhdGVkIGF0IHJlc3Qgb3IgZXhlcmNpc2UuCjIuIEh5cGVydGVuc2lvbjogU2xpZ2h0bHkgYWJvdmUgdGFyZ2V0ICgxMzgvODQpLiBJbmNyZWFzZSBsaXNpbm9wcmlsIHRvIDIwIG1nLiBSZWNoZWNrIGluIDYgd2Vla3MuCjMuIEh5cGVybGlwaWRlbWlhOiBMREwgOTYgb24gYXRvcnZhc3RhdGluIDIwIG1nLiBDb250aW51ZS4gQWNjZXB0YWJsZSBmb3IgY3VycmVudCBBU0NWRCByaXNrLgo0LiBFbGV2YXRlZCBoZW1vZ2xvYmluOiBDb25zaXN0ZW50IHdpdGggc2Vjb25kYXJ5IHBvbHljeXRoZW1pYSBmcm9tIGNocm9uaWMgaHlwb3hpYS4gRGlzY3Vzc2VkIHdpdGggcHVsbW9ub2xvZ3kgYXQgbGFzdCBjb29yZGluYXRpb24uCjUuIFNtb2tpbmcgY2Vzc2F0aW9uOiBQYXRpZW50IGNvbmZpcm1lZCBzdXN0YWluZWQgY2Vzc2F0aW9uIHNpbmNlIDIwMTguIENvbW1lbmRlZC4KClJldHVybjogMyBtb250aHMuIFNvb25lciBpZiBhY3V0ZSBleGFjZXJiYXRpb24uCuKAlCBEci4gS2V2aW4gTmd1eWVuLCBNRCwgSW50ZXJuYWwgTWVkaWNpbmUK"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "DocumentReference",
+          "status": "current",
+          "type": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "11506-3",
+                "display": "Progress note"
+              }
+            ]
+          },
+          "category": [
+            {
+              "text": "pulmonology"
+            }
+          ],
+          "date": "2026-02-20",
+          "author": [
+            {
+              "display": "Dr. Patricia Walsh, MD"
+            }
+          ],
+          "content": [
+            {
+              "attachment": {
+                "contentType": "text/plain",
+                "data": "UFVMTU9OT0xPR1kgRk9MTE9XLVVQIE5PVEUKRGF0ZTogMjAyNi0wMi0yMApQYXRpZW50OiBSb2JlcnQgS2ltLCA2OU0KUHJvdmlkZXI6IERyLiBQYXRyaWNpYSBXYWxzaCwgTUQKClZJU0lUIFJFQVNPTjogNi1tb250aCBDT1BEIGZvbGxvdy11cCDigJQgc3Bpcm9tZXRyeSwgTzIgYXNzZXNzbWVudAoKSElTVE9SWToKTXIuIEtpbSBpcyBhIDY5LXllYXItb2xkIG1hbGUgd2l0aCBDT1BEIChHT0xEIFN0YWdlIDItMyksIGZvcm1lciBzbW9rZXIgKDM1IHBhY2steWVhcnMsIHF1aXQgMjAxOCkuIExhc3QgZXhhY2VyYmF0aW9uIHJlcXVpcmluZyBzdGVyb2lkcyB3YXMgT2N0b2JlciAyMDI0IOKAlCAxIGNvdXJzZSBvZiBwcmVkbmlzb25lLCBubyBob3NwaXRhbGl6YXRpb24gaW4gMisgeWVhcnMuIE9uIG1heGltYWwgaW5oYWxlciByZWdpbWVuIChMQU1BICsgSUNTL0xBQkEpLiBSZXBvcnRzIHN0YWJsZSBzeW1wdG9tcyB3aXRoIGV4ZXJ0aW9uYWwgbGltaXRhdGlvbi4KClNQSVJPTUVUUlkgKHRvZGF5KToKRkVWMTogNTQlIHByZWRpY3RlZCAocHJldmlvdXNseSA1OCUgaW4gMjAyNSDigJQgbWlsZCBwcm9ncmVzc2lvbikKRlZDOiA3OCUgcHJlZGljdGVkCkZFVjEvRlZDIHJhdGlvOiAwLjU4IChvYnN0cnVjdGlvbiBjb25maXJtZWQpCkdPTEQgU3RhZ2U6IDItMyAobW9kZXJhdGUgdG8gc2V2ZXJlKQoKNi1NSU5VVEUgV0FMSyBURVNUOgpEaXN0YW5jZTogMzEwIG1ldGVycyAoYmVsb3cgbm9ybWFsIGZvciBhZ2Uvc2V4KQpPMiBzYXQgYXQgcmVzdDogOTIlLCBuYWRpciBkdXJpbmcgZXhlcmNpc2U6IDg3JSAoc2lnbmlmaWNhbnQgZGVzYXR1cmF0aW9uKQoKQVNTRVNTTUVOVCBBTkQgUExBTjoKMS4gQ09QRCDigJQgbW9kZXJhdGUgdG8gc2V2ZXJlOiBGRVYxIDU0JSBwcmVkaWN0ZWQgd2l0aCBwcm9ncmVzc2l2ZSBkZWNsaW5lLiBDdXJyZW50IGluaGFsZXIgcmVnaW1lbiBpcyBtYXhpbWFsLiBObyBmdXJ0aGVyIGFkZGl0aW9ucyBpbmRpY2F0ZWQgdW5sZXNzIHRyaXBsZSB0aGVyYXB5IHRyaWFsIHdhcnJhbnRlZC4KMi4gRXhlcmNpc2UgZGVzYXR1cmF0aW9uIHRvIDg3JTogTWVldHMgY3JpdGVyaWEgZm9yIHN1cHBsZW1lbnRhbCBveHlnZW4gZHVyaW5nIGV4ZXJ0aW9uLiBQcmVzY3JpYmluZyBwb3J0YWJsZSBPMiBhdCAyIEwvbWluIHdpdGggZXhlcmNpc2UuIFJlc3Rpbmcgc2F0IDkyJSDigJQgZG9lcyBub3QgeWV0IG1lZXQgY3JpdGVyaWEgZm9yIDI0LWhvdXIgTzIsIGJ1dCBib3JkZXJsaW5lLiBXaWxsIHJlYXNzZXNzIGluIDMgbW9udGhzLgozLiBFeGFjZXJiYXRpb24gcHJldmVudGlvbjogUmV2aWV3ZWQgYWN0aW9uIHBsYW4uIEVuY291cmFnZWQgcGF0aWVudCB0byBoYXZlIHJlc2N1ZSBwcmVkbmlzb25lIGFuZCBheml0aHJvbXljaW4gYXQgaG9tZSBwZXIgc3RhbmRpbmcgb3JkZXIuCjQuIEFubnVhbCBpbmZsdWVuemEgYW5kIHBuZXVtb2NvY2NhbCB2YWNjaW5hdGlvbjogQ29uZmlybWVkIHVwIHRvIGRhdGUuCjUuIFB1bG1vbmFyeSByZWhhYmlsaXRhdGlvbjogUmVmZXJyYWwgcGxhY2VkIOKAlCBwYXRpZW50IGFncmVlZCB0byBlbnJvbGwuCgpSZXR1cm46IDMgbW9udGhzLiBTb29uZXIgaWYgZXhhY2VyYmF0aW9uLgrigJQgRHIuIFBhdHJpY2lhIFdhbHNoLCBNRCwgUHVsbW9ub2xvZ3kK"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "encounters": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Internal medicine visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2026-03-10",
+            "end": "2026-03-10"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Internal medicine visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2025-12-05",
+            "end": "2025-12-05"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Pulmonology visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2026-02-20",
+            "end": "2026-02-20"
+          }
+        }
+      }
+    ]
+  },
+  "procedures": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": []
+  },
+  "allergies": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "AllergyIntolerance",
+          "code": {
+            "text": "Sulfonamides"
+          },
+          "reaction": [
+            {
+              "description": "hives"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

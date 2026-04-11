@@ -1,0 +1,679 @@
+{
+  "description": "Maria Vasquez, 45F \u2014 Morbid obesity BMI 44, OSA on CPAP, hypothyroidism, prediabetes. MODERATE RISK.",
+  "patient": {
+    "resourceType": "Patient",
+    "id": "patient-d",
+    "name": [
+      {
+        "use": "official",
+        "family": "Vasquez",
+        "given": [
+          "Maria"
+        ]
+      }
+    ],
+    "birthDate": "1980-09-14",
+    "gender": "female"
+  },
+  "conditions": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "E66.01",
+                "display": "Morbid (severe) obesity due to excess calories"
+              }
+            ],
+            "text": "Morbid obesity"
+          },
+          "onsetDateTime": "2018-01-01"
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "G47.33",
+                "display": "Obstructive sleep apnea (adult)"
+              }
+            ],
+            "text": "Obstructive sleep apnea"
+          },
+          "onsetDateTime": "2023-06-01"
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "E03.9",
+                "display": "Hypothyroidism, unspecified"
+              }
+            ],
+            "text": "Hypothyroidism"
+          },
+          "onsetDateTime": "2019-03-01"
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "R73.09",
+                "display": "Other abnormal glucose"
+              }
+            ],
+            "text": "Prediabetes"
+          },
+          "onsetDateTime": "2022-06-01"
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "E78.5",
+                "display": "Hyperlipidemia, unspecified"
+              }
+            ],
+            "text": "Dyslipidemia"
+          },
+          "onsetDateTime": "2024-01-01"
+        }
+      }
+    ]
+  },
+  "medications": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "levothyroxine 125 mcg tablet"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "metformin 500 mg tablet"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "rosuvastatin 10 mg tablet"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "vitals": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "55284-4",
+                "display": "Blood pressure"
+              }
+            ]
+          },
+          "effectiveDateTime": "2026-02-28",
+          "component": [
+            {
+              "code": {
+                "coding": [
+                  {
+                    "code": "8480-6"
+                  }
+                ]
+              },
+              "valueQuantity": {
+                "value": 132,
+                "unit": "mmHg"
+              }
+            },
+            {
+              "code": {
+                "coding": [
+                  {
+                    "code": "8462-4"
+                  }
+                ]
+              },
+              "valueQuantity": {
+                "value": 84,
+                "unit": "mmHg"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "8867-4",
+                "display": "Heart rate"
+              }
+            ],
+            "text": "Heart rate"
+          },
+          "effectiveDateTime": "2026-02-28",
+          "valueQuantity": {
+            "value": 82,
+            "unit": "bpm"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "59408-5",
+                "display": "Oxygen saturation"
+              }
+            ],
+            "text": "Oxygen saturation"
+          },
+          "effectiveDateTime": "2026-02-28",
+          "valueQuantity": {
+            "value": 95,
+            "unit": "%"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "39156-5",
+                "display": "BMI"
+              }
+            ],
+            "text": "BMI"
+          },
+          "effectiveDateTime": "2026-02-28",
+          "valueQuantity": {
+            "value": 44.2,
+            "unit": "kg/m2"
+          }
+        }
+      }
+    ]
+  },
+  "labs": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "4548-4",
+                "display": "Hemoglobin A1c"
+              }
+            ],
+            "text": "Hemoglobin A1c"
+          },
+          "effectiveDateTime": "2026-02-22",
+          "valueQuantity": {
+            "value": 6.2,
+            "unit": "%"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "3016-3",
+                "display": "TSH"
+              }
+            ],
+            "text": "TSH"
+          },
+          "effectiveDateTime": "2026-02-22",
+          "valueQuantity": {
+            "value": 1.8,
+            "unit": "mIU/L"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "2093-3",
+                "display": "LDL Cholesterol"
+              }
+            ],
+            "text": "LDL Cholesterol"
+          },
+          "effectiveDateTime": "2026-02-22",
+          "valueQuantity": {
+            "value": 128,
+            "unit": "mg/dL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "2160-0",
+                "display": "Creatinine"
+              }
+            ],
+            "text": "Creatinine"
+          },
+          "effectiveDateTime": "2026-02-22",
+          "valueQuantity": {
+            "value": 0.9,
+            "unit": "mg/dL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "2345-7",
+                "display": "Glucose"
+              }
+            ],
+            "text": "Glucose"
+          },
+          "effectiveDateTime": "2026-02-22",
+          "valueQuantity": {
+            "value": 108,
+            "unit": "mg/dL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "1742-6",
+                "display": "ALT"
+              }
+            ],
+            "text": "ALT"
+          },
+          "effectiveDateTime": "2026-02-22",
+          "valueQuantity": {
+            "value": 48,
+            "unit": "U/L"
+          },
+          "interpretation": [
+            {
+              "coding": [
+                {
+                  "code": "H"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "documents": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "DocumentReference",
+          "status": "current",
+          "type": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "11506-3",
+                "display": "Progress note"
+              }
+            ]
+          },
+          "category": [
+            {
+              "text": "family medicine"
+            }
+          ],
+          "date": "2026-02-28",
+          "author": [
+            {
+              "display": "Dr. James Morrison, MD"
+            }
+          ],
+          "content": [
+            {
+              "attachment": {
+                "contentType": "text/plain",
+                "data": "UFJPR1JFU1MgTk9URSDigJQgRmFtaWx5IE1lZGljaW5lCkRhdGU6IDIwMjYtMDItMjgKUGF0aWVudDogTWFyaWEgVmFzcXVleiwgNDVGClByb3ZpZGVyOiBEci4gSmFtZXMgTW9ycmlzb24sIE1ECgpWSVNJVCBSRUFTT046IEFubnVhbCBwaHlzaWNhbCArIG9uZ29pbmcgbWFuYWdlbWVudCBvZiBPU0EsIGh5cG90aHlyb2lkaXNtLCB3ZWlnaHQKCklOVEVSVkFMIEhJU1RPUlk6Ck1zLiBWYXNxdWV6IGlzIGEgNDUteWVhci1vbGQgZmVtYWxlIHdpdGggbW9yYmlkIG9iZXNpdHkgKEJNSSA0NCksIG9ic3RydWN0aXZlIHNsZWVwIGFwbmVhIG9uIENQQVAgKHByZXNjcmliZWQgMjAyMyksIGh5cG90aHlyb2lkaXNtIG9uIGxldm90aHlyb3hpbmUsIGFuZCBwcmVkaWFiZXRlcyAoSGJBMWMgNi4yJSBvbiBtZXRmb3JtaW4pLiBTaGUgcHJlc2VudHMgZm9yIGhlciBhbm51YWwgcGh5c2ljYWwuIFNoZSByZXBvcnRzIHVzaW5nIENQQVAgY29uc2lzdGVudGx5IChwZXIgZG93bmxvYWQ6IEFISSBvbiBDUEFQIG5vdyAzLjIgZXZlbnRzL2hyIOKAlCBleGNlbGxlbnQpLiBTaGUgaGFzIGxvc3QgNiBsYnMgc2luY2UgbGFzdCB2aXNpdCB0aHJvdWdoIGRpZXRhcnkgY2hhbmdlcy4gU2hlIGRlbmllcyBjaGVzdCBwYWluLCBzaWduaWZpY2FudCBkeXNwbmVhIGF0IHJlc3QsIG9yIG5ldyBzeW1wdG9tcy4gU2hlIG5vdGVzIGRheXRpbWUgZmF0aWd1ZSBpcyBpbXByb3ZlZCBzaW5jZSBDUEFQIGNvbXBsaWFuY2UgaW1wcm92ZWQuCgpNRURJQ0FUSU9OUzoKLSBMZXZvdGh5cm94aW5lIDEyNSBtY2cgZGFpbHkgKHRha2Ugb24gZW1wdHkgc3RvbWFjaCkKLSBNZXRmb3JtaW4gNTAwIG1nIHR3aWNlIGRhaWx5Ci0gQ1BBUCB0aGVyYXB5ICg5IGNtIEgyTywgQUhJIDMuMi9ociBwZXIgcmVjZW50IGRvd25sb2FkKQoKVklUQUxTICh0b2RheSk6IEJQIDEzMi84NCBtbUhnLCBIUiA4MiBicG0sIFJSIDE2LCBPMiBTYXQgOTUlIFJBIChyZXN0aW5nKSwgQk1JIDQ0LjIsIHdlaWdodCAxMTkga2cKCkVYQU1JTkFUSU9OOgpHZW5lcmFsOiBPYmVzZSBmZW1hbGUsIG5vIGFjdXRlIGRpc3RyZXNzCkFpcndheTogTWFsbGFtcGF0aSBDbGFzcyBJSUksIHNob3J0IG5lY2ssIGxhcmdlIHRvbmd1ZSBub3RlZApDYXJkaW92YXNjdWxhcjogUmVndWxhciByYXRlIGFuZCByaHl0aG0sIG5vIG11cm11cnMKUmVzcGlyYXRvcnk6IENsZWFyIHRvIGF1c2N1bHRhdGlvbiBiaWxhdGVyYWxseQpFeHRyZW1pdGllczogTm8gZWRlbWEKCkxBQlMgKDIwMjYtMDItMjIsIGZhc3RpbmcpOgpIYkExYzogNi4yJSAocHJlZGlhYmV0ZXMg4oCUIHN0YWJsZSkKVFNIOiAxLjggbUlVL0wgKGV1dGh5cm9pZCBvbiBsZXZvdGh5cm94aW5lKQpGYXN0aW5nIGdsdWNvc2U6IDEwOCBtZy9kTApUb3RhbCBjaG9sZXN0ZXJvbDogMjEwLCBMREwgMTI4LCBIREwgNDgsIFRHIDE3MgpDQkM6IE5vcm1hbApCTVA6IE5vcm1hbCAoQ3IgMC45KQpBTFQ6IDQ4IFUvTCAobWlsZGx5IGVsZXZhdGVkLCBjb25zaXN0ZW50IHdpdGggTkFGTEQvZmF0dHkgbGl2ZXIpCgpBU1NFU1NNRU5UIEFORCBQTEFOOgoxLiBNb3JiaWQgb2Jlc2l0eSAoQk1JIDQ0KTogT25nb2luZyBkaWV0YXJ5IG1vZGlmaWNhdGlvbiBhbmQgYmVoYXZpb3IgdGhlcmFweS4gUmVmZXJyZWQgdG8gYmFyaWF0cmljIHN1cmdlcnkgcHJvZ3JhbSBmb3IgY29uc3VsdGF0aW9uIGF0IHBhdGllbnQncyByZXF1ZXN0LiBXZWlnaHQgbG9zcyBvZiA2IGxicyDigJQgcG9zaXRpdmUgbW9tZW50dW0uCjIuIE9ic3RydWN0aXZlIHNsZWVwIGFwbmVhOiBDUEFQIGNvbXBsaWFudCwgQUhJIHdlbGwtY29udHJvbGxlZC4gQ29udGludWUgY3VycmVudCBzZXR0aW5ncy4gU2xlZXAgbWVkaWNpbmUgZm9sbG93LXVwIChEci4gS3dhbikgbmV4dCBtb250aC4KMy4gSHlwb3RoeXJvaWRpc206IFRTSCAxLjgg4oCUIGV1dGh5cm9pZCBvbiBsZXZvdGh5cm94aW5lIDEyNSBtY2cuIENvbnRpbnVlLgo0LiBQcmVkaWFiZXRlczogSGJBMWMgNi4yJSwgc3RhYmxlLiBDb250aW51ZSBtZXRmb3JtaW4gNTAwIG1nIEJJRC4gUmVpbmZvcmNlIGRpZXQgYW5kIGV4ZXJjaXNlLiBUYXJnZXQgd2VpZ2h0IGxvc3MgdG8gcmV2ZXJzZSBwcmVkaWFiZXRlcyB0cmFqZWN0b3J5Lgo1LiBEeXNsaXBpZGVtaWE6IExETCAxMjgsIFRHIDE3Mi4gR2l2ZW4gYWdlIGFuZCByaXNrLCBpbml0aWF0aW5nIHJvc3V2YXN0YXRpbiAxMCBtZyBmb3IgcHJpbWFyeSBwcmV2ZW50aW9uIChBU0NWRCByaXNrIH44LTEwJSBhdCAxMCB5ZWFycyBnaXZlbiBtdWx0aXBsZSByaXNrIGZhY3RvcnMpLgo2LiBBaXJ3YXkgY29uY2VybjogRG9jdW1lbnRlZCBkaWZmaWN1bHQgYWlyd2F5IHJpc2sgKE1hbGxhbXBhdGkgSUlJLCBvYmVzaXR5LCBzaG9ydCBuZWNrKSDigJQgdG8gYmUgZmxhZ2dlZCBpbiBhbnkgZnV0dXJlIGFuZXN0aGVzaWEgZW5jb3VudGVycy4KClJldHVybjogNiBtb250aHMuIFNvb25lciBpZiBuZWVkZWQuCuKAlCBEci4gSmFtZXMgTW9ycmlzb24sIE1ELCBGYW1pbHkgTWVkaWNpbmUK"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "DocumentReference",
+          "status": "current",
+          "type": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "11506-3",
+                "display": "Progress note"
+              }
+            ]
+          },
+          "category": [
+            {
+              "text": "sleep medicine"
+            }
+          ],
+          "date": "2026-01-10",
+          "author": [
+            {
+              "display": "Dr. Patricia Kwan, MD"
+            }
+          ],
+          "content": [
+            {
+              "attachment": {
+                "contentType": "text/plain",
+                "data": "U0xFRVAgTUVESUNJTkUgRk9MTE9XLVVQIE5PVEUKRGF0ZTogMjAyNi0wMS0xMApQYXRpZW50OiBNYXJpYSBWYXNxdWV6LCA0NUYKUHJvdmlkZXI6IERyLiBQYXRyaWNpYSBLd2FuLCBNRAoKVklTSVQgUkVBU09OOiA2LW1vbnRoIE9TQSBmb2xsb3ctdXAg4oCUIENQQVAgY29tcGxpYW5jZSByZXZpZXcKCkhJU1RPUlk6Ck1zLiBWYXNxdWV6IGhhcyBvYnN0cnVjdGl2ZSBzbGVlcCBhcG5lYSBkaWFnbm9zZWQgYnkgcG9seXNvbW5vZ3JhcGh5IGluIEp1bmUgMjAyMyAoQUhJIDM4IGV2ZW50cy9ociwgbW9kZXJhdGUtc2V2ZXJlKS4gU2hlIHdhcyBpbml0aWF0ZWQgb24gQ1BBUCAoOSBjbSBIMk8gZml4ZWQgcHJlc3N1cmUpIGFuZCBoYXMgc2hvd24gcHJvZ3Jlc3NpdmUgaW1wcm92ZW1lbnQgaW4gY29tcGxpYW5jZS4KCkNQQVAgREFUQSBET1dOTE9BRCAocGFzdCA5MCBkYXlzKToKQXZlcmFnZSBuaWdodGx5IHVzZTogNi40IGhvdXJzICg+NCBob3VycyA4NyUgb2YgbmlnaHRzIOKAlCBleGNlbGxlbnQgY29tcGxpYW5jZSkKUmVzaWR1YWwgQUhJOiAzLjIgZXZlbnRzL2hyICh3ZWxsLWNvbnRyb2xsZWQsIHRhcmdldCA8NSkKTGVhayByYXRlOiBXaXRoaW4gbm9ybWFsIGxpbWl0cwpNYXNrOiBGdWxsIGZhY2UgbWFzaywgbm8gaXNzdWVzCgpTWU1QVE9NUzoKRXhjZXNzaXZlIGRheXRpbWUgc2xlZXBpbmVzcyBzaWduaWZpY2FudGx5IGltcHJvdmVkLiBFcHdvcnRoIFNsZWVwaW5lc3MgU2NhbGU6IDggKHByZXZpb3VzbHkgMTYgYXQgZGlhZ25vc2lzKS4gTm8gbW9ybmluZyBoZWFkYWNoZXMuIFBhcnRuZXIgY29uZmlybXMgbm8gb2JzZXJ2ZWQgYXBuZWFzLgoKTzIgTk9DVFVSTkFMIFNBVFVSQVRJT04gKGZyb20gQ1BBUCk6IE1lYW4gOTUlLCBuYWRpciA4OSUgKGJyaWVmIGRpcCBkdXJpbmcgUkVNIOKAlCBub3QgY2xpbmljYWxseSBzaWduaWZpY2FudCBnaXZlbiBvdmVyYWxsIEFISSBjb250cm9sbGVkKQoKQVNTRVNTTUVOVCBBTkQgUExBTjoKMS4gT1NBIOKAlCBtb2RlcmF0ZS1zZXZlcmUgYnkgZGlhZ25vc2lzLCBub3cgd2VsbC1jb250cm9sbGVkIG9uIENQQVA6IEV4Y2VsbGVudCByZXNwb25zZS4gTm8gdGl0cmF0aW9uIGNoYW5nZXMgbmVlZGVkLgoyLiBXZWlnaHQ6IE9iZXNpdHkgaXMgcHJpbWFyeSBkcml2ZXIgb2YgT1NBLiBXZWlnaHQgbG9zcyBvZiBldmVuIDUtMTAlIHNpZ25pZmljYW50bHkgaW1wcm92ZXMgQUhJLiBFbmNvdXJhZ2VkIGJhcmlhdHJpYyBldmFsdWF0aW9uIChyZWZlcnJlZCBieSBQQ1ApLgozLiBTdXJnaWNhbC9hbmVzdGhlc2lhIHJpc2s6IFBhdGllbnQgc2hvdWxkIGluZm9ybSBhbGwgcHJvdmlkZXJzIGFuZCBzdXJnaWNhbCB0ZWFtcyBvZiBzZXZlcmUgT1NBIGhpc3RvcnkuIFBvc3Qtb3BlcmF0aXZlIG1vbml0b3JpbmcgZm9yIHJlc3BpcmF0b3J5IGRlcHJlc3Npb24gcmVxdWlyZWQgaWYgc3VyZ2VyeSBwdXJzdWVkLiBDUEFQIHNob3VsZCBiZSBhdmFpbGFibGUgaW4gcG9zdC1hbmVzdGhlc2lhIGNhcmUgdW5pdC4KNC4gTmV4dCBzbGVlcCBzdHVkeTogUmVwZWF0IGlmIHNpZ25pZmljYW50IHdlaWdodCBjaGFuZ2UgKD4xMCUgYm9keSB3ZWlnaHQpIG9yIHN5bXB0b21zIHJldHVybi4KClJldHVybjogMTIgbW9udGhzIG9yIFBSTi4K4oCUIERyLiBQYXRyaWNpYSBLd2FuLCBNRCwgU2xlZXAgTWVkaWNpbmUK"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "encounters": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Family medicine visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2026-02-28",
+            "end": "2026-02-28"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Family medicine visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2025-02-20",
+            "end": "2025-02-20"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Sleep medicine visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2026-01-10",
+            "end": "2026-01-10"
+          }
+        }
+      }
+    ]
+  },
+  "procedures": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": []
+  },
+  "allergies": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "AllergyIntolerance",
+          "code": {
+            "text": "Codeine"
+          },
+          "reaction": [
+            {
+              "description": "nausea and vomiting"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

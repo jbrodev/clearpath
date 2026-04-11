@@ -1,0 +1,823 @@
+{
+  "description": "Linda Park, 62F \u2014 Seropositive RA on methotrexate + adalimumab, anemia of chronic disease, HTN. MODERATE RISK.",
+  "patient": {
+    "resourceType": "Patient",
+    "id": "patient-g",
+    "name": [
+      {
+        "use": "official",
+        "family": "Park",
+        "given": [
+          "Linda"
+        ]
+      }
+    ],
+    "birthDate": "1963-06-08",
+    "gender": "female"
+  },
+  "conditions": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "M05.79",
+                "display": "Rheumatoid arthritis with rheumatoid factor, multiple sites"
+              }
+            ],
+            "text": "Seropositive rheumatoid arthritis"
+          },
+          "onsetDateTime": "2014-01-01"
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "I10",
+                "display": "Essential (primary) hypertension"
+              }
+            ],
+            "text": "Hypertension"
+          },
+          "onsetDateTime": "2018-01-01"
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "D63.8",
+                "display": "Anemia in other chronic diseases"
+              }
+            ],
+            "text": "Anemia of chronic disease"
+          },
+          "onsetDateTime": "2019-01-01"
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "M81.0",
+                "display": "Age-related osteoporosis without current pathological fracture"
+              }
+            ],
+            "text": "Osteopenia"
+          },
+          "onsetDateTime": "2022-01-01"
+        }
+      }
+    ]
+  },
+  "medications": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "methotrexate 15 mg tablet"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "adalimumab 40 mg/0.8 mL subcutaneous injection"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "folic acid 1 mg tablet"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "lisinopril 10 mg tablet"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "amlodipine 5 mg tablet"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "calcium carbonate 500 mg tablet"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "vitals": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "55284-4",
+                "display": "Blood pressure"
+              }
+            ]
+          },
+          "effectiveDateTime": "2026-03-01",
+          "component": [
+            {
+              "code": {
+                "coding": [
+                  {
+                    "code": "8480-6"
+                  }
+                ]
+              },
+              "valueQuantity": {
+                "value": 136,
+                "unit": "mmHg"
+              }
+            },
+            {
+              "code": {
+                "coding": [
+                  {
+                    "code": "8462-4"
+                  }
+                ]
+              },
+              "valueQuantity": {
+                "value": 86,
+                "unit": "mmHg"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "8867-4",
+                "display": "Heart rate"
+              }
+            ],
+            "text": "Heart rate"
+          },
+          "effectiveDateTime": "2026-03-01",
+          "valueQuantity": {
+            "value": 74,
+            "unit": "bpm"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "59408-5",
+                "display": "Oxygen saturation"
+              }
+            ],
+            "text": "Oxygen saturation"
+          },
+          "effectiveDateTime": "2026-03-01",
+          "valueQuantity": {
+            "value": 98,
+            "unit": "%"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "39156-5",
+                "display": "BMI"
+              }
+            ],
+            "text": "BMI"
+          },
+          "effectiveDateTime": "2026-03-01",
+          "valueQuantity": {
+            "value": 26.1,
+            "unit": "kg/m2"
+          }
+        }
+      }
+    ]
+  },
+  "labs": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "718-7",
+                "display": "Hemoglobin"
+              }
+            ],
+            "text": "Hemoglobin"
+          },
+          "effectiveDateTime": "2026-02-20",
+          "valueQuantity": {
+            "value": 10.6,
+            "unit": "g/dL"
+          },
+          "interpretation": [
+            {
+              "coding": [
+                {
+                  "code": "L"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "777-3",
+                "display": "Platelets"
+              }
+            ],
+            "text": "Platelets"
+          },
+          "effectiveDateTime": "2026-02-20",
+          "valueQuantity": {
+            "value": 312,
+            "unit": "10^3/uL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "6690-2",
+                "display": "WBC"
+              }
+            ],
+            "text": "WBC"
+          },
+          "effectiveDateTime": "2026-02-20",
+          "valueQuantity": {
+            "value": 5.8,
+            "unit": "10^3/uL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "2160-0",
+                "display": "Creatinine"
+              }
+            ],
+            "text": "Creatinine"
+          },
+          "effectiveDateTime": "2026-02-20",
+          "valueQuantity": {
+            "value": 0.9,
+            "unit": "mg/dL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "1742-6",
+                "display": "ALT"
+              }
+            ],
+            "text": "ALT"
+          },
+          "effectiveDateTime": "2026-02-20",
+          "valueQuantity": {
+            "value": 38,
+            "unit": "U/L"
+          },
+          "interpretation": [
+            {
+              "coding": [
+                {
+                  "code": "H"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "1920-8",
+                "display": "AST"
+              }
+            ],
+            "text": "AST"
+          },
+          "effectiveDateTime": "2026-02-20",
+          "valueQuantity": {
+            "value": 42,
+            "unit": "U/L"
+          },
+          "interpretation": [
+            {
+              "coding": [
+                {
+                  "code": "H"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "14804-9",
+                "display": "CRP"
+              }
+            ],
+            "text": "CRP"
+          },
+          "effectiveDateTime": "2026-02-20",
+          "valueQuantity": {
+            "value": 1.8,
+            "unit": "mg/dL"
+          },
+          "interpretation": [
+            {
+              "coding": [
+                {
+                  "code": "H"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "documents": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "DocumentReference",
+          "status": "current",
+          "type": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "11506-3",
+                "display": "Progress note"
+              }
+            ]
+          },
+          "category": [
+            {
+              "text": "internal medicine"
+            }
+          ],
+          "date": "2026-03-01",
+          "author": [
+            {
+              "display": "Dr. Benjamin Ross, MD"
+            }
+          ],
+          "content": [
+            {
+              "attachment": {
+                "contentType": "text/plain",
+                "data": "UFJPR1JFU1MgTk9URSDigJQgSW50ZXJuYWwgTWVkaWNpbmUKRGF0ZTogMjAyNi0wMy0wMQpQYXRpZW50OiBMaW5kYSBQYXJrLCA2MkYKUHJvdmlkZXI6IERyLiBCZW5qYW1pbiBSb3NzLCBNRAoKVklTSVQgUkVBU09OOiBTZW1pLWFubnVhbCBmb2xsb3ctdXAg4oCUIHJoZXVtYXRvaWQgYXJ0aHJpdGlzLCBoeXBlcnRlbnNpb24sIGFuZW1pYSBtb25pdG9yaW5nCgpJTlRFUlZBTCBISVNUT1JZOgpNcy4gUGFyayBpcyBhIDYyLXllYXItb2xkIGZlbWFsZSB3aXRoIHNlcm9wb3NpdGl2ZSByaGV1bWF0b2lkIGFydGhyaXRpcyAoYW50aS1DQ1AgcG9zaXRpdmUsIFJGIHBvc2l0aXZlKSBtYW5hZ2VkIHdpdGggbWV0aG90cmV4YXRlIGFuZCBhZGFsaW11bWFiLCBoeXBlcnRlbnNpb24sIGFuZCBtaWxkIG5vcm1vY3l0aWMgYW5lbWlhIChjb25zaXN0ZW50IHdpdGggYW5lbWlhIG9mIGNocm9uaWMgZGlzZWFzZSBmcm9tIFJBKS4gU2hlIHByZXNlbnRzIGZvciBoZXIgc2VtaS1hbm51YWwgY2hlY2staW4uIFJBIGhhcyBiZWVuIGluIGxvdyBkaXNlYXNlIGFjdGl2aXR5IHBlciByaGV1bWF0b2xvZ3kgKERyLiBSZXllcykuIFNoZSByZXBvcnRzIG1pbGQgYmlsYXRlcmFsIHdyaXN0IGFuZCBNQ1Agam9pbnQgc3RpZmZuZXNzIGluIHRoZSBtb3JuaW5ncywgcmVzb2x2aW5nIHdpdGhpbiAyMC0zMCBtaW51dGVzLiBObyBuZXcgam9pbnQgc3dlbGxpbmcsIGZldmVycywgb3IgaW5mZWN0aW9ucy4gU2hlIGRlbmllcyBzaG9ydG5lc3Mgb2YgYnJlYXRoIG9yIGFueSBjYXJkaWFjIHN5bXB0b21zLiBCbG9vZCBwcmVzc3VyZXMgYXQgaG9tZSBhdmVyYWdpbmcgMTMyLTE0MCBzeXN0b2xpYy4gQWRoZXJlbnQgd2l0aCBhbGwgbWVkaWNhdGlvbnMuCgpNRURJQ0FUSU9OUzoKLSBNZXRob3RyZXhhdGUgMTUgbWcgb3JhbGx5IG9uY2Ugd2Vla2x5ICh3aXRoIGZvbGljIGFjaWQgMSBtZyBkYWlseSkKLSBBZGFsaW11bWFiIDQwIG1nIHN1YmN1dGFuZW91cyBpbmplY3Rpb24gZXZlcnkgMiB3ZWVrcwotIEZvbGljIGFjaWQgMSBtZyBkYWlseQotIExpc2lub3ByaWwgMTAgbWcgZGFpbHkKLSBBbWxvZGlwaW5lIDUgbWcgZGFpbHkKLSBDYWxjaXVtIGNhcmJvbmF0ZSA1MDAgbWcgKyB2aXRhbWluIEQgNDAwIElVIHR3aWNlIGRhaWx5CgpWSVRBTFMgKHRvZGF5KTogQlAgMTM2Lzg2IG1tSGcsIEhSIDc0IGJwbSwgUlIgMTQsIE8yIFNhdCA5OCUgUkEsIEJNSSAyNi4xCgpFWEFNSU5BVElPTjoKR2VuZXJhbDogV2VsbC1hcHBlYXJpbmcsIG5vIGFjdXRlIGRpc3RyZXNzCk11c2N1bG9za2VsZXRhbDogTWlsZCBiaWxhdGVyYWwgTUNQIHRlbmRlcm5lc3MgKDJuZCwgM3JkKSwgbm8gYWN0aXZlIHN5bm92aXRpcyB0b2RheSwgbm8gam9pbnQgZWZmdXNpb25zLiBXcmlzdHM6IG1pbGQgbGltaXRhdGlvbiBvZiBmbGV4aW9uIGJpbGF0ZXJhbGx5LgpDYXJkaW92YXNjdWxhcjogUmVndWxhciByYXRlLCBubyBtdXJtdXJzClNraW46IE5vIHBzb3JpYXRpYyBsZXNpb25zLCBubyBpbmplY3Rpb24gc2l0ZSByZWFjdGlvbnMKCkxBQlMgKDIwMjYtMDItMjApOgpDQkM6IFdCQyA1LjgsIEhnYiAxMC42IChsb3cg4oCUIGJhc2VsaW5lIDEwLjQtMTEuMCksIFBsdCAzMTIsIE1DViA4NiAobm9ybW9jeXRpYykKQk1QOiBOYSAxNDAsIEsgMy45LCBDciAwLjksIEdsdWNvc2UgOTQKTEZUczogQVNUIDQyIChtaWxkbHkgZWxldmF0ZWQpLCBBTFQgMzggKG1pbGRseSBlbGV2YXRlZCksIG5vcm1hbCBiaWxpIGFuZCBhbGsgcGhvcwpFU1I6IDQ0IG1tL2hyLCBDUlA6IDEuOCBtZy9kTCAobWlsZGx5IGVsZXZhdGVkIOKAlCBsb3cgZGlzZWFzZSBhY3Rpdml0eSByYW5nZSkKSXJvbiBzdHVkaWVzOiBTZXJ1bSBpcm9uIDUyLCBUSUJDIDI4MCwgZmVycml0aW4gMTg2IOKGkiBjb25zaXN0ZW50IHdpdGggYW5lbWlhIG9mIGNocm9uaWMgZGlzZWFzZSAobm90IGlyb24gZGVmaWNpZW5jeSkKCkFTU0VTU01FTlQgQU5EIFBMQU46CjEuIFJoZXVtYXRvaWQgYXJ0aHJpdGlzOiBMb3cgZGlzZWFzZSBhY3Rpdml0eSBwZXIgbGFicyBhbmQgZXhhbS4gQ29udGludWUgbWV0aG90cmV4YXRlIDE1IG1nIHdlZWtseSArIGFkYWxpbXVtYWIgNDAgbWcgcTJ3ZWVrcy4gRm9saWMgYWNpZCBjb250aW51ZWQgdG8gbWluaW1pemUgTVRYIHNpZGUgZWZmZWN0cy4gUmVmZXIgYmFjayB0byByaGV1bWF0b2xvZ3kgZm9yIERBUy0yOCBzY29yZSBpbiA0IHdlZWtzLgoyLiBBbmVtaWEgKEhnYiAxMC42KTogU3RhYmxlIG5vcm1vY3l0aWMgYW5lbWlhIG9mIGNocm9uaWMgZGlzZWFzZS4gSXJvbiBzdHVkaWVzIGNvbmZpcm0gbm8gaXJvbiBkZWZpY2llbmN5LiBObyB0cmFuc2Z1c2lvbiBuZWVkZWQuIE1vbml0b3IgbW9udGhseS4gSWYgZHJvcHMgYmVsb3cgMTAsIGRpc2N1c3MgZXJ5dGhyb3BvaWV0aW4tc3RpbXVsYXRpbmcgYWdlbnQuCjMuIE1pbGRseSBlbGV2YXRlZCBMRlRzOiBMaWtlbHkgbWV0aG90cmV4YXRlIGhlcGF0b3RveGljaXR5IChjaHJvbmljLCBsb3ctZ3JhZGUpLiBEaXNjdXNzZWQgd2l0aCBEci4gUmV5ZXMuIENvbnRpbnVlIGN1cnJlbnQgZG9zZSDigJQgbm8gY2hhbmdlLiBSZXBlYXQgTEZUcyBpbiAzIG1vbnRocy4KNC4gSHlwZXJ0ZW5zaW9uOiBCUCAxMzYvODYuIFN1Ym9wdGltYWxseSBjb250cm9sbGVkLiBBZGQtb24gdG8gbGlzaW5vcHJpbCAxMCBtZyArIGFtbG9kaXBpbmUgNSBtZyDigJQgYm90aCBhdCB0YXJnZXQgZG9zZS4gUmVjaGVjayBpbiA4IHdlZWtzLiBDb25zaWRlciBjaGxvcnRoYWxpZG9uZSBpZiBzdGlsbCB1bmNvbnRyb2xsZWQuCjUuIEluZmVjdGlvbiByaXNrOiBQYXRpZW50IG9uIGJpb2xvZ2ljICsgaW1tdW5vbW9kdWxhdG9yIOKAlCByZWluZm9yY2UgaW1wb3J0YW5jZSBvZiBwcm9tcHRseSByZXBvcnRpbmcgZmV2ZXIsIGluZmVjdGlvbiBzaWducywgb3IgcmVzcGlyYXRvcnkgc3ltcHRvbXMuIFRCIHNjcmVlbmluZyBsYXN0IGRvbmUgMjAyNCAobmVnYXRpdmUpLgo2LiBCb25lIGhlYWx0aDogQ2FsY2l1bSArIHZpdGFtaW4gRCBjb250aW51ZWQgZm9yIFJBL3N0ZXJvaWQgcmlzay4gREVYQSBsYXN0IDIwMjIg4oCUIG9zdGVvcGVuaWEuIE5leHQgREVYQSAyMDI1IChwYXRpZW50IHRvIHNjaGVkdWxlKS4KClJldHVybjogNiBtb250aHMsIHNvb25lciBpZiBmbGFyZSBvciBpbmZlY3Rpb24uCuKAlCBEci4gQmVuamFtaW4gUm9zcywgTUQsIEludGVybmFsIE1lZGljaW5lCg=="
+              }
+            }
+          ]
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "DocumentReference",
+          "status": "current",
+          "type": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "11506-3",
+                "display": "Progress note"
+              }
+            ]
+          },
+          "category": [
+            {
+              "text": "rheumatology"
+            }
+          ],
+          "date": "2026-02-15",
+          "author": [
+            {
+              "display": "Dr. Alicia Reyes, MD"
+            }
+          ],
+          "content": [
+            {
+              "attachment": {
+                "contentType": "text/plain",
+                "data": "UkhFVU1BVE9MT0dZIEZPTExPVy1VUCBOT1RFCkRhdGU6IDIwMjYtMDItMTUKUGF0aWVudDogTGluZGEgUGFyaywgNjJGClByb3ZpZGVyOiBEci4gQWxpY2lhIFJleWVzLCBNRAoKVklTSVQgUkVBU09OOiAzLW1vbnRoIFJBIGZvbGxvdy11cCDigJQgZGlzZWFzZSBhY3Rpdml0eSwgYmlvbG9naWMgbW9uaXRvcmluZwoKSElTVE9SWToKTXMuIFBhcmsgaXMgYSA2Mi15ZWFyLW9sZCBmZW1hbGUgd2l0aCBzZXJvcG9zaXRpdmUgUkEgKGFudGktQ0NQIDE0MiBVL21MLCBSRiA4NCBJVS9tTCwgZGlhZ25vc2VkIDIwMTQpLiBTaGUgaGFzIGJlZW4gb24gbWV0aG90cmV4YXRlICsgYWRhbGltdW1hYiBzaW5jZSAyMDE4IHdpdGggZ29vZCBzdXN0YWluZWQgcmVzcG9uc2UuIFNoZSBwcmVzZW50cyBmb3IgaGVyIDMtbW9udGggdmlzaXQuIFNoZSByZXBvcnRzIG1pbGQgbW9ybmluZyBzdGlmZm5lc3MgKDIwLTMwIG1pbikgYmlsYXRlcmFsbHkgaW4gd3Jpc3RzIGFuZCBNQ1BzLiBObyBzaWduaWZpY2FudCBmbGFyZSBzaW5jZSBsYXN0IHZpc2l0LiBObyBpbmZlY3Rpb25zLCBob3NwaXRhbGl6YXRpb25zLCBvciBtZWRpY2F0aW9uIGludGVycnVwdGlvbnMuCgpESVNFQVNFIEFDVElWSVRZOgpEQVMtMjggKEVTUik6IDIuOSDigJQgTG93IGRpc2Vhc2UgYWN0aXZpdHkgKHRhcmdldCA8IDMuMiBhY2hpZXZlZCkKVGVuZGVyIGpvaW50IGNvdW50OiA0LzI4ClN3b2xsZW4gam9pbnQgY291bnQ6IDEvMjggKDJuZCBNQ1AgcmlnaHQpClBhdGllbnQgR2xvYmFsIEFzc2Vzc21lbnQ6IDI4LzEwMAoKSU1BR0lORzoKWC1yYXlzIGhhbmRzL3dyaXN0cyAoMjAyNS0xMC0yMCk6IE5vIG5ldyBlcm9zaW9ucy4gRXhpc3RpbmcgbWlsZCBlcm9zaXZlIGNoYW5nZXMgYXQgMm5kIGFuZCAzcmQgTUNQcyBiaWxhdGVyYWxseSAoc3RhYmxlKS4KCkxBQk9SQVRPUlk6CkhnYiAxMC42IOKAlCBvbmdvaW5nIGFuZW1pYSBvZiBjaHJvbmljIGRpc2Vhc2UuIERpc2N1c3NlZCB3aXRoIFBDUC4KTEZUcyBtaWxkbHkgZWxldmF0ZWQgKEFTVCA0MiwgQUxUIDM4KSDigJQgY2hyb25pYyBsb3ctZ3JhZGUgTVRYIGVmZmVjdC4gTm8gZG9zZSBjaGFuZ2Ugd2FycmFudGVkLgpIZXBhdGl0aXMgQiBzdXJmYWNlIGFudGlnZW46IE5lZ2F0aXZlIChjaGVja2VkIHByaW9yIHRvIGJpb2xvZ2ljIGluaXRpYXRpb24sIGFubnVhbCByZWNoZWNrIG5lZ2F0aXZlIDIwMjUpLgoKQVNTRVNTTUVOVCBBTkQgUExBTjoKMS4gUkEgZGlzZWFzZSBhY3Rpdml0eTogTG93IGRpc2Vhc2UgYWN0aXZpdHkgKERBUy0yOCAyLjkpLiBDb250aW51ZSBjdXJyZW50IERNQVJEIHJlZ2ltZW4g4oCUIG1ldGhvdHJleGF0ZSAxNSBtZyB3ZWVrbHkgKyBhZGFsaW11bWFiIDQwIG1nIHEyd2Vla3MuIE5vIGVzY2FsYXRpb24gbmVlZGVkLgoyLiBCaW9sb2dpYyBzYWZldHkgbW9uaXRvcmluZzogTm8gaW5mZWN0aW9ucywgaGVwYXRpdGlzIHJlYWN0aXZhdGlvbiwgb3IgbWFsaWduYW5jeSBjb25jZXJucy4gQW5udWFsIFRCIHNjcmVlbmluZyBuZWdhdGl2ZSAoMjAyNSkuIEFkYWxpbXVtYWIgdG8gYmUgSEVMRCBtaW5pbXVtIDEgd2VlayBiZWZvcmUgYW55IGVsZWN0aXZlIHN1cmdpY2FsIHByb2NlZHVyZSBhbmQgcmVzdGFydGVkIHdoZW4gd291bmQgaGVhbGluZyBpcyBjb25maXJtZWQg4oCUIHR5cGljYWxseSAyIHdlZWtzIHBvc3Qtb3AuCjMuIE1ldGhvdHJleGF0ZTogSE9MRCBtZXRob3RyZXhhdGUgMSB3ZWVrIGJlZm9yZSBhbmQgMSB3ZWVrIGFmdGVyIGFueSBzdXJnaWNhbCBwcm9jZWR1cmUgdG8gbWluaW1pemUgd291bmQgaGVhbGluZyBhbmQgaW5mZWN0aW9uIHJpc2suCjQuIEFuZW1pYTogTm9ybW9jeXRpYyBhbmVtaWEgb2YgY2hyb25pYyBkaXNlYXNlIOKAlCBzdGFibGUuIE1vbml0b3JlZCB3aXRoIFBDUC4KNS4gRWxldmF0ZWQgTEZUczogU3RhYmxlIGxvdy1ncmFkZSBlbGV2YXRpb24gb24gTVRYLiBMaXZlciBiaW9wc3kgbm90IGluZGljYXRlZCBhdCB0aGlzIGxldmVsIGFuZCBkdXJhdGlvbi4gQ29udGludWUgbW9uaXRvcmluZy4KNi4gT3N0ZW9wb3Jvc2lzIHJpc2s6IENvbnRpbnVlZCBjYWxjaXVtICsgdml0YW1pbiBELiBObyBvcmFsIHN0ZXJvaWRzIGN1cnJlbnRseSwgd2hpY2ggcmVkdWNlcyByaXNrLgoKUmV0dXJuOiAzIG1vbnRocyAoTWF5IDIwMjYpLiBBbGVydCBpZiBmbGFyZSwgZmV2ZXIsIG9yIGNvbmNlcm5pbmcgc3ltcHRvbXMuCuKAlCBEci4gQWxpY2lhIFJleWVzLCBNRCwgUmhldW1hdG9sb2d5Cg=="
+              }
+            }
+          ]
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "DocumentReference",
+          "status": "current",
+          "type": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "11506-3",
+                "display": "Progress note"
+              }
+            ]
+          },
+          "category": [
+            {
+              "text": "cardiology"
+            }
+          ],
+          "date": "2026-01-08",
+          "author": [
+            {
+              "display": "Dr. Priya Mehta, MD, FACC"
+            }
+          ],
+          "content": [
+            {
+              "attachment": {
+                "contentType": "text/plain",
+                "data": "Q0FSRElPTE9HWSBDT05TVUxUQVRJT04gTk9URQpEYXRlOiAyMDI2LTAxLTA4ClBhdGllbnQ6IExpbmRhIFBhcmssIDYyRgpQcm92aWRlcjogRHIuIFByaXlhIE1laHRhLCBNRCwgRkFDQwoKVklTSVQgUkVBU09OOiBDYXJkaW92YXNjdWxhciByaXNrIGFzc2Vzc21lbnQg4oCUIHJoZXVtYXRvaWQgYXJ0aHJpdGlzIG9uIGJpb2xvZ2ljIHRoZXJhcHkKCkhJU1RPUlk6Ck1zLiBQYXJrIGlzIGEgNjIteWVhci1vbGQgZmVtYWxlIHdpdGggc2Vyb3Bvc2l0aXZlIHJoZXVtYXRvaWQgYXJ0aHJpdGlzIG9uIG1ldGhvdHJleGF0ZSBhbmQgYWRhbGltdW1hYiwgcmVmZXJyZWQgZm9yIGNhcmRpb3Zhc2N1bGFyIHJpc2sgZXZhbHVhdGlvbi4gUmhldW1hdG9pZCBhcnRocml0aXMgaXMgYW4gaW5kZXBlbmRlbnQgcmlzayBmYWN0b3IgZm9yIGFjY2VsZXJhdGVkIGF0aGVyb3NjbGVyb3NpcyBhbmQgcHJlbWF0dXJlIGNhcmRpb3Zhc2N1bGFyIGRpc2Vhc2UuIFNoZSBoYXMgaHlwZXJ0ZW5zaW9uIChzdWJvcHRpbWFsbHkgY29udHJvbGxlZCBvbiBhbWxvZGlwaW5lICsgbGlzaW5vcHJpbCkgYW5kIG1pbGQgZHlzbGlwaWRlbWlhLiBTaGUgZGVuaWVzIGV4ZXJ0aW9uYWwgc3ltcHRvbXMsIHBhbHBpdGF0aW9ucywgb3Igc3luY29wZS4gTm8gaGlzdG9yeSBvZiBNSSwgc3Ryb2tlLCBvciBwZXJpcGhlcmFsIHZhc2N1bGFyIGRpc2Vhc2UuCgpDQVJESU9WQVNDVUxBUiBSSVNLIEZBQ1RPUlM6Ci0gSHlwZXJ0ZW5zaW9uIChvbiB0d28gYWdlbnRzLCBwYXJ0aWFsbHkgY29udHJvbGxlZCkKLSBSQS1yZWxhdGVkIHN5c3RlbWljIGluZmxhbW1hdGlvbiAoZWxldmF0ZWQgQ1JQLCBFU1IpCi0gRHlzbGlwaWRlbWlhIChub3QgY3VycmVudGx5IG9uIHN0YXRpbikKLSBBZ2UgNjIsIGZlbWFsZQotIE5vIGRpYWJldGVzLCBubyBzbW9raW5nCgpQSFlTSUNBTCBFWEFNSU5BVElPTjoKQlA6IDEzNi84NiBtbUhnLCBIUjogNzQgYnBtLCByZWd1bGFyCkNhcmRpb3Zhc2N1bGFyOiBSZWd1bGFyIHJhdGUgYW5kIHJoeXRobSwgbm8gbXVybXVycy4gTm8gSlZELiBObyBwZXJpcGhlcmFsIGVkZW1hLgoKRElBR05PU1RJQ1M6CkVLRyAodG9kYXkpOiBOb3JtYWwgc2ludXMgcmh5dGhtLCByYXRlIDc0LiBObyBTVC1UIHdhdmUgY2hhbmdlcy4gTm9ybWFsIGludGVydmFscy4KUmVzdGluZyBlY2hvY2FyZGlvZ3JhbSAoMjAyNS0wNy0xMCk6IExWRUYgNjIlIChub3JtYWwpLCBubyB3YWxsIG1vdGlvbiBhYm5vcm1hbGl0aWVzLCBubyBzaWduaWZpY2FudCB2YWx2dWxhciBkaXNlYXNlLCBtaWxkIExWSCBjb25zaXN0ZW50IHdpdGggaHlwZXJ0ZW5zaXZlIGhlYXJ0IGRpc2Vhc2UuIE5vcm1hbCBkaWFzdG9saWMgZnVuY3Rpb24uCgoxMC1ZRUFSIEFTQ1ZEIFJJU0sgKFBvb2xlZCBDb2hvcnQgRXF1YXRpb25zKTogOC40JSDigJQgYm9yZGVybGluZSBlbGV2YXRlZC4gQWRqdXN0ZWQgdXB3YXJkIHRvIGFwcHJveGltYXRlbHkgMTIlIGdpdmVuIFJBLXNwZWNpZmljIENWIHJpc2sgZW5oYW5jZW1lbnQuCgpBU1NFU1NNRU5UIEFORCBQTEFOOgoxLiBDYXJkaW92YXNjdWxhciByaXNrIGluIFJBOiBFbGV2YXRlZCBhYm92ZSBhdmVyYWdlIGZvciBhZ2UgZ2l2ZW4gUkEtcmVsYXRlZCBzeXN0ZW1pYyBpbmZsYW1tYXRpb24uIENSUCAxLjggbWcvZEwgcmVmbGVjdHMgb25nb2luZyBpbmZsYW1tYXRvcnkgYnVyZGVuIHRoYXQgY29udHJpYnV0ZXMgdG8gYXRoZXJvc2NsZXJvdGljIHJpc2suCjIuIEluaXRpYXRpbmcgc3RhdGluIHRoZXJhcHk6IFJlY29tbWVuZGluZyByb3N1dmFzdGF0aW4gMTAgbWcgZm9yIHByaW1hcnkgcHJldmVudGlvbiBnaXZlbiBlbmhhbmNlZCBBU0NWRCByaXNrICg+Ny41JSB3aXRoIFJBIG1vZGlmaWVyKS4gQ29vcmRpbmF0ZSB3aXRoIFBDUC4KMy4gSHlwZXJ0ZW5zaW9uOiBCUCAxMzYvODYg4oCUIG9wdGltaXplIGNvbnRyb2wuIFBDUCBtYW5hZ2luZy4gVGFyZ2V0IDwxMzAvODAuCjQuIEFkYWxpbXVtYWI6IFRORiBpbmhpYml0b3JzIHBhcmFkb3hpY2FsbHkgcmVkdWNlIENWIGV2ZW50cyBpbiBSQSDigJQgY29udGludWF0aW9uIGFwcHJvcHJpYXRlIGFuZCBjYXJkaW9wcm90ZWN0aXZlLgo1LiBBc3BpcmluOiBMb3ctZG9zZSBhc3BpcmluIG5vdCBpbmRpY2F0ZWQgZm9yIHByaW1hcnkgcHJldmVudGlvbiBhdCB0aGlzIHJpc2sgbGV2ZWwuIEF2b2lkIGdpdmVuIGNvbmNvbWl0YW50IE5TQUlEIHJpc2suCgpGb2xsb3ctdXA6IDEyIG1vbnRocyBmb3IgcmVwZWF0IGNhcmRpb3Zhc2N1bGFyIHJpc2sgYXNzZXNzbWVudCBhbmQgbGlwaWQgcGFuZWwgb24gc3RhdGluLgrigJQgRHIuIFByaXlhIE1laHRhLCBNRCwgRkFDQywgQ2FyZGlvbG9neQo="
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "encounters": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Internal medicine visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2026-03-01",
+            "end": "2026-03-01"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Internal medicine visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2025-09-10",
+            "end": "2025-09-10"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Rheumatology visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2026-02-15",
+            "end": "2026-02-15"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Rheumatology visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2025-11-15",
+            "end": "2025-11-15"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Cardiology visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2026-01-08",
+            "end": "2026-01-08"
+          }
+        }
+      }
+    ]
+  },
+  "procedures": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": []
+  },
+  "allergies": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "AllergyIntolerance",
+          "code": {
+            "text": "Sulfa antibiotics"
+          },
+          "reaction": [
+            {
+              "description": "severe rash"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

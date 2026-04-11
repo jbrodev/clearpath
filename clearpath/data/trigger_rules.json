@@ -1,0 +1,285 @@
+{
+  "tier1_triggers": [
+    {
+      "id": "active_anticoagulation",
+      "label": "Active anticoagulation therapy",
+      "specialty": ["hematology"],
+      "source": "medication_engine",
+      "description": "Patient is on anticoagulant medication requiring perioperative management plan"
+    },
+    {
+      "id": "recent_stroke_tia",
+      "label": "Recent stroke or TIA within 6 months",
+      "specialty": ["neurology"],
+      "source": "condition_and_notes",
+      "lookback_days": 180,
+      "keywords": [
+        "stroke", "cva", "cerebrovascular accident",
+        "tia", "transient ischemic attack",
+        "ischemic stroke", "hemorrhagic stroke",
+        "cerebral infarction", "brain infarct"
+      ],
+      "icd_codes": ["I63", "I64", "G45", "I61", "I62"]
+    },
+    {
+      "id": "recent_mi",
+      "label": "Recent myocardial infarction within 6 months",
+      "specialty": ["cardiology"],
+      "source": "condition_and_notes",
+      "lookback_days": 180,
+      "keywords": [
+        "myocardial infarction", "heart attack", "mi",
+        "nstemi", "stemi", "acute coronary syndrome", "acs"
+      ],
+      "icd_codes": ["I21", "I22"]
+    },
+    {
+      "id": "unstable_angina",
+      "label": "Unstable angina or active chest pain",
+      "specialty": ["cardiology"],
+      "source": "condition_and_notes",
+      "keywords": [
+        "unstable angina", "chest pain", "angina",
+        "chest tightness", "worsening angina"
+      ],
+      "icd_codes": ["I20.0"]
+    },
+    {
+      "id": "decompensated_chf",
+      "label": "Decompensated or severe heart failure",
+      "specialty": ["cardiology"],
+      "source": "condition_and_notes",
+      "keywords": [
+        "decompensated heart failure", "acute heart failure",
+        "chf exacerbation", "worsening heart failure",
+        "ejection fraction", "ef <", "ef<", "lvef <", "lvef<",
+        "fluid overload", "pulmonary edema"
+      ],
+      "icd_codes": ["I50.0", "I50.1", "I50.9", "I50.2", "I50.3"]
+    },
+    {
+      "id": "oxygen_dependent",
+      "label": "Oxygen-dependent respiratory failure",
+      "specialty": ["pulmonology"],
+      "source": "condition_and_notes",
+      "keywords": [
+        "oxygen dependent", "home oxygen", "supplemental oxygen",
+        "o2 dependent", "requires oxygen", "2l oxygen",
+        "respiratory failure", "hypoxic"
+      ],
+      "icd_codes": ["J96", "J96.0", "J96.1"]
+    },
+    {
+      "id": "prior_anesthesia_complication",
+      "label": "Documented prior anesthesia complication",
+      "specialty": ["anesthesia"],
+      "source": "notes_and_procedures",
+      "keywords": [
+        "anesthesia complication", "difficult airway",
+        "failed intubation", "malignant hyperthermia",
+        "pseudocholinesterase deficiency", "anesthesia reaction",
+        "succinylcholine reaction", "adverse reaction to anesthesia"
+      ]
+    },
+    {
+      "id": "severe_uncontrolled_htn",
+      "label": "Severe uncontrolled hypertension (SBP >180)",
+      "specialty": ["cardiology"],
+      "source": "vitals",
+      "threshold": {"systolic": 180}
+    },
+    {
+      "id": "uncontrolled_seizure_disorder",
+      "label": "Uncontrolled seizure disorder",
+      "specialty": ["neurology"],
+      "source": "condition_and_notes",
+      "keywords": [
+        "seizure disorder", "epilepsy", "uncontrolled seizures",
+        "breakthrough seizure", "status epilepticus",
+        "refractory epilepsy"
+      ],
+      "icd_codes": ["G40", "G41"]
+    },
+    {
+      "id": "implanted_cardiac_device",
+      "label": "Implanted cardiac device requiring evaluation",
+      "specialty": ["cardiology"],
+      "source": "condition_and_notes",
+      "keywords": [
+        "pacemaker", "icd", "implantable cardioverter defibrillator",
+        "cardiac resynchronization", "crt", "crt-d", "crt-p",
+        "implanted defibrillator", "aicd"
+      ],
+      "icd_codes": ["Z95.0", "Z95.810", "Z95.811", "Z95.812"]
+    },
+    {
+      "id": "antiplatelet_dual_therapy",
+      "label": "Dual antiplatelet therapy",
+      "specialty": ["hematology", "cardiology"],
+      "source": "medication_engine",
+      "description": "Patient on two antiplatelet agents or antiplatelet plus anticoagulant"
+    }
+  ],
+  "tier2_scoring": [
+    {
+      "id": "uncontrolled_diabetes",
+      "label": "Uncontrolled diabetes mellitus",
+      "points": 2,
+      "source": "condition_and_labs",
+      "keywords": ["diabetes", "dm", "type 2 diabetes", "type 1 diabetes", "diabetic"],
+      "icd_codes": ["E11", "E10", "E13"],
+      "lab_threshold": {"hba1c": 8.0}
+    },
+    {
+      "id": "controlled_diabetes",
+      "label": "Controlled diabetes mellitus",
+      "points": 1,
+      "source": "condition",
+      "keywords": ["diabetes", "dm"],
+      "icd_codes": ["E11", "E10"]
+    },
+    {
+      "id": "moderate_hypertension",
+      "label": "Moderate hypertension",
+      "points": 1,
+      "source": "condition_and_vitals",
+      "keywords": ["hypertension", "htn", "high blood pressure"],
+      "icd_codes": ["I10"],
+      "threshold": {"systolic": 140}
+    },
+    {
+      "id": "copd",
+      "label": "COPD",
+      "points": 2,
+      "source": "condition",
+      "keywords": ["copd", "chronic obstructive pulmonary disease", "emphysema", "chronic bronchitis"],
+      "icd_codes": ["J44"]
+    },
+    {
+      "id": "osa",
+      "label": "Obstructive sleep apnea",
+      "points": 1,
+      "source": "condition_and_notes",
+      "keywords": ["sleep apnea", "osa", "obstructive sleep apnea", "cpap", "bipap"],
+      "icd_codes": ["G47.33"]
+    },
+    {
+      "id": "advanced_age",
+      "label": "Age 75 or older",
+      "points": 1,
+      "source": "demographics",
+      "threshold": {"age": 75}
+    },
+    {
+      "id": "polypharmacy",
+      "label": "Polypharmacy (8 or more active medications)",
+      "points": 1,
+      "source": "medications",
+      "threshold": {"medication_count": 8}
+    },
+    {
+      "id": "no_recent_pcp_visit",
+      "label": "No PCP visit in 12+ months",
+      "points": 1,
+      "source": "encounters",
+      "threshold": {"days_since_pcp_visit": 365}
+    },
+    {
+      "id": "no_recent_labs",
+      "label": "No recent labs in 6+ months",
+      "points": 1,
+      "source": "observations",
+      "threshold": {"days_since_labs": 180}
+    },
+    {
+      "id": "multiple_comorbidities",
+      "label": "Multiple comorbidities (4 or more chronic conditions)",
+      "points": 1,
+      "source": "conditions",
+      "threshold": {"chronic_condition_count": 4}
+    },
+    {
+      "id": "obesity",
+      "label": "Obesity (BMI 40+)",
+      "points": 1,
+      "source": "vitals_and_condition",
+      "keywords": ["morbid obesity", "obesity", "obese"],
+      "icd_codes": ["E66"],
+      "threshold": {"bmi": 40}
+    },
+    {
+      "id": "chronic_kidney_disease",
+      "label": "Chronic kidney disease stage 3+",
+      "points": 1,
+      "source": "condition_and_labs",
+      "keywords": ["chronic kidney disease", "ckd", "renal insufficiency", "renal failure"],
+      "icd_codes": ["N18.3", "N18.4", "N18.5", "N18.6"],
+      "lab_threshold": {"creatinine": 1.5}
+    },
+    {
+      "id": "chronic_liver_disease",
+      "label": "Chronic liver disease or cirrhosis",
+      "points": 1,
+      "source": "condition",
+      "keywords": ["cirrhosis", "liver disease", "hepatic", "liver failure"],
+      "icd_codes": ["K70", "K71", "K72", "K74"]
+    },
+    {
+      "id": "recent_hospitalization",
+      "label": "Hospitalization within 6 months",
+      "points": 1,
+      "source": "encounters",
+      "lookback_days": 180
+    }
+  ],
+  "decision_thresholds": {
+    "no_clearance_needed": {"max_score": 2, "requires_no_tier1": true},
+    "clearance_recommended": {"min_score": 3, "max_score": 5, "requires_no_tier1": true},
+    "specialist_required": {"min_score": 6},
+    "any_tier1_triggers_to": "specialist_required"
+  },
+  "rcri_criteria": [
+    {
+      "id": "rcri_high_risk_surgery",
+      "label": "High-risk surgery",
+      "points": 1,
+      "keywords": ["intraperitoneal", "intrathoracic", "suprainguinal vascular", "cardiac surgery"]
+    },
+    {
+      "id": "rcri_ischemic_heart_disease",
+      "label": "Ischemic heart disease",
+      "points": 1,
+      "keywords": ["coronary artery disease", "cad", "angina", "myocardial infarction", "stent"],
+      "icd_codes": ["I25", "I20", "I21", "I22"]
+    },
+    {
+      "id": "rcri_congestive_heart_failure",
+      "label": "History of congestive heart failure",
+      "points": 1,
+      "keywords": ["heart failure", "chf", "congestive heart failure"],
+      "icd_codes": ["I50"]
+    },
+    {
+      "id": "rcri_cerebrovascular_disease",
+      "label": "History of cerebrovascular disease",
+      "points": 1,
+      "keywords": ["stroke", "tia", "cva", "cerebrovascular"],
+      "icd_codes": ["I63", "I64", "G45"]
+    },
+    {
+      "id": "rcri_insulin_dependent_diabetes",
+      "label": "Insulin-dependent diabetes",
+      "points": 1,
+      "keywords": ["insulin"],
+      "source": "medication_engine",
+      "flag": "insulin_dependent_diabetes"
+    },
+    {
+      "id": "rcri_preoperative_creatinine",
+      "label": "Preoperative creatinine >2.0 mg/dL",
+      "points": 1,
+      "source": "labs",
+      "lab_threshold": {"creatinine": 2.0}
+    }
+  ]
+}

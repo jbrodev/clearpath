@@ -1,0 +1,198 @@
+{
+  "anticoagulants": {
+    "class": "anticoagulant",
+    "tier": 1,
+    "flag": "active_anticoagulation",
+    "specialty": "hematology",
+    "names": [
+      "warfarin", "coumadin", "jantoven",
+      "apixaban", "eliquis",
+      "rivaroxaban", "xarelto",
+      "dabigatran", "pradaxa",
+      "edoxaban", "savaysa",
+      "enoxaparin", "lovenox",
+      "fondaparinux", "arixtra",
+      "heparin", "hep-lock",
+      "tinzaparin", "innohep",
+      "dalteparin", "fragmin",
+      "argatroban", "bivalirudin", "angiomax",
+      "lepirudin", "refludan"
+    ]
+  },
+  "antiplatelets": {
+    "class": "antiplatelet",
+    "tier": 1,
+    "flag": "antiplatelet_therapy",
+    "specialty": "hematology",
+    "names": [
+      "clopidogrel", "plavix",
+      "ticagrelor", "brilinta",
+      "prasugrel", "effient",
+      "ticlopidine", "ticlid",
+      "dipyridamole", "persantine",
+      "vorapaxar", "zontivity",
+      "cangrelor", "kengreal",
+      "aspirin", "ecotrin", "bufferin", "bayer aspirin", "enteric coated aspirin"
+    ]
+  },
+  "antiarrhythmics": {
+    "class": "antiarrhythmic",
+    "tier": 2,
+    "flag": "cardiac_rhythm_medication",
+    "specialty": "cardiology",
+    "names": [
+      "amiodarone", "pacerone", "nexterone",
+      "dronedarone", "multaq",
+      "flecainide", "tambocor",
+      "propafenone", "rhythmol",
+      "sotalol", "betapace", "sorine",
+      "dofetilide", "tikosyn",
+      "digoxin", "lanoxin", "digitek",
+      "ibutilide", "corvert",
+      "quinidine", "quinaglute"
+    ]
+  },
+  "insulin": {
+    "class": "insulin",
+    "tier": 2,
+    "flag": "insulin_dependent_diabetes",
+    "specialty": null,
+    "names": [
+      "insulin",
+      "lantus", "glargine",
+      "basaglar", "toujeo",
+      "levemir", "detemir",
+      "tresiba", "degludec",
+      "humalog", "lispro",
+      "novolog", "novorapid", "aspart",
+      "apidra", "glulisine",
+      "humulin", "novolin",
+      "nph", "regular insulin",
+      "toujeo", "semglee",
+      "admelog", "lyumjev",
+      "fiasp"
+    ]
+  },
+  "beta_blockers": {
+    "class": "beta_blocker",
+    "tier": 2,
+    "flag": "beta_blocker_therapy",
+    "specialty": null,
+    "names": [
+      "metoprolol", "lopressor", "toprol-xl", "toprol xl",
+      "carvedilol", "coreg",
+      "atenolol", "tenormin",
+      "bisoprolol", "zebeta",
+      "propranolol", "inderal",
+      "labetalol", "trandate", "normodyne",
+      "nebivolol", "bystolic",
+      "nadolol", "corgard",
+      "acebutolol", "sectral",
+      "pindolol", "visken",
+      "timolol", "blocadren"
+    ]
+  },
+  "high_dose_steroids": {
+    "class": "corticosteroid",
+    "tier": 2,
+    "flag": "corticosteroid_use",
+    "specialty": null,
+    "names": [
+      "prednisone", "deltasone", "rayos",
+      "prednisolone", "orapred", "pediapred",
+      "methylprednisolone", "medrol", "depo-medrol", "solu-medrol",
+      "dexamethasone", "decadron", "dexasone",
+      "hydrocortisone", "cortef", "solu-cortef",
+      "budesonide", "entocort", "pulmicort",
+      "fludrocortisone", "florinef",
+      "triamcinolone", "kenalog",
+      "betamethasone", "celestone"
+    ]
+  },
+  "anticonvulsants": {
+    "class": "anticonvulsant",
+    "tier": 2,
+    "flag": "seizure_disorder_medication",
+    "specialty": "neurology",
+    "names": [
+      "phenytoin", "dilantin",
+      "levetiracetam", "keppra",
+      "valproic acid", "depakote", "depakene",
+      "carbamazepine", "tegretol",
+      "lamotrigine", "lamictal",
+      "oxcarbazepine", "trileptal",
+      "topiramate", "topamax",
+      "gabapentin", "neurontin",
+      "phenobarbital", "luminal",
+      "clonazepam", "klonopin",
+      "zonisamide", "zonegran",
+      "lacosamide", "vimpat",
+      "perampanel", "fycompa"
+    ]
+  },
+  "cardiac_medications_high_risk": {
+    "class": "cardiac_high_risk",
+    "tier": 2,
+    "flag": "high_risk_cardiac_medication",
+    "specialty": "cardiology",
+    "names": [
+      "sacubitril", "entresto",
+      "ivabradine", "corlanor",
+      "milrinone", "primacor",
+      "dobutamine",
+      "dopamine",
+      "norepinephrine", "levophed",
+      "vasopressin",
+      "nesiritide", "natrecor"
+    ]
+  },
+  "immunosuppressants": {
+    "class": "immunosuppressant",
+    "tier": 2,
+    "flag": "immunosuppressant_therapy",
+    "specialty": null,
+    "names": [
+      "tacrolimus", "prograf", "advagraf",
+      "cyclosporine", "sandimmune", "neoral",
+      "mycophenolate", "cellcept", "myfortic",
+      "azathioprine", "imuran",
+      "sirolimus", "rapamune",
+      "everolimus", "zortress",
+      "methotrexate", "rheumatrex", "trexall",
+      "adalimumab", "humira",
+      "etanercept", "enbrel",
+      "infliximab", "remicade",
+      "certolizumab", "cimzia",
+      "golimumab", "simponi",
+      "abatacept", "orencia",
+      "rituximab", "rituxan",
+      "tocilizumab", "actemra",
+      "sarilumab", "kevzara",
+      "baricitinib", "olumiant",
+      "tofacitinib", "xeljanz",
+      "upadacitinib", "rinvoq",
+      "secukinumab", "cosentyx",
+      "ixekizumab", "taltz",
+      "belimumab", "benlysta",
+      "voclosporin", "lupkynis",
+      "leflunomide", "arava"
+    ]
+  },
+  "respiratory_high_risk": {
+    "class": "respiratory_high_risk",
+    "tier": 2,
+    "flag": "significant_pulmonary_medication",
+    "specialty": "pulmonology",
+    "names": [
+      "roflumilast", "daliresp",
+      "nintedanib", "ofev",
+      "pirfenidone", "esbriet",
+      "bosentan", "tracleer",
+      "macitentan", "opsumit",
+      "sildenafil", "revatio",
+      "tadalafil", "adcirca",
+      "epoprostenol", "flolan",
+      "iloprost", "ventavis"
+    ]
+  }
+}

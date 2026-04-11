@@ -1,0 +1,817 @@
+{
+  "description": "John Doe, 73M \u2014 Recent ischemic stroke on warfarin, hypertension, T2DM. HIGH RISK.",
+  "patient": {
+    "resourceType": "Patient",
+    "id": "patient-a",
+    "name": [
+      {
+        "use": "official",
+        "family": "Doe",
+        "given": [
+          "John"
+        ]
+      }
+    ],
+    "birthDate": "1952-03-15",
+    "gender": "male"
+  },
+  "conditions": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "I63.9",
+                "display": "Cerebral infarction, unspecified"
+              }
+            ],
+            "text": "Ischemic stroke"
+          },
+          "onsetDateTime": "2026-01-10"
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "I10",
+                "display": "Essential (primary) hypertension"
+              }
+            ],
+            "text": "Hypertension"
+          },
+          "onsetDateTime": "2015-06-01"
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "E11.9",
+                "display": "Type 2 diabetes mellitus without complications"
+              }
+            ],
+            "text": "Type 2 diabetes"
+          },
+          "onsetDateTime": "2018-03-15"
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Condition",
+          "clinicalStatus": {
+            "coding": [
+              {
+                "code": "active"
+              }
+            ]
+          },
+          "code": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/sid/icd-10",
+                "code": "E78.5",
+                "display": "Hyperlipidemia, unspecified"
+              }
+            ],
+            "text": "Hyperlipidemia"
+          },
+          "onsetDateTime": "2016-01-01"
+        }
+      }
+    ]
+  },
+  "medications": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "warfarin 5 mg tablet"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "metoprolol succinate 50 mg tablet"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "lisinopril 10 mg tablet"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "atorvastatin 40 mg tablet"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "MedicationRequest",
+          "status": "active",
+          "medicationCodeableConcept": {
+            "coding": [
+              {
+                "display": "metformin 1000 mg tablet"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "vitals": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "55284-4",
+                "display": "Blood pressure"
+              }
+            ]
+          },
+          "effectiveDateTime": "2026-03-15",
+          "component": [
+            {
+              "code": {
+                "coding": [
+                  {
+                    "code": "8480-6"
+                  }
+                ]
+              },
+              "valueQuantity": {
+                "value": 148,
+                "unit": "mmHg"
+              }
+            },
+            {
+              "code": {
+                "coding": [
+                  {
+                    "code": "8462-4"
+                  }
+                ]
+              },
+              "valueQuantity": {
+                "value": 92,
+                "unit": "mmHg"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "8867-4",
+                "display": "Heart rate"
+              }
+            ],
+            "text": "Heart rate"
+          },
+          "effectiveDateTime": "2026-03-15",
+          "valueQuantity": {
+            "value": 76,
+            "unit": "bpm"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "59408-5",
+                "display": "Oxygen saturation"
+              }
+            ],
+            "text": "Oxygen saturation"
+          },
+          "effectiveDateTime": "2026-03-15",
+          "valueQuantity": {
+            "value": 97,
+            "unit": "%"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "vital-signs"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "39156-5",
+                "display": "BMI"
+              }
+            ],
+            "text": "BMI"
+          },
+          "effectiveDateTime": "2026-03-15",
+          "valueQuantity": {
+            "value": 28.4,
+            "unit": "kg/m2"
+          }
+        }
+      }
+    ]
+  },
+  "labs": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "4548-4",
+                "display": "Hemoglobin A1c"
+              }
+            ],
+            "text": "Hemoglobin A1c"
+          },
+          "effectiveDateTime": "2026-02-20",
+          "valueQuantity": {
+            "value": 7.8,
+            "unit": "%"
+          },
+          "interpretation": [
+            {
+              "coding": [
+                {
+                  "code": "H"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "6301-6",
+                "display": "PT/INR"
+              }
+            ],
+            "text": "PT/INR"
+          },
+          "effectiveDateTime": "2026-03-01",
+          "valueQuantity": {
+            "value": 2.3,
+            "unit": "INR"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "2160-0",
+                "display": "Creatinine"
+              }
+            ],
+            "text": "Creatinine"
+          },
+          "effectiveDateTime": "2026-02-20",
+          "valueQuantity": {
+            "value": 1.1,
+            "unit": "mg/dL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "2093-3",
+                "display": "LDL Cholesterol"
+              }
+            ],
+            "text": "LDL Cholesterol"
+          },
+          "effectiveDateTime": "2026-02-20",
+          "valueQuantity": {
+            "value": 82,
+            "unit": "mg/dL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "718-7",
+                "display": "Hemoglobin"
+              }
+            ],
+            "text": "Hemoglobin"
+          },
+          "effectiveDateTime": "2026-03-01",
+          "valueQuantity": {
+            "value": 13.4,
+            "unit": "g/dL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "777-3",
+                "display": "Platelets"
+              }
+            ],
+            "text": "Platelets"
+          },
+          "effectiveDateTime": "2026-03-01",
+          "valueQuantity": {
+            "value": 221,
+            "unit": "10^3/uL"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Observation",
+          "status": "final",
+          "category": [
+            {
+              "coding": [
+                {
+                  "code": "laboratory"
+                }
+              ]
+            }
+          ],
+          "code": {
+            "coding": [
+              {
+                "code": "2345-7",
+                "display": "Glucose"
+              }
+            ],
+            "text": "Glucose"
+          },
+          "effectiveDateTime": "2026-02-20",
+          "valueQuantity": {
+            "value": 138,
+            "unit": "mg/dL"
+          }
+        }
+      }
+    ]
+  },
+  "documents": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "DocumentReference",
+          "status": "current",
+          "type": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "11506-3",
+                "display": "Progress note"
+              }
+            ]
+          },
+          "category": [
+            {
+              "text": "family medicine"
+            }
+          ],
+          "date": "2026-03-15",
+          "author": [
+            {
+              "display": "Dr. Michael Torres, MD"
+            }
+          ],
+          "content": [
+            {
+              "attachment": {
+                "contentType": "text/plain",
+                "data": "UFJPR1JFU1MgTk9URSDigJQgRmFtaWx5IE1lZGljaW5lCkRhdGU6IDIwMjYtMDMtMTUKUGF0aWVudDogSm9obiBEb2UsIDczTQpQcm92aWRlcjogRHIuIE1pY2hhZWwgVG9ycmVzLCBNRAoKVklTSVQgUkVBU09OOiAzLW1vbnRoIGZvbGxvdy11cCDigJQgc3Ryb2tlIHJlY292ZXJ5LCBIVE4sIGRpYWJldGVzIG1hbmFnZW1lbnQKCklOVEVSVkFMIEhJU1RPUlk6Ck1yLiBEb2UgcHJlc2VudHMgZm9yIGhpcyBxdWFydGVybHkgdmlzaXQgZm9sbG93aW5nIGhpcyBpc2NoZW1pYyBzdHJva2UgaW4gSmFudWFyeSAyMDI2LiBIZSByZXBvcnRzIGNvbnRpbnVlZCBpbXByb3ZlbWVudCBpbiByaWdodCBoYW5kIGdyaXAgc3RyZW5ndGguIE5vIG5ldyBuZXVyb2xvZ2ljYWwgc3ltcHRvbXMsIGNoZXN0IHBhaW4sIG9yIHNob3J0bmVzcyBvZiBicmVhdGguIEJsb29kIHByZXNzdXJlIGhhcyByZW1haW5lZCBlbGV2YXRlZCBhdCBob21lICgxNDBzLTE1MHMgc3lzdG9saWMpLiBIZSBpcyBhZGhlcmVudCB3aXRoIGFsbCBtZWRpY2F0aW9ucy4gV2FyZmFyaW4gbWFuYWdlZCBieSBEci4gT2tvbmt3bzsgbGFzdCBJTlIgMi40ICh0aGVyYXBldXRpYykuIEhlIGlzIHdhbGtpbmcgdHdvIGJsb2NrcyBkYWlseSB3aXRoIGEgY2FuZSBhbmQgZG9pbmcgd2VsbCB3aXRoIG91dHBhdGllbnQgc3Ryb2tlIHJlaGFiaWxpdGF0aW9uLgoKTUVESUNBVElPTlMgKGNvbmZpcm1lZCBhY3RpdmUpOgotIFdhcmZhcmluIDUgbWcgZGFpbHkgKElOUi1tb25pdG9yZWQgYnkgaGVtYXRvbG9neSkKLSBNZXRvcHJvbG9sIHN1Y2NpbmF0ZSA1MCBtZyBkYWlseQotIExpc2lub3ByaWwgMTAgbWcgZGFpbHkKLSBBdG9ydmFzdGF0aW4gNDAgbWcgZGFpbHkKLSBNZXRmb3JtaW4gMTAwMCBtZyB0d2ljZSBkYWlseQoKVklUQUxTICh0b2RheSk6IEJQIDE0OC85MiBtbUhnLCBIUiA3NiBicG0sIFJSIDE0LCBPMiBTYXQgOTclIFJBLCBCTUkgMjguNAoKRVhBTUlOQVRJT046CkdlbmVyYWw6IEFsZXJ0IGFuZCBvcmllbnRlZCwgbWlsZCByaWdodC1oYW5kIGdyaXAgd2Vha25lc3MgKGltcHJvdmluZyksIGFtYnVsYXRlcyB3aXRoIGNhbmUKQ2FyZGlvdmFzY3VsYXI6IFJlZ3VsYXIgcmF0ZSBhbmQgcmh5dGhtLCBubyBtdXJtdXJzCk5ldXJvbG9naWNhbDogSW1wcm92ZWQgcmlnaHQgZ3JpcCBzdHJlbmd0aCA0Ky81LCBubyBuZXcgZGVmaWNpdHMsIHNwZWVjaCBjbGVhcgoKTEFCUyAoMjAyNi0wMi0yMCwgZXh0ZXJuYWwpOgpIYkExYyA3LjglLCBJTlIgMi40LCBMREwgODIsIEJNUCBub3JtYWwgKENyIDEuMSksIENCQyBub3JtYWwKCkFTU0VTU01FTlQgQU5EIFBMQU46CjEuIFBvc3Qtc3Ryb2tlIHJlY292ZXJ5OiBQcm9ncmVzc2luZyB3ZWxsLiBDb250aW51ZSByZWhhYmlsaXRhdGlvbi4gRm9sbG93LXVwIHdpdGggRHIuIENoZW4gKG5ldXJvbG9neSkgbmV4dCBtb250aC4KMi4gSHlwZXJ0ZW5zaW9uOiBTdWJvcHRpbWFsbHkgY29udHJvbGxlZC4gSW5jcmVhc2luZyBsaXNpbm9wcmlsIHRvIDIwIG1nLiBSZWNoZWNrIEJQIGF0IDYtd2VlayBjYWxsLgozLiBUeXBlIDIgZGlhYmV0ZXM6IEhiQTFjIDcuOCUg4oCUIG5lYXIgdGFyZ2V0LiBDb250aW51ZSBtZXRmb3JtaW4uIFJlaW5mb3JjZSBkaWV0Lgo0LiBBbnRpY29hZ3VsYXRpb246IE1hbmFnZWQgYnkgRHIuIE9rb25rd28uIElOUiB0aGVyYXBldXRpYy4gQ29udGludWUgd2FyZmFyaW4uCjUuIExpcGlkczogTERMIDgyIOKAlCBhdCBnb2FsIG9uIGF0b3J2YXN0YXRpbi4gQ29udGludWUuCgpSZXR1cm46IDMgbW9udGhzIG9yIHNvb25lciBpZiBuZWVkZWQuCuKAlCBEci4gTWljaGFlbCBUb3JyZXMsIE1ELCBGYW1pbHkgTWVkaWNpbmUK"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "DocumentReference",
+          "status": "current",
+          "type": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "11506-3",
+                "display": "Progress note"
+              }
+            ]
+          },
+          "category": [
+            {
+              "text": "cardiology"
+            }
+          ],
+          "date": "2026-02-12",
+          "author": [
+            {
+              "display": "Dr. James Liu, MD, FACC"
+            }
+          ],
+          "content": [
+            {
+              "attachment": {
+                "contentType": "text/plain",
+                "data": "Q0FSRElPTE9HWSBGT0xMT1ctVVAgTk9URQpEYXRlOiAyMDI2LTAyLTEyClBhdGllbnQ6IEpvaG4gRG9lLCA3M00KUHJvdmlkZXI6IERyLiBKYW1lcyBMaXUsIE1ELCBGQUNDCgpWSVNJVCBSRUFTT046IEFubnVhbCBjYXJkaW92YXNjdWxhciBmb2xsb3ctdXAg4oCUIEhUTiwgcG9zdC1zdHJva2UgY2FyZGlhYyBtb25pdG9yaW5nCgpISVNUT1JZOgpNci4gRG9lIHByZXNlbnRzIGZvciBhbm51YWwgY2FyZGlvbG9neSBmb2xsb3ctdXAuIEhlIGhhcyBoeXBlcnRlbnNpb24gKHN1Ym9wdGltYWxseSBjb250cm9sbGVkIG9uIG1ldG9wcm9sb2wgKyBsaXNpbm9wcmlsKSwgaHlwZXJsaXBpZGVtaWEsIGFuZCBzdWZmZXJlZCBhIHJpZ2h0IE1DQSBpc2NoZW1pYyBzdHJva2UgaW4gSmFudWFyeSAyMDI2IHdpdGggZ29vZCByZWNvdmVyeS4gTm8gaGlzdG9yeSBvZiBDQUQsIE1JLCBvciBoZWFydCBmYWlsdXJlLiBIZSBkZW5pZXMgY2hlc3QgcGFpbiwgcGFscGl0YXRpb25zLCBkeXNwbmVhIG9uIGV4ZXJ0aW9uLCBvciBsZWcgc3dlbGxpbmcuIEhlIHJlcG9ydHMgZ29vZCBleGVyY2lzZSB0b2xlcmFuY2UgcHJpb3IgdG8ga25lZSBsaW1pdGF0aW9ucy4KClZJVEFMUzogQlAgMTQ2LzkwIG1tSGcsIEhSIDc0IGJwbSwgcmVndWxhcgoKRVhBTUlOQVRJT046CkNhcmRpb3Zhc2N1bGFyOiBSZWd1bGFyIHJhdGUgYW5kIHJoeXRobSwgUzEvUzIgbm9ybWFsLCBubyBtdXJtdXJzLCBydWJzLCBvciBnYWxsb3BzLiBObyBKVkQuIFRyYWNlIGJpbGF0ZXJhbCBhbmtsZSBlZGVtYS4KCkRJQUdOT1NUSUNTOgpFS0cgdG9kYXk6IE5vcm1hbCBzaW51cyByaHl0aG0sIHJhdGUgNzQsIExWSCBwYXR0ZXJuLCBubyBhY3V0ZSBTVCBjaGFuZ2VzLCBRVGMgNDI4IG1zLgpFY2hvICgyMDI2LTAxLTIwKTogTFZFRiA2MiUsIG5vcm1hbCB3YWxsIG1vdGlvbiwgbWlsZCBMVkgsIGRpYXN0b2xpYyBkeXNmdW5jdGlvbiBncmFkZSAxLCBubyBzaWduaWZpY2FudCB2YWx2dWxhciBwYXRob2xvZ3kuCgpBU1NFU1NNRU5UIEFORCBQTEFOOgoxLiBIeXBlcnRlbnNpb24gd2l0aCBMVkg6IFN1Ym9wdGltYWxseSBjb250cm9sbGVkLiBSZWNvbW1lbmQgdXB0aXRyYXRpbmcgbGlzaW5vcHJpbCBhdCBQQ1AgdmlzaXQuIFRhcmdldCA8IDEzMC84MC4KMi4gUG9zdC1zdHJva2UgY2FyZGlhYyBtb25pdG9yaW5nOiBObyBhcnJoeXRobWlhIGRldGVjdGVkIG9uIHRvZGF5J3MgRUtHLiBFY2hvIHByZXNlcnZlZCBFRiBhdCA2MiUg4oCUIHJlYXNzdXJpbmcuIE5vIGNhcmRpYWMgZW1ib2xpYyBzb3VyY2UgaWRlbnRpZmllZC4KMy4gTGlwaWRzOiBMREwgODIgb24gYXRvcnZhc3RhdGluIDQwIG1nIOKAlCBhdCBnb2FsLiBDb250aW51ZS4KNC4gQ29udGludWUgbWV0b3Byb2xvbCDigJQgZG8gbm90IGRpc2NvbnRpbnVlIGFicnVwdGx5Lgo1LiBNb25pdG9yIHBvdGFzc2l1bSB3aXRoIGxpc2lub3ByaWwgdXB0aXRyYXRpb24gKG5leHQgQk1QIGluIDQtNiB3ZWVrcyB2aWEgUENQKS4KCkZvbGxvdy11cDogMTIgbW9udGhzIG9yIFBSTi4gUmVmZXIgYmFjayBpZiBuZXcgY2FyZGlhYyBzeW1wdG9tcyBhcmlzZS4K4oCUIERyLiBKYW1lcyBMaXUsIE1ELCBGQUNDLCBDYXJkaW9sb2d5Cg=="
+              }
+            }
+          ]
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "DocumentReference",
+          "status": "current",
+          "type": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "11506-3",
+                "display": "Progress note"
+              }
+            ]
+          },
+          "category": [
+            {
+              "text": "neurology"
+            }
+          ],
+          "date": "2026-03-20",
+          "author": [
+            {
+              "display": "Dr. Sarah Chen, MD"
+            }
+          ],
+          "content": [
+            {
+              "attachment": {
+                "contentType": "text/plain",
+                "data": "TkVVUk9MT0dZIEZPTExPVy1VUCBOT1RFCkRhdGU6IDIwMjYtMDMtMjAKUGF0aWVudDogSm9obiBEb2UsIDczTQpQcm92aWRlcjogRHIuIFNhcmFoIENoZW4sIE1ECgpWSVNJVCBSRUFTT046IDEwLXdlZWsgcG9zdC1zdHJva2UgZm9sbG93LXVwIOKAlCBpc2NoZW1pYyBzdHJva2UgSmFudWFyeSAxMCwgMjAyNgoKSU5URVJWQUwgSElTVE9SWToKTXIuIERvZSBwcmVzZW50cyAxMCB3ZWVrcyBhZnRlciByaWdodCBNQ0EgaXNjaGVtaWMgc3Ryb2tlLiBIZSByZXBvcnRzIGV4Y2VsbGVudCBmdW5jdGlvbmFsIHJlY292ZXJ5LiBSaWdodC1oYW5kIGdyaXAgd2Vha25lc3MgaXMgbGFyZ2VseSByZXNvbHZlZCDigJQgaGUgaXMgbm93IHdyaXRpbmcsIGJ1dHRvbmluZyBzaGlydHMsIGFuZCBtYW5hZ2luZyBkYWlseSBhY3Rpdml0aWVzIGluZGVwZW5kZW50bHkuIEhlIGNvbXBsZXRlZCA4IHdlZWtzIG9mIG91dHBhdGllbnQgb2NjdXBhdGlvbmFsIHRoZXJhcHkuIE5vIHJlY3VycmVudCBuZXVyb2xvZ2ljYWwgZXBpc29kZXMsIHRyYW5zaWVudCBzeW1wdG9tcywgb3IgZmFsbHMuIFNsZWVwIGltcHJvdmVkLiBGYW1pbHkgcmVwb3J0cyBtb29kIGlzIGdvb2QuCgpORVVST0xPR0lDQUwgRVhBTUlOQVRJT046Ck1lbnRhbCBzdGF0dXM6IE1NU0UgMjkvMzAgKDEgcG9pbnQgb2ZmIG9yaWVudGF0aW9uKS4gU3BlZWNoIGZsdWVudCwgbm8gYXBoYXNpYS4KTW90b3I6IFJpZ2h0IGdyaXAgNCsvNSAocHJldmlvdXNseSA0LzUgYXQgbGFzdCB2aXNpdCkuIExlZnQgc2lkZSBmdWxsIHN0cmVuZ3RoLgpHYWl0OiBNaWxkbHkgYW50YWxnaWMgZHVlIHRvIGtuZWUgcGFpbjsgbm8gYXRheGlhIG9yIGhlbWlwYXJldGljIGdhaXQgcGF0dGVybi4KQ29vcmRpbmF0aW9uOiBJbnRhY3QuCgpJTUFHSU5HICgyMDI2LTAzLTE4IE1SSSBicmFpbik6IEV2b2x2aW5nIHJpZ2h0IE1DQSBpbmZhcmN0IOKAlCBubyBuZXcgaXNjaGVtaWEsIG5vIGhlbW9ycmhhZ2ljIHRyYW5zZm9ybWF0aW9uLiBFeHBlY3RlZCBjaHJvbmljIGNoYW5nZXMuCgpBTlRJQ09BR1VMQVRJT046IFdhcmZhcmluIGNvbnRpbnVlZCAoSU5SIDIuNCwgdGhlcmFwZXV0aWMpLiBXb3JraW5nIHdpdGggRHIuIE9rb25rd28gb24gYW50aWNvYWd1bGF0aW9uIG1hbmFnZW1lbnQuCgpBU1NFU1NNRU5UIEFORCBQTEFOOgoxLiBQb3N0LWlzY2hlbWljIHN0cm9rZSByZWNvdmVyeTogRXhjZWxsZW50IHRyYWplY3RvcnkuIE5JSFNTIG5vdyAxLiBObyByZWN1cnJlbmNlLgoyLiBTZWNvbmRhcnkgcHJldmVudGlvbjogQ29udGludWUgd2FyZmFyaW4gKHRoZXJhcGV1dGljIElOUikuIFN0cmljdCBCUCBjb250cm9sIGNyaXRpY2FsIOKAlCBwbGVhc2UgZW5zdXJlIGxpc2lub3ByaWwgdXB0aXRyYXRpb24gZm9sbG93cyB0aHJvdWdoLgozLiBTdHJva2UgZXRpb2xvZ3k6IExpa2VseSBjYXJkaW9lbWJvbGljIHZzLiBsYXJnZSB2ZXNzZWwuIENhcm90aWQgc3Rlbm9zaXMgNTAtNjklIHJpZ2h0IElDQSDigJQgbm90IHN1cmdpY2FsIGNhbmRpZGF0ZSBhdCB0aGlzIGxldmVsLiBTdGF0aW4gdGhlcmFweSBhcHByb3ByaWF0ZS4KNC4gU2VpenVyZSByaXNrOiBMb3cuIE5vIHByb3BoeWxheGlzIGluZGljYXRlZC4KNS4gRHJpdmluZzogTWF5IHJlc3VtZSBpbiA2IG1vbnRocyBmcm9tIHN0cm9rZSBkYXRlIChKdWx5IDIwMjYpIHBlciBzdGF0ZSBndWlkZWxpbmVzLgoKTmV4dCBhcHBvaW50bWVudDogMyBtb250aHMgKEp1bmUgMjAyNikgd2l0aCByZXBlYXQgY29nbml0aXZlIHNjcmVlbiBhbmQgTVJJLgrigJQgRHIuIFNhcmFoIENoZW4sIE1ELCBOZXVyb2xvZ3kK"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "DocumentReference",
+          "status": "current",
+          "type": {
+            "coding": [
+              {
+                "system": "http://loinc.org",
+                "code": "11506-3",
+                "display": "Progress note"
+              }
+            ]
+          },
+          "category": [
+            {
+              "text": "hematology"
+            }
+          ],
+          "date": "2026-03-01",
+          "author": [
+            {
+              "display": "Dr. Rachel Okonkwo, MD"
+            }
+          ],
+          "content": [
+            {
+              "attachment": {
+                "contentType": "text/plain",
+                "data": "SEVNQVRPTE9HWSBGT0xMT1ctVVAgTk9URQpEYXRlOiAyMDI2LTAzLTAxClBhdGllbnQ6IEpvaG4gRG9lLCA3M00KUHJvdmlkZXI6IERyLiBSYWNoZWwgT2tvbmt3bywgTUQKClZJU0lUIFJFQVNPTjogV2FyZmFyaW4gbWFuYWdlbWVudCDigJQgYW50aWNvYWd1bGF0aW9uIGZvciBzZWNvbmRhcnkgc3Ryb2tlIHByZXZlbnRpb24KCkFOVElDT0FHVUxBVElPTiBISVNUT1JZOgpNci4gRG9lIGluaXRpYXRlZCB3YXJmYXJpbiBKYW51YXJ5IDIwMjYgZm9sbG93aW5nIGlzY2hlbWljIHN0cm9rZS4gSW5kaWNhdGlvbjogc2Vjb25kYXJ5IHByZXZlbnRpb24gZ2l2ZW4gY3J5cHRvZ2VuaWMvcG9zc2libGUgY2FyZGlvZW1ib2xpYyBldGlvbG9neS4gVGFyZ2V0IElOUiAyLjDigJMzLjAuIEhlIGhhcyBiZWVuIHN0YWJsZSBhbmQgYWRoZXJlbnQuIE5vIGJsZWVkaW5nIGV2ZW50cy4gTm8gcmVjdXJyZW50IHRocm9tYm90aWMgZXZlbnRzLgoKSU5SIFRSRU5EOgotIDIwMjYtMDEtMjA6IElOUiAxLjgg4oaSIGRvc2UgYWRqdXN0ZWQgdG8gNSBtZwotIDIwMjYtMDEtMjg6IElOUiAyLjEgKHRoZXJhcGV1dGljKQotIDIwMjYtMDItMDU6IElOUiAyLjQgKHRoZXJhcGV1dGljKQotIDIwMjYtMDMtMDEgKHRvZGF5KTogSU5SIDIuMyAodGhlcmFwZXV0aWMpCgpNRURJQ0FUSU9OUyBSRVZJRVdFRDogV2FyZmFyaW4gNSBtZyBkYWlseS4gUGF0aWVudCByZXBvcnRzIGdvb2QgYWRoZXJlbmNlIGFuZCBjb25zaXN0ZW50IGRpZXQuIE5vIG5ldyBtZWRpY2F0aW9ucyBvciBzdXBwbGVtZW50cyBpbnRyb2R1Y2VkLgoKTEFCT1JBVE9SWSAodG9kYXkpOgpQVDogMjMuOCBzZWMsIElOUjogMi4zLCBhUFRUOiAzMSBzZWMKQ0JDOiBXQkMgNy4xLCBIZ2IgMTMuNCwgUGx0IDIyMSDigJQgYWxsIG5vcm1hbCwgbm8gc2lnbnMgb2YgYmxlZWRpbmcgb3IgdGhyb21ib2N5dG9wZW5pYS4KCkFTU0VTU01FTlQgQU5EIFBMQU46CjEuIEFudGljb2FndWxhdGlvbjogV2VsbC1jb250cm9sbGVkIG9uIHdhcmZhcmluIDUgbWcuIENvbnRpbnVlIGN1cnJlbnQgZG9zZS4gTmV4dCBJTlIgaW4gNCB3ZWVrcy4KMi4gU3RhYmlsaXR5OiBJTlIgaGFzIGJlZW4gY29uc2lzdGVudGx5IHRoZXJhcGV1dGljIHgzIGNoZWNrcy4gQ29uc2lkZXIgdHJhbnNpdGlvbmluZyB0byA2LXdlZWsgbW9uaXRvcmluZyBpbnRlcnZhbHMgaWYgc3RhYmlsaXR5IG1haW50YWluZWQuCjMuIEVkdWNhdGlvbjogUmV2aWV3ZWQgdml0YW1pbiBLIGRpZXRhcnkgY29uc2lzdGVuY3kuIFJlbWluZGVkIHBhdGllbnQgdG8gcmVwb3J0IGFueSB1bnVzdWFsIGJsZWVkaW5nIChndW0sIHN0b29sLCB1cmluZSksIGZhbGxzLCBvciBuZXcgbWVkaWNhdGlvbnMgdG8gdGhpcyBvZmZpY2UgaW1tZWRpYXRlbHkuCjQuIEJyaWRnaW5nIHBsYW5uaW5nOiBJZiBzdXJnZXJ5IGlzIGJlaW5nIGNvbnNpZGVyZWQsIHBhdGllbnQgd2lsbCBuZWVkIGNvb3JkaW5hdGVkIGJyaWRnaW5nIHBsYW4gKGVub3hhcGFyaW4pLiBQbGVhc2UgY29udGFjdCBoZW1hdG9sb2d5IG1pbmltdW0gMyB3ZWVrcyBiZWZvcmUgYW55IHBsYW5uZWQgcHJvY2VkdXJlLgoKTmV4dCB2aXNpdDogNiB3ZWVrcyBmb3IgSU5SIHJlY2hlY2suCuKAlCBEci4gUmFjaGVsIE9rb25rd28sIE1ELCBIZW1hdG9sb2d5Cg=="
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "encounters": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Family medicine visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2026-03-15",
+            "end": "2026-03-15"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Family medicine visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2025-12-10",
+            "end": "2025-12-10"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Cardiology visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2026-02-12",
+            "end": "2026-02-12"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Neurology visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2026-03-20",
+            "end": "2026-03-20"
+          }
+        }
+      },
+      {
+        "resource": {
+          "resourceType": "Encounter",
+          "status": "finished",
+          "type": [
+            {
+              "coding": [
+                {
+                  "display": "Hematology visit"
+                }
+              ]
+            }
+          ],
+          "period": {
+            "start": "2026-03-01",
+            "end": "2026-03-01"
+          }
+        }
+      }
+    ]
+  },
+  "procedures": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": []
+  },
+  "allergies": {
+    "resourceType": "Bundle",
+    "type": "searchset",
+    "entry": [
+      {
+        "resource": {
+          "resourceType": "AllergyIntolerance",
+          "code": {
+            "text": "Penicillin"
+          },
+          "reaction": [
+            {
+              "description": "rash"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
