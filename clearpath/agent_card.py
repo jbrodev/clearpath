@@ -43,6 +43,15 @@ AGENT_CARD = {
                 "anesthesia_review_required, or insufficient_information. "
                 "Includes risk score, RCRI score, triggering factors, and recommended next steps."
             ),
+            "tags": [
+                "preoperative",
+                "clearance",
+                "anesthesia",
+                "perioperative",
+                "risk-stratification",
+                "fhir",
+                "clinical-decision-support",
+            ],
             "inputModes": ["text"],
             "outputModes": ["text"],
             "examples": [
