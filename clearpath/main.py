@@ -135,6 +135,7 @@ async def a2a_handler(request: Request):
         if message.metadata and FHIR_CONTEXT_EXTENSION_URI in message.metadata:
             echo_metadata = {FHIR_CONTEXT_EXTENSION_URI: message.metadata[FHIR_CONTEXT_EXTENSION_URI]}
 
+        # A2A v1 parts use the field name as discriminator (no "type" field).
         task = A2ATask(
             id=task_id,
             status=A2ATaskStatus(state="completed"),
@@ -142,18 +143,20 @@ async def a2a_handler(request: Request):
                 A2AArtifact(
                     name="clearance_assessment",
                     parts=[
-                        {"type": "text", "text": result_md},
-                        {"type": "data", "data": result_json}
-                    ]
+                        {"text": result_md},
+                        {"data": result_json},
+                    ],
                 )
             ],
             metadata=echo_metadata,
         )
 
+        # A2A v1 wraps the result with the type as a field name: {"task": ...}
+        # or {"message": ...}. This replaces the v0.3 inline "kind" discriminator.
         return JSONResponse(content={
             "jsonrpc": "2.0",
             "id": req_id,
-            "result": task.model_dump()
+            "result": {"task": task.model_dump(exclude_none=True)},
         })
 
     except Exception as e:
