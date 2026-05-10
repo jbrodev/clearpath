@@ -4,10 +4,26 @@ This is the first thing Prompt Opinion reads when you register the external agen
 Conforms to A2A v1 (https://docs.promptopinion.ai/a2a-v1-migration):
   - extensions live under capabilities.extensions[]
   - no top-level url, preferredTransport, or capabilities.stateTransitionHistory
+  - supportedInterfaces declares the JSON-RPC transport and public URL
   - FHIR context extension declares its required scopes via params.scopes[]
+
+The public URL is read from RENDER_EXTERNAL_URL (Render auto-sets this) or
+CLEARPATH_BASE_URL if set manually. Without one of these, supportedInterfaces
+will have an empty URL and the platform validator will reject the card.
 """
 
+import os
+
 from clearpath.models.a2a import FHIR_CONTEXT_EXTENSION_URI
+
+
+def _public_url() -> str:
+    url = (
+        os.environ.get("RENDER_EXTERNAL_URL")
+        or os.environ.get("CLEARPATH_BASE_URL")
+        or ""
+    )
+    return url.rstrip("/")
 
 
 _FHIR_SCOPES = [
@@ -83,4 +99,11 @@ AGENT_CARD = {
 
 
 def get_agent_card() -> dict:
-    return dict(AGENT_CARD)
+    card = dict(AGENT_CARD)
+    base = _public_url()
+    # Required in A2A v1: supportedInterfaces is an ordered list with the
+    # preferred transport first. ClearPath speaks JSON-RPC 2.0 over HTTPS.
+    card["supportedInterfaces"] = [
+        {"transport": "JSONRPC", "url": f"{base}/" if base else ""},
+    ]
+    return card
