@@ -101,9 +101,17 @@ AGENT_CARD = {
 def get_agent_card() -> dict:
     card = dict(AGENT_CARD)
     base = _public_url()
+    url = f"{base}/" if base else ""
     # Required in A2A v1: supportedInterfaces is an ordered list with the
-    # preferred transport first. ClearPath speaks JSON-RPC 2.0 over HTTPS.
+    # preferred binding first. ClearPath speaks JSON-RPC 2.0 over HTTPS.
+    # PromptOpinion's validator requires protocolBinding + protocolVersion;
+    # the open A2A spec uses transport — declaring both for compatibility.
     card["supportedInterfaces"] = [
-        {"transport": "JSONRPC", "url": f"{base}/" if base else ""},
+        {
+            "protocolBinding": "JSONRPC",
+            "protocolVersion": "1.0",
+            "transport": "JSONRPC",
+            "url": url,
+        },
     ]
     return card
