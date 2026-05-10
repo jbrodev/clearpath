@@ -1,0 +1,539 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:d9a0c6d0-e660-4247-8c3c-b05f56607ca3",
+      "resource": {
+        "resourceType": "Patient",
+        "name": [
+          {
+            "family": "Thompson",
+            "given": [
+              "Marcus"
+            ]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1968-11-23"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Patient"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:2c00abdd-f3d2-4ba9-b886-f545741da2cd",
+      "resource": {
+        "resourceType": "Condition",
+        "subject": {
+          "reference": "urn:uuid:d9a0c6d0-e660-4247-8c3c-b05f56607ca3"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/icd-10",
+              "code": "I10",
+              "display": "Essential hypertension"
+            }
+          ],
+          "text": "Hypertension (uncontrolled)"
+        },
+        "onsetDateTime": "2017-09-14"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:a3953082-8d71-4abc-8e93-424200754325",
+      "resource": {
+        "resourceType": "Condition",
+        "subject": {
+          "reference": "urn:uuid:d9a0c6d0-e660-4247-8c3c-b05f56607ca3"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/icd-10",
+              "code": "R73.03",
+              "display": "Prediabetes"
+            }
+          ],
+          "text": "Prediabetes"
+        },
+        "onsetDateTime": "2023-02-08"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:c0ee1722-efc0-44b0-ac62-82fe080f2aa8",
+      "resource": {
+        "resourceType": "Condition",
+        "subject": {
+          "reference": "urn:uuid:d9a0c6d0-e660-4247-8c3c-b05f56607ca3"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/icd-10",
+              "code": "F17.210",
+              "display": "Nicotine dependence, cigarettes"
+            }
+          ],
+          "text": "Tobacco use disorder"
+        },
+        "onsetDateTime": "2010-01-01"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:30c31229-d31f-4c04-8448-974f54c4476f",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "subject": {
+          "reference": "urn:uuid:d9a0c6d0-e660-4247-8c3c-b05f56607ca3"
+        },
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "197361",
+              "display": "amlodipine 10 MG Oral Tablet"
+            }
+          ],
+          "text": "amlodipine 10mg daily"
+        },
+        "authoredOn": "2025-08-15"
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:491c0fb5-8205-4dac-8ef3-eb1c69877e1c",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "subject": {
+          "reference": "urn:uuid:d9a0c6d0-e660-4247-8c3c-b05f56607ca3"
+        },
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "310798",
+              "display": "hydrochlorothiazide 25 MG Oral Tablet"
+            }
+          ],
+          "text": "hydrochlorothiazide 25mg daily"
+        },
+        "authoredOn": "2025-08-15"
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:531f3853-5966-4d67-ae38-f907ccc6e29b",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "subject": {
+          "reference": "urn:uuid:d9a0c6d0-e660-4247-8c3c-b05f56607ca3"
+        },
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "979467",
+              "display": "losartan 50 MG Oral Tablet"
+            }
+          ],
+          "text": "losartan 50mg daily (newly added)"
+        },
+        "authoredOn": "2026-04-28"
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:8c9a6e0a-9d1c-497f-840f-0a44355d4e2e",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "85354-9",
+              "display": "Blood pressure panel"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:d9a0c6d0-e660-4247-8c3c-b05f56607ca3"
+        },
+        "effectiveDateTime": "2026-04-28",
+        "component": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8480-6"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 162,
+              "unit": "mmHg"
+            }
+          },
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8462-4"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 98,
+              "unit": "mmHg"
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:f93ddcc9-f83f-4154-b09e-f08975ce2376",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:d9a0c6d0-e660-4247-8c3c-b05f56607ca3"
+        },
+        "effectiveDateTime": "2026-04-28",
+        "valueQuantity": {
+          "value": 84,
+          "unit": "bpm"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:0f9b53e6-a16a-45a2-ba37-bef9d7be75db",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "39156-5",
+              "display": "Body mass index"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:d9a0c6d0-e660-4247-8c3c-b05f56607ca3"
+        },
+        "effectiveDateTime": "2026-04-28",
+        "valueQuantity": {
+          "value": 29.4,
+          "unit": "kg/m2"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:df5586b6-6599-4cbd-bb80-5f0091af539f",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "4548-4",
+              "display": "Hemoglobin A1c"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:d9a0c6d0-e660-4247-8c3c-b05f56607ca3"
+        },
+        "effectiveDateTime": "2026-04-20",
+        "valueQuantity": {
+          "value": 6.2,
+          "unit": "%"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:15e7cebb-c715-403a-bc34-2fb606992e0d",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2160-0",
+              "display": "Creatinine"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:d9a0c6d0-e660-4247-8c3c-b05f56607ca3"
+        },
+        "effectiveDateTime": "2026-04-20",
+        "valueQuantity": {
+          "value": 1.0,
+          "unit": "mg/dL"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:0e700a8c-8028-459c-be2a-34cb75e51ba4",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "13457-7",
+              "display": "LDL cholesterol"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:d9a0c6d0-e660-4247-8c3c-b05f56607ca3"
+        },
+        "effectiveDateTime": "2026-04-20",
+        "valueQuantity": {
+          "value": 138,
+          "unit": "mg/dL"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "H"
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:4abedaa1-9e90-4dcc-a3b4-f718d6c0d0e1",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "status": "current",
+        "type": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "11506-3",
+              "display": "Progress note"
+            }
+          ]
+        },
+        "category": [
+          {
+            "text": "family medicine"
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:d9a0c6d0-e660-4247-8c3c-b05f56607ca3"
+        },
+        "date": "2026-04-28",
+        "author": [
+          {
+            "display": "Dr. Henry Williams, Family Medicine"
+          }
+        ],
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "NTgteWVhci1vbGQgbWFuIHdpdGggaHlwZXJ0ZW5zaW9uIHVuY29udHJvbGxlZCBvbiB0d28gYWdlbnRzIChhbWxvZGlwaW5lICsgSENUWikuIEJQIHRvZGF5IDE2Mi85OCwgbGFzdCAzIHJlYWRpbmdzIGFsbCA+MTUwLzkwLiBQcmVkaWFiZXRlcyBwZXIgQTFjIDYuMiUuIENvbnRpbnVlcyB0byBzbW9rZSAxIHBhY2sgcGVyIGRheSwgMzAtcGFjay15ZWFyIGhpc3RvcnkuIEJNSSAyOS4gQ291bnNlbGVkIG9uIEJQIGFuZCBzbW9raW5nIGFnYWluIC0gcGF0aWVudCBkZWNsaW5lcyBzcGVjaWFsaXN0IHJlZmVycmFsLCB3aWxsIHRyaWFsIHRoaXJkIGFudGloeXBlcnRlbnNpdmUgKGxvc2FydGFuIGFkZGVkKS4gUGxhbm5pbmcgb3BlbiBpbmd1aW5hbCBoZXJuaWEgcmVwYWlyIG5leHQgbW9udGguIEJQIG5lZWRzIHRvIGJlIGJlbG93IDE2MC8xMDAgZGF5LW9mLXN1cmdlcnk7IGlmIG5vdCwgd2lsbCBuZWVkIHRvIGRlZmVyIG9yIGdldCBhbmVzdGhlc2lhIGlucHV0Lg=="
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "DocumentReference"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:f7ab86f4-cec8-4e68-9275-ec65d78b0ab8",
+      "resource": {
+        "resourceType": "Encounter",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "185349003",
+                "display": "Family medicine consultation"
+              }
+            ]
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:d9a0c6d0-e660-4247-8c3c-b05f56607ca3"
+        },
+        "period": {
+          "start": "2026-04-28T11:00:00Z",
+          "end": "2026-04-28T11:30:00Z"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Encounter"
+      }
+    }
+  ]
+}

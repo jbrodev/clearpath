@@ -1,0 +1,317 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:078426be-723e-4b60-8fbb-38cd4a7272db",
+      "resource": {
+        "resourceType": "Patient",
+        "name": [
+          {
+            "family": "Bennett",
+            "given": [
+              "Sarah"
+            ]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1992-08-04"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Patient"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:30a68e76-16ce-4c97-b442-5ca8018611e2",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "85354-9",
+              "display": "Blood pressure panel"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:078426be-723e-4b60-8fbb-38cd4a7272db"
+        },
+        "effectiveDateTime": "2026-04-30",
+        "component": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8480-6"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 118,
+              "unit": "mmHg"
+            }
+          },
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8462-4"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 72,
+              "unit": "mmHg"
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:ce1c4b85-3b36-4e55-a053-bd1ea1acb716",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:078426be-723e-4b60-8fbb-38cd4a7272db"
+        },
+        "effectiveDateTime": "2026-04-30",
+        "valueQuantity": {
+          "value": 68,
+          "unit": "bpm"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:56e5289c-1f58-4ebb-8227-1340a039ec31",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "39156-5",
+              "display": "Body mass index"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:078426be-723e-4b60-8fbb-38cd4a7272db"
+        },
+        "effectiveDateTime": "2026-04-30",
+        "valueQuantity": {
+          "value": 22.1,
+          "unit": "kg/m2"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:14feef48-9880-4494-9715-da894328dffb",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "718-7",
+              "display": "Hemoglobin"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:078426be-723e-4b60-8fbb-38cd4a7272db"
+        },
+        "effectiveDateTime": "2026-04-30",
+        "valueQuantity": {
+          "value": 13.6,
+          "unit": "g/dL"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:8f4c7bb9-bc3e-4ee6-9f9d-6dbfaa947391",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2160-0",
+              "display": "Creatinine"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:078426be-723e-4b60-8fbb-38cd4a7272db"
+        },
+        "effectiveDateTime": "2026-04-30",
+        "valueQuantity": {
+          "value": 0.8,
+          "unit": "mg/dL"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:a31200d1-8a9a-4207-bcc3-6f3e0466639e",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "status": "current",
+        "type": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "11506-3",
+              "display": "Progress note"
+            }
+          ]
+        },
+        "category": [
+          {
+            "text": "family medicine"
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:078426be-723e-4b60-8fbb-38cd4a7272db"
+        },
+        "date": "2026-04-30",
+        "author": [
+          {
+            "display": "Dr. Lisa Marquez, Family Medicine"
+          }
+        ],
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "SGVhbHRoeSAzNC15ZWFyLW9sZCB3b21hbi4gQW5udWFsIHBoeXNpY2FsLiBObyBjaHJvbmljIGNvbmRpdGlvbnMsIG5vIGRhaWx5IG1lZGljYXRpb25zIG90aGVyIHRoYW4gYSBtdWx0aXZpdGFtaW4uIE5vbi1zbW9rZXIuIEV4ZXJjaXNlcyA0IHRpbWVzIHBlciB3ZWVrLiBCTUkgbm9ybWFsLiBWaXRhbHMgbm9ybWFsLiBSb3V0aW5lIGJsb29kd29yayBub3JtYWwuIFBhdGllbnQgc2NoZWR1bGluZyB3aXNkb20gdG9vdGggZXh0cmFjdGlvbiB3aXRoIHNlZGF0aW9uIC0gcmVxdWVzdGVkIHByZS1vcCBjbGVhcmFuY2UgcGVyIE9NUyBvZmZpY2UgcG9saWN5LiBObyBhbmVzdGhlc2lhIGNvbmNlcm5zIGZyb20gcHJpbWFyeSBjYXJlIHBlcnNwZWN0aXZlLg=="
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "DocumentReference"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:fb65a24a-4b8a-4be6-b962-27471f4eb6f3",
+      "resource": {
+        "resourceType": "Encounter",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "185349003",
+                "display": "Family medicine consultation"
+              }
+            ]
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:078426be-723e-4b60-8fbb-38cd4a7272db"
+        },
+        "period": {
+          "start": "2026-04-30T10:00:00Z",
+          "end": "2026-04-30T10:20:00Z"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Encounter"
+      }
+    }
+  ]
+}

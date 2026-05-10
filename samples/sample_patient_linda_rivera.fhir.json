@@ -1,0 +1,893 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6",
+      "resource": {
+        "resourceType": "Patient",
+        "name": [
+          {
+            "family": "Rivera",
+            "given": [
+              "Linda"
+            ]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1955-03-08"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Patient"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5983f19e-1ea8-48f4-95bc-9b9552a56bdf",
+      "resource": {
+        "resourceType": "Condition",
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/icd-10",
+              "code": "I48.91",
+              "display": "Atrial fibrillation, unspecified"
+            }
+          ],
+          "text": "Atrial fibrillation, paroxysmal"
+        },
+        "onsetDateTime": "2020-04-12"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:6e8d6797-6677-4d67-ab15-0d563387198b",
+      "resource": {
+        "resourceType": "Condition",
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/icd-10",
+              "code": "I21.4",
+              "display": "Non-ST elevation myocardial infarction"
+            }
+          ],
+          "text": "NSTEMI s/p DES (4 months ago)"
+        },
+        "onsetDateTime": "2026-01-15"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:fc4c2d85-c197-4328-9d9a-340df27a8889",
+      "resource": {
+        "resourceType": "Condition",
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/icd-10",
+              "code": "J44.9",
+              "display": "Chronic obstructive pulmonary disease"
+            }
+          ],
+          "text": "COPD, oxygen-dependent"
+        },
+        "onsetDateTime": "2018-11-03"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:06005d6b-50ea-465e-b4b4-05f903a03f11",
+      "resource": {
+        "resourceType": "Condition",
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/icd-10",
+              "code": "G47.33",
+              "display": "Obstructive sleep apnea (adult)"
+            }
+          ],
+          "text": "Severe obstructive sleep apnea on CPAP"
+        },
+        "onsetDateTime": "2019-06-21"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:e5413439-b444-4d3d-bea2-21d342be17af",
+      "resource": {
+        "resourceType": "Condition",
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/icd-10",
+              "code": "N18.3",
+              "display": "Chronic kidney disease, stage 3"
+            }
+          ],
+          "text": "CKD stage 3"
+        },
+        "onsetDateTime": "2022-08-30"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5245ec2c-09e9-4b8c-b99f-08051f4230d7",
+      "resource": {
+        "resourceType": "Condition",
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/icd-10",
+              "code": "E66.9",
+              "display": "Obesity, unspecified"
+            }
+          ],
+          "text": "Obesity (BMI 34)"
+        },
+        "onsetDateTime": "2015-01-01"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5c3e4cf4-0b71-4c21-9957-bc9d3c6a14d6",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "243670",
+              "display": "aspirin 81 MG Oral Tablet"
+            }
+          ],
+          "text": "aspirin 81mg daily"
+        },
+        "authoredOn": "2026-01-16"
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:435b992c-20b1-4b5a-a0ce-42202274be9c",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "309362",
+              "display": "clopidogrel 75 MG Oral Tablet"
+            }
+          ],
+          "text": "clopidogrel 75mg daily"
+        },
+        "authoredOn": "2026-01-16"
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:7b8b4c04-1cd6-44e0-a3df-28b764eb9318",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "866427",
+              "display": "metoprolol succinate 50 MG Extended Release Oral Tablet"
+            }
+          ],
+          "text": "metoprolol succinate 50mg daily"
+        },
+        "authoredOn": "2026-01-16"
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:369edd39-7f36-4d56-9309-dd4375be31bf",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "617318",
+              "display": "atorvastatin 80 MG Oral Tablet"
+            }
+          ],
+          "text": "atorvastatin 80mg nightly"
+        },
+        "authoredOn": "2026-01-16"
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:ea014b6e-8240-4786-9d8d-3340699f3d35",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "1543450",
+              "display": "tiotropium bromide 18 MCG Inhalant Capsule"
+            }
+          ],
+          "text": "tiotropium 18mcg inhaled daily"
+        },
+        "authoredOn": "2023-09-04"
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:1509bbe0-d5e4-4638-8f11-22a612d83805",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "329498",
+              "display": "albuterol 0.09 MG/ACTUAT Metered Dose Inhaler"
+            }
+          ],
+          "text": "albuterol HFA 2 puffs PRN"
+        },
+        "authoredOn": "2023-09-04"
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:7a7eb231-9f2e-479a-a0d1-745bc425310d",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "85354-9",
+              "display": "Blood pressure panel"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "effectiveDateTime": "2026-04-29",
+        "component": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8480-6"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 138,
+              "unit": "mmHg"
+            }
+          },
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8462-4"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 82,
+              "unit": "mmHg"
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:4b849ecd-37a1-49a6-88be-60761ec9e474",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "effectiveDateTime": "2026-04-29",
+        "valueQuantity": {
+          "value": 76,
+          "unit": "bpm"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:0780248f-9769-4c0c-b764-ff6949c0c301",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "39156-5",
+              "display": "Body mass index"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "effectiveDateTime": "2026-04-29",
+        "valueQuantity": {
+          "value": 34.1,
+          "unit": "kg/m2"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:cb445baf-08a0-4fff-9f9f-71cfe867b5f3",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "59408-5",
+              "display": "Oxygen saturation"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "effectiveDateTime": "2026-04-29",
+        "valueQuantity": {
+          "value": 92,
+          "unit": "%"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:0198bbf4-7ccf-44d2-92e3-ceae81052385",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2160-0",
+              "display": "Creatinine"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "effectiveDateTime": "2026-04-22",
+        "valueQuantity": {
+          "value": 1.6,
+          "unit": "mg/dL"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "H"
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:6f3a1a22-19f9-4f67-a5f7-7e21fe8202a6",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "33914-3",
+              "display": "Glomerular filtration rate"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "effectiveDateTime": "2026-04-22",
+        "valueQuantity": {
+          "value": 38,
+          "unit": "mL/min/1.73m2"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "H"
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:54b1c54b-7ee6-4897-99ff-400e20bf3341",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "718-7",
+              "display": "Hemoglobin"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "effectiveDateTime": "2026-04-22",
+        "valueQuantity": {
+          "value": 11.4,
+          "unit": "g/dL"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "H"
+              }
+            ]
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:c041cc3c-4344-4060-b142-153a09430a60",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "777-3",
+              "display": "Platelets"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "effectiveDateTime": "2026-04-22",
+        "valueQuantity": {
+          "value": 188,
+          "unit": "10*3/uL"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:e4fe9af2-71b0-452d-9998-914bc9e259ae",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "status": "current",
+        "type": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "11506-3",
+              "display": "Progress note"
+            }
+          ]
+        },
+        "category": [
+          {
+            "text": "family medicine"
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "date": "2026-04-29",
+        "author": [
+          {
+            "display": "Dr. Sandra Okafor, Family Medicine"
+          }
+        ],
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "Q29tcGxleCA3MS15ZWFyLW9sZCB3b21hbiB3aXRoIG11bHRpcGxlIGhpZ2gtcmlzayBjb25kaXRpb25zOiBwYXJveHlzbWFsIEFGaWIgY29udHJvbGxlZCBvbiBtZXRvcHJvbG9sLCBOU1RFTUkgNCBtb250aHMgYWdvIHdpdGggREVTIHBsYWNlbWVudCBpbiBMQUQgLSBvbiBkdWFsIGFudGlwbGF0ZWxldCB0aGVyYXB5IChhc3BpcmluICsgY2xvcGlkb2dyZWwpLCBzZXZlcmUgQ09QRCByZXF1aXJpbmcgMkwgaG9tZSBveHlnZW4sIHNldmVyZSBvYnN0cnVjdGl2ZSBzbGVlcCBhcG5lYSBvbiBuaWdodGx5IENQQVAsIENLRCBzdGFnZSAzIChlR0ZSIDM4KSwgb2Jlc2l0eSAoQk1JIDM0KS4gQ2FyZGlvbG9neSBhbmQgcHVsbW9ub2xvZ3kgYXJlIGFjdGl2ZWx5IGludm9sdmVkLiBQYXRpZW50IGlzIGJlaW5nIGV2YWx1YXRlZCBmb3IgZWxlY3RpdmUgcmlnaHQgdG90YWwgaGlwIHJlcGxhY2VtZW50LiBHaXZlbiByZWNlbnQgTlNURU1JL3N0ZW50ICh3aXRoaW4gNiBtb250aHMpLCBEQVBUIHJlcXVpcmVtZW50LCBveHlnZW4tZGVwZW5kZW50IENPUEQsIHNldmVyZSBPU0EsIGFuZCBDS0QsIHRoaXMgcGF0aWVudCByZXF1aXJlcyBCT1RIIGNhcmRpb2xvZ3kgYW5kIGFuZXN0aGVzaWEgcmV2aWV3IGJlZm9yZSBhbnkgZWxlY3RpdmUgcHJvY2VkdXJlIGNhbiBiZSBjb25zaWRlcmVkLg=="
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "DocumentReference"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:8642d7a6-d2bc-4fdc-ace8-8c58ccd00efc",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "status": "current",
+        "type": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "11488-4",
+              "display": "Consult note"
+            }
+          ]
+        },
+        "category": [
+          {
+            "text": "cardiology"
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "date": "2026-04-15",
+        "author": [
+          {
+            "display": "Dr. Wei Liu, Cardiology"
+          }
+        ],
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "TXJzLiBSaXZlcmEsIDQgbW9udGhzIHMvcCBOU1RFTUkgd2l0aCBzdWNjZXNzZnVsIFBDSSBhbmQgZHJ1Zy1lbHV0aW5nIHN0ZW50IHBsYWNlbWVudCBpbiBMQUQuIEN1cnJlbnRseSBvbiBhc3BpcmluIDgxbWcgKyBjbG9waWRvZ3JlbCA3NW1nIChEQVBUKS4gUGxhbiB0byBjb250aW51ZSBEQVBUIGZvciBtaW5pbXVtIDYgbW9udGhzLCBpZGVhbGx5IDEyIG1vbnRocyBnaXZlbiBERVMuIEJldGEgYmxvY2tlciAobWV0b3Byb2xvbCkgYW5kIGhpZ2gtaW50ZW5zaXR5IHN0YXRpbiBjb250aW51ZWQuIEVjaG8gbGFzdCBtb250aDogTFZFRiA1MCUsIG1pbGQgbWl0cmFsIHJlZ3VyZy4gU3Ryb25nIHJlY29tbWVuZGF0aW9uOiBkbyBOT1QgaW50ZXJydXB0IERBUFQgZm9yIGVsZWN0aXZlIHN1cmdlcnkgdW50aWwgNiBtb250aHMgcG9zdC1QQ0kgYXQgdGhlIGVhcmxpZXN0Lg=="
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "DocumentReference"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:a4b20054-8c71-417b-97f0-526516d9c193",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "status": "current",
+        "type": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "11488-4",
+              "display": "Consult note"
+            }
+          ]
+        },
+        "category": [
+          {
+            "text": "pulmonology"
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "date": "2026-03-20",
+        "author": [
+          {
+            "display": "Dr. Priya Sharma, Pulmonology"
+          }
+        ],
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "U2V2ZXJlIENPUEQgR09MRCBzdGFnZSAzLCBGRVYxIDQyJSBwcmVkaWN0ZWQuIE9uIGhvbWUgTzIgYXQgMkwuIFNldmVyZSBPU0EsIEFISSAzOCwgZnVsbHkgY29tcGxpYW50IHdpdGggQ1BBUCBhdCAxMiBjbSBIMk8uIFRvYmFjY28tZnJlZSB4IDQgeWVhcnMuIE9uIHRpb3Ryb3BpdW0gZGFpbHksIGFsYnV0ZXJvbCByZXNjdWUuIFN0YWJsZSBidXQgaGlnaCBwZXJpb3BlcmF0aXZlIHB1bG1vbmFyeSByaXNrLiBBUklTQ0FUIGhpZ2guIFJlY29tbWVuZCByZWdpb25hbCBhbmVzdGhlc2lhIGlmIGF0IGFsbCBwb3NzaWJsZS4="
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "DocumentReference"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:df7db81b-4db2-4dd9-a41e-e31d50a80900",
+      "resource": {
+        "resourceType": "Encounter",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "185349003",
+                "display": "Family medicine consultation"
+              }
+            ]
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:44e8537e-bc9e-4b7a-996d-2d46d3ab9ea6"
+        },
+        "period": {
+          "start": "2026-04-29T13:00:00Z",
+          "end": "2026-04-29T13:40:00Z"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Encounter"
+      }
+    }
+  ]
+}

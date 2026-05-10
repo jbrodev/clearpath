@@ -80,7 +80,10 @@ async def a2a_handler(request: Request):
     req_id = body.get("id")
     method = body.get("method", "")
 
-    if method not in ("message/send", "tasks/send"):
+    # A2A v1 renamed methods to PascalCase. Accept both old (v0.3) and new (v1)
+    # method names so the same handler works against either dialect of caller.
+    _SEND_METHODS = {"SendMessage", "message/send", "tasks/send"}
+    if method not in _SEND_METHODS:
         return JSONResponse(content={
             "jsonrpc": "2.0",
             "id": req_id,

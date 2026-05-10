@@ -1,0 +1,375 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:3260726c-731f-49a0-9938-ec1efb5cf136",
+      "resource": {
+        "resourceType": "Patient",
+        "name": [
+          {
+            "family": "Park",
+            "given": [
+              "Eleanor"
+            ]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1964-02-19"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Patient"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:59fdf634-d7de-4256-b461-1ba0143c4059",
+      "resource": {
+        "resourceType": "Condition",
+        "subject": {
+          "reference": "urn:uuid:3260726c-731f-49a0-9938-ec1efb5cf136"
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/sid/icd-10",
+              "code": "I10",
+              "display": "Essential hypertension"
+            }
+          ],
+          "text": "Hypertension"
+        },
+        "onsetDateTime": "2020-05-10"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Condition"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:0783b0b4-b402-4f40-87d6-74ce176b5bed",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "status": "active",
+        "intent": "order",
+        "subject": {
+          "reference": "urn:uuid:3260726c-731f-49a0-9938-ec1efb5cf136"
+        },
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "314076",
+              "display": "lisinopril 10 MG Oral Tablet"
+            }
+          ],
+          "text": "lisinopril 10mg daily"
+        },
+        "authoredOn": "2024-06-12"
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:a44cd41d-0d46-4b34-9d96-bf2134998ba9",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "85354-9",
+              "display": "Blood pressure panel"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:3260726c-731f-49a0-9938-ec1efb5cf136"
+        },
+        "effectiveDateTime": "2026-05-01",
+        "component": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8480-6"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 124,
+              "unit": "mmHg"
+            }
+          },
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8462-4"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 78,
+              "unit": "mmHg"
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:31358e41-8069-4522-a12b-01b2c65fd476",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:3260726c-731f-49a0-9938-ec1efb5cf136"
+        },
+        "effectiveDateTime": "2026-05-01",
+        "valueQuantity": {
+          "value": 72,
+          "unit": "bpm"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:394599f4-b92d-4234-aaf6-4970521d5de3",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "39156-5",
+              "display": "Body mass index"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:3260726c-731f-49a0-9938-ec1efb5cf136"
+        },
+        "effectiveDateTime": "2026-05-01",
+        "valueQuantity": {
+          "value": 24.8,
+          "unit": "kg/m2"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:49a84c2c-2bbb-43d7-975e-d84c3a28bcbb",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2160-0",
+              "display": "Creatinine"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:3260726c-731f-49a0-9938-ec1efb5cf136"
+        },
+        "effectiveDateTime": "2026-04-25",
+        "valueQuantity": {
+          "value": 0.9,
+          "unit": "mg/dL"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:6e6b15eb-bde5-4b36-953e-0b0cc8de4d07",
+      "resource": {
+        "resourceType": "Observation",
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2823-3",
+              "display": "Potassium"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:3260726c-731f-49a0-9938-ec1efb5cf136"
+        },
+        "effectiveDateTime": "2026-04-25",
+        "valueQuantity": {
+          "value": 4.1,
+          "unit": "mmol/L"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:f777f0b2-5b37-4b9a-ba68-635ad7b5f1bb",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "status": "current",
+        "type": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "11506-3",
+              "display": "Progress note"
+            }
+          ]
+        },
+        "category": [
+          {
+            "text": "family medicine"
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:3260726c-731f-49a0-9938-ec1efb5cf136"
+        },
+        "date": "2026-05-01",
+        "author": [
+          {
+            "display": "Dr. Henry Williams, Family Medicine"
+          }
+        ],
+        "content": [
+          {
+            "attachment": {
+              "contentType": "text/plain",
+              "data": "NjIteWVhci1vbGQgd29tYW4sIGh5cGVydGVuc2lvbiB3ZWxsLWNvbnRyb2xsZWQgb24gbW9ub3RoZXJhcHkgeCA2IHllYXJzLiBObyBvdGhlciBjaHJvbmljIGNvbmRpdGlvbnMuIE5vbi1zbW9rZXIuIFdhbGtzIGRhaWx5LiBCUCB0b2RheSAxMjQvNzgsIGhhcyBiZWVuIGNvbnNpc3RlbnRseSBiZWxvdyAxMzAvODAuIEFubnVhbCBsYWJzIHVucmVtYXJrYWJsZS4gU2NoZWR1bGluZyBjYXRhcmFjdCBzdXJnZXJ5IGxlZnQgZXllIC0gbG93LXJpc2sgcHJvY2VkdXJlLiBDb250aW51ZSBsaXNpbm9wcmlsIHRocm91Z2ggcHJvY2VkdXJlIHBlciBhbmVzdGhlc2lhIHByZWZlcmVuY2Uu"
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "DocumentReference"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:27aa7444-33ac-40f5-832f-48bb959c031e",
+      "resource": {
+        "resourceType": "Encounter",
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB"
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://snomed.info/sct",
+                "code": "185349003",
+                "display": "Family medicine consultation"
+              }
+            ]
+          }
+        ],
+        "subject": {
+          "reference": "urn:uuid:3260726c-731f-49a0-9938-ec1efb5cf136"
+        },
+        "period": {
+          "start": "2026-05-01T14:00:00Z",
+          "end": "2026-05-01T14:25:00Z"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Encounter"
+      }
+    }
+  ]
+}
