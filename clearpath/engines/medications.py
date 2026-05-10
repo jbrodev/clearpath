@@ -69,10 +69,6 @@ def classify_medications(raw_names: list[str]) -> list[Medication]:
     return classified
 
 
-def get_flagged_medications(medications: list[Medication]) -> list[Medication]:
-    return [m for m in medications if m.flag is not None]
-
-
 def has_anticoagulant(medications: list[Medication]) -> bool:
     return any(m.flag == "active_anticoagulation" for m in medications)
 
@@ -89,15 +85,3 @@ def is_dual_antiplatelet_or_combination(medications: list[Medication]) -> bool:
     anticoag_count = sum(1 for m in medications if m.flag == "active_anticoagulation")
     antiplatelet_count = sum(1 for m in medications if m.flag == "antiplatelet_therapy")
     return anticoag_count + antiplatelet_count >= 2
-
-
-def get_medication_flags(medications: list[Medication]) -> set[str]:
-    return {m.flag for m in medications if m.flag}
-
-
-def get_required_specialties_from_meds(medications: list[Medication]) -> list[str]:
-    specialties = set()
-    for m in medications:
-        if m.flag and m.tier == 1 and m.specialty:
-            specialties.add(m.specialty)
-    return list(specialties)

@@ -39,6 +39,7 @@ async def run_clearance_pipeline(
         output = await enrich_with_reasoning(output, _empty_snapshot(), [], user_query)
         return output
     except Exception as e:
+        print(f"[clearpath] FHIR init error: {type(e).__name__}: {e}")
         output = _no_fhir_output()
         output.missing_information.append(f"FHIR initialization error: {str(e)}")
         output = await enrich_with_reasoning(output, _empty_snapshot(), [], user_query)

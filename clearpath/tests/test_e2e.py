@@ -68,10 +68,21 @@ async def test_patient_b_low_risk():
 
 
 @pytest.mark.asyncio
-async def test_patient_e_sparse():
-    """Empty chart = insufficient_information"""
-    fhir_data = load_synthetic_patient("patient_e_sparse.json")
-    output = await run_deterministic_pipeline(fhir_data)
+async def test_truly_empty_chart_is_insufficient():
+    """Chart with no conditions, meds, or PCP note resolves to insufficient_information."""
+    empty_bundle = {"resourceType": "Bundle", "type": "searchset", "entry": []}
+    empty_fhir = {
+        "patient": {"id": "x", "gender": "unknown"},
+        "conditions": empty_bundle,
+        "medications": empty_bundle,
+        "vitals": empty_bundle,
+        "labs": empty_bundle,
+        "documents": empty_bundle,
+        "encounters": empty_bundle,
+        "procedures": empty_bundle,
+        "allergies": empty_bundle,
+    }
+    output = await run_deterministic_pipeline(empty_fhir)
 
     assert output.disposition == Disposition.INSUFFICIENT_INFORMATION
     assert len(output.missing_information) > 0
@@ -128,8 +139,9 @@ def test_markdown_output_renders():
         missing_information=["coagulation labs"],
     )
     md = output.to_markdown()
-    assert "ClearPath" in md
-    assert "specialist_required" in md.lower() or "Specialist Required" in md
+    assert "Specialist Required" in md
     assert "cardiology" in md.lower()
-    assert "Triggering Factors" in md
+    assert "Risk: HIGH" in md
+    assert "RCRI 3/6" in md
+    assert "Flags" in md
     assert "Next Steps" in md

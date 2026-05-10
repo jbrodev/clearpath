@@ -15,11 +15,28 @@ from clearpath.models.clinical import ClearanceOutput, PatientSnapshot, Disposit
 from clearpath.reasoning.templates import SYSTEM_PROMPT, build_reasoning_prompt
 
 
+_sync_client: anthropic.Anthropic | None = None
+_async_client: anthropic.AsyncAnthropic | None = None
+
+
 def _get_client() -> anthropic.Anthropic:
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        raise ValueError("ANTHROPIC_API_KEY environment variable is not set")
-    return anthropic.Anthropic(api_key=api_key)
+    global _sync_client
+    if _sync_client is None:
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if not api_key:
+            raise ValueError("ANTHROPIC_API_KEY environment variable is not set")
+        _sync_client = anthropic.Anthropic(api_key=api_key)
+    return _sync_client
+
+
+def _get_async_client() -> anthropic.AsyncAnthropic:
+    global _async_client
+    if _async_client is None:
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if not api_key:
+            raise ValueError("ANTHROPIC_API_KEY environment variable is not set")
+        _async_client = anthropic.AsyncAnthropic(api_key=api_key)
+    return _async_client
 
 
 def _parse_llm_output(text: str) -> tuple[str, list[str]]:
@@ -130,6 +147,7 @@ async def enrich_with_reasoning(
                 max_tokens=600,
                 system=SYSTEM_PROMPT,
                 messages=[{"role": "user", "content": prompt}],
+                timeout=30.0,
             )
         )
 
@@ -139,7 +157,8 @@ async def enrich_with_reasoning(
         if not summary:
             summary, steps = _fallback_summary(output, snapshot)
 
-    except Exception:
+    except Exception as e:
+        print(f"[clearpath] reasoning fallback: {type(e).__name__}: {e}")
         summary, steps = _fallback_summary(output, snapshot)
 
     output.clinical_summary = summary
@@ -147,69 +166,62 @@ async def enrich_with_reasoning(
     return output
 
 
-def _build_followup_prompt(
-    output: ClearanceOutput,
-    snapshot: PatientSnapshot,
-    question: str,
-    history: list[dict],
-) -> str:
+def _build_chart_context(output: ClearanceOutput, snapshot: PatientSnapshot) -> str:
+    """
+    Static chart context for a given patient + assessment. Identical across follow-ups
+    in a session, so it's a prime candidate for prompt caching.
+    """
     lines = []
 
-    # Patient identity
     name_parts = [snapshot.first_name or "", snapshot.last_name or ""]
     name = " ".join(p for p in name_parts if p).strip() or "Unknown"
     lines.append(f"PATIENT: {name} | Age: {snapshot.age or 'unknown'} | Sex: {snapshot.sex or 'unknown'}")
     lines.append("")
 
-    # Conditions
     if snapshot.active_conditions:
         lines.append("ACTIVE CONDITIONS:")
         for c in snapshot.active_conditions:
-            onset = f" — onset {c.onset_date}" if c.onset_date else ""
-            icd = f" ({c.icd_code})" if c.icd_code else ""
-            lines.append(f"- {c.display}{icd}{onset}")
+            onset = f" (onset {c.onset_date})" if c.onset_date else ""
+            lines.append(f"- {c.display}{onset}")
         lines.append("")
 
-    # Medications
     if snapshot.active_medications:
-        lines.append("ACTIVE MEDICATIONS:")
+        lines.append("ACTIVE MEDICATIONS (drug class for specialty mapping):")
         for m in snapshot.active_medications:
-            lines.append(f"- {m.name}")
+            cls = f" [{m.drug_class}]" if m.drug_class else ""
+            sp = f" (typically {m.specialty})" if m.specialty else ""
+            lines.append(f"- {m.name}{cls}{sp}")
         lines.append("")
 
-    # Vitals
     if snapshot.recent_vitals:
         v = snapshot.recent_vitals
-        vitals_parts = []
+        parts = []
         if v.systolic_bp and v.diastolic_bp:
-            vitals_parts.append(f"BP {v.systolic_bp}/{v.diastolic_bp} mmHg")
+            parts.append(f"BP {v.systolic_bp}/{v.diastolic_bp}")
         if v.heart_rate:
-            vitals_parts.append(f"HR {v.heart_rate} bpm")
+            parts.append(f"HR {v.heart_rate}")
         if v.o2_saturation:
-            vitals_parts.append(f"O2 {v.o2_saturation}%")
+            parts.append(f"O2 {v.o2_saturation}%")
         if v.bmi:
-            vitals_parts.append(f"BMI {v.bmi}")
-        if vitals_parts:
-            lines.append(f"RECENT VITALS: {', '.join(vitals_parts)}")
+            parts.append(f"BMI {v.bmi}")
+        if parts:
+            lines.append(f"RECENT VITALS: {', '.join(parts)}")
             lines.append("")
 
-    # Labs
-    if snapshot.recent_labs:
-        lines.append("RECENT LABS:")
-        for lab in snapshot.recent_labs:
-            flag = " [ABNORMAL]" if lab.abnormal else ""
+    abnormal_labs = [l for l in snapshot.recent_labs if l.abnormal]
+    if abnormal_labs:
+        lines.append("ABNORMAL LABS:")
+        for lab in abnormal_labs:
             val = f"{lab.value} {lab.unit}" if lab.value is not None else "N/A"
             date = f" ({lab.date[:10]})" if lab.date else ""
-            lines.append(f"- {lab.name}: {val}{date}{flag}")
+            lines.append(f"- {lab.name}: {val}{date}")
         lines.append("")
 
-    # PCP note
     if snapshot.pcp_note_raw:
-        lines.append("PCP NOTE (most recent):")
-        lines.append(snapshot.pcp_note_raw[:1200])
+        lines.append("PCP NOTE:")
+        lines.append(snapshot.pcp_note_raw[:600])
         lines.append("")
 
-    # Specialist notes
     if snapshot.specialist_notes:
         lines.append("SPECIALIST NOTES:")
         for sp_data in snapshot.specialist_notes:
@@ -218,89 +230,153 @@ def _build_followup_prompt(
             if notes:
                 note = notes[0]
                 doctor = note.get("doctor_name") or ""
-                date = note.get("date", "")[:10] if note.get("date") else ""
-                header = f"[{specialty}]"
-                if doctor:
-                    header += f" — {doctor}"
-                if date:
-                    header += f" — {date}"
+                header = f"[{specialty}]" + (f" {doctor}" if doctor else "")
                 lines.append(header + ":")
-                lines.append(note.get("text", "")[:800])
+                lines.append(note.get("text", "")[:400])
                 lines.append("")
 
-    # Prior clearance assessment
     lines.append("PRIOR CLEARANCE ASSESSMENT:")
     disposition_label = output.disposition.value.replace("_", " ").title()
     if output.recommended_specialties and output.disposition.value in (
         "specialist_required", "anesthesia_review_required", "clearance_recommended"
     ):
-        specs = ", ".join(s.title() for s in output.recommended_specialties)
-        disposition_label += f": {specs}"
+        disposition_label += ": " + ", ".join(s.title() for s in output.recommended_specialties)
     lines.append(f"  Disposition: {disposition_label}")
-    lines.append(f"  Risk Level: {output.risk_level.value.upper()}  |  RCRI: {output.rcri_score}/6")
+    lines.append(f"  Risk: {output.risk_level.value.upper()} | RCRI {output.rcri_score}/6")
     if output.triggering_factors:
-        lines.append(f"  Triggering Factors: {'; '.join(output.triggering_factors)}")
-    if output.recommended_specialties:
-        lines.append(f"  Recommended Specialties: {', '.join(s.title() for s in output.recommended_specialties)}")
+        lines.append(f"  Flags: {'; '.join(output.triggering_factors)}")
     if output.clinical_summary:
-        lines.append(f"  Clinical Summary: {output.clinical_summary}")
+        lines.append(f"  Summary: {output.clinical_summary}")
     if output.recommended_next_steps:
-        lines.append("  Recommended Next Steps:")
-        for i, step in enumerate(output.recommended_next_steps, 1):
-            lines.append(f"    {i}. {step}")
-    lines.append("")
+        lines.append("  Next Steps: " + " | ".join(output.recommended_next_steps))
 
-    # Conversation history
-    if history:
-        lines.append("PRIOR CONVERSATION:")
-        for turn in history:
-            lines.append(f"  Clinician: {turn['q']}")
-            # Truncate long assistant turns (full reports) to keep context manageable
+    return "\n".join(lines)
+
+
+def _build_question_block(question: str, history: list[dict]) -> str:
+    """Per-turn block: short recent history + current question. NOT cached."""
+    lines = []
+    # Keep only the last 2 turns so cache hits more often and prompt stays small.
+    recent = history[-2:] if history else []
+    if recent:
+        lines.append("RECENT CONVERSATION:")
+        for turn in recent:
+            lines.append(f"  Q: {turn['q']}")
             a = turn["a"]
-            if len(a) > 600:
-                a = a[:600] + "... [report truncated]"
-            lines.append(f"  ClearPath: {a}")
+            if len(a) > 400:
+                a = a[:400] + "..."
+            lines.append(f"  A: {a}")
         lines.append("")
-
     lines.append(f"CURRENT QUESTION: {question}")
     return "\n".join(lines)
 
 
+_WEB_SEARCH_TOOL = {
+    "type": "web_search_20250305",
+    "name": "web_search",
+    "max_uses": 2,
+}
+
 _FOLLOWUP_SYSTEM = (
-    "You are ClearPath, a clinical decision support tool. A pre-operative clearance assessment "
-    "has already been completed for this patient, and you have access to their full chart. "
-    "Answer the clinician's question accurately using any available patient data — conditions, "
-    "medications, labs, vitals, clinical notes, or the prior clearance assessment. "
-    "Be concise, clinically precise, and cite specific sources when relevant "
-    "(e.g., 'per the cardiology note from Dr. Liu'). "
-    "Do not repeat the full clearance report unless explicitly asked."
+    "You are ClearPath. A clearance assessment has already been done for this patient and "
+    "you have their full chart.\n\n"
+    "Answer in plain English a patient could understand. Skip jargon. If you must use a clinical "
+    "term, define it in the same sentence.\n\n"
+    "Ground every clinical recommendation in a recognized standard and name it: "
+    "ACC/AHA perioperative cardiovascular guidelines, ASA preoperative evaluation, "
+    "RCRI for cardiac risk, STOP-BANG for OSA, ARISCAT for pulmonary risk, "
+    "FDA drug labeling, or the most recent specialty-society guideline. "
+    "When the question goes beyond the chart (drug mechanisms, interactions, guideline thresholds, "
+    "perioperative protocols, diagnosis criteria), use the web_search tool to confirm before "
+    "answering.\n\n"
+    "Reasoning rules about prescribers and specialists:\n"
+    "- The prescriber of a medication is whoever the chart says wrote the prescription. "
+    "Do NOT assume one physician manages the entire med list just because their note appears "
+    "in the chart.\n"
+    "- A specialist's scope is limited to the conditions they treat. Cardiology manages "
+    "cardiac drugs (beta blockers, ACE inhibitors, anticoagulants for AFib, statins for ASCVD); "
+    "endocrinology manages diabetes/thyroid drugs; pulmonology manages inhalers and oxygen; "
+    "the PCP typically manages everything else and is the prescriber of record unless the "
+    "note explicitly says otherwise.\n"
+    "- When the user asks who manages a med, map drug-by-drug from drug class to specialty. "
+    "Do not lump.\n\n"
+    "Format rules:\n"
+    "- Lead with the direct answer in the first sentence.\n"
+    "- 1 to 3 short sentences total, or up to 4 tight bullets. No preamble.\n"
+    "- Inline-link any guideline, study, or drug label, e.g. 'per the [2022 ACC/AHA guidelines](https://...)'. "
+    "Do NOT add a Sources section at the end.\n"
+    "- When citing chart data, name the source briefly (e.g., 'per Dr. Liu's cardiology note').\n"
+    "- Avoid em dashes; use commas or colons.\n"
+    "- Do not repeat the full clearance report.\n"
+    "- Never invent guidelines, dosages, prescribers, or citations. If the chart does not say "
+    "who prescribed something, say so — do not guess."
 )
 
 
-async def answer_followup(
+async def stream_followup(
     output: ClearanceOutput,
     snapshot: PatientSnapshot,
     question: str,
     history: list[dict],
-) -> str:
+):
     """
-    Answer a follow-up clinical question using the cached assessment + full patient record.
-    Returns a conversational markdown string.
+    Async generator yielding response text chunks for a follow-up question.
+
+    Optimizations:
+      - Streaming: time-to-first-token is ~1s instead of waiting for the full response.
+      - Prompt caching: the system prompt and patient chart context are tagged with
+        cache_control so follow-ups #2+ in a session hit the Anthropic prompt cache,
+        cutting input processing time and cost (~10x) for the cached portion.
+      - Tighter caps: max_tokens=500, max_uses=2 on web_search, trimmed chart context.
+
+    Yields text chunks as they arrive from the model. Caller is responsible for
+    accumulating the full response if needed (e.g., to store in conversation history).
     """
     try:
-        client = _get_client()
-        prompt = _build_followup_prompt(output, snapshot, question, history)
+        client = _get_async_client()
+    except ValueError:
+        yield "ANTHROPIC_API_KEY is not set. Add it to your .env file."
+        return
 
-        loop = asyncio.get_event_loop()
-        response = await loop.run_in_executor(
-            None,
-            lambda: client.messages.create(
-                model="claude-sonnet-4-6",
-                max_tokens=600,
-                system=_FOLLOWUP_SYSTEM,
-                messages=[{"role": "user", "content": prompt}],
-            )
-        )
-        return response.content[0].text.strip() if response.content else "No response generated."
-    except Exception:
-        return "Unable to process follow-up. Type `refresh` for a new full assessment."
+    chart_context = _build_chart_context(output, snapshot)
+    question_block = _build_question_block(question, history)
+
+    system = [
+        {"type": "text", "text": _FOLLOWUP_SYSTEM, "cache_control": {"type": "ephemeral"}},
+    ]
+    user_content = [
+        {"type": "text", "text": chart_context, "cache_control": {"type": "ephemeral"}},
+        {"type": "text", "text": question_block},
+    ]
+
+    async def _stream(use_web_search: bool):
+        kwargs = {
+            "model": "claude-sonnet-4-6",
+            "max_tokens": 500,
+            "system": system,
+            "messages": [{"role": "user", "content": user_content}],
+            "timeout": 45.0,
+        }
+        if use_web_search:
+            kwargs["tools"] = [_WEB_SEARCH_TOOL]
+        return client.messages.stream(**kwargs)
+
+    try:
+        async with await _stream(True) as stream:
+            async for chunk in stream.text_stream:
+                yield chunk
+        return
+    except anthropic.BadRequestError:
+        pass  # fall through to retry without web_search
+    except Exception as e:
+        print(f"[clearpath] followup stream error: {type(e).__name__}: {e}")
+        yield "Unable to process follow-up. Type `refresh` for a new full assessment."
+        return
+
+    try:
+        async with await _stream(False) as stream:
+            async for chunk in stream.text_stream:
+                yield chunk
+    except Exception as e:
+        print(f"[clearpath] followup retry error: {type(e).__name__}: {e}")
+        yield "Unable to process follow-up. Type `refresh` for a new full assessment."

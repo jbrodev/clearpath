@@ -12,10 +12,20 @@ from clearpath.models.clinical import (
 )
 
 
-def determine_risk_level(score: int, has_tier1: bool) -> RiskLevel:
-    if has_tier1 or score >= 6:
-        return RiskLevel.CRITICAL if score >= 9 else RiskLevel.HIGH
-    if score >= 3:
+# Specialties whose triggers represent high perioperative risk
+_HIGH_RISK_SPECIALTIES = {"cardiology", "neurology", "pulmonology", "anesthesia", "hematology"}
+
+
+def determine_risk_level(score: int, tier1_triggers: list[TriggerResult]) -> RiskLevel:
+    has_high_risk_tier1 = any(
+        any(s in _HIGH_RISK_SPECIALTIES for s in t.specialties)
+        for t in tier1_triggers
+    )
+    if score >= 9:
+        return RiskLevel.CRITICAL
+    if has_high_risk_tier1 or score >= 6:
+        return RiskLevel.HIGH
+    if tier1_triggers or score >= 3:
         return RiskLevel.MODERATE
     return RiskLevel.LOW
 
@@ -113,7 +123,6 @@ def _build_specialist_findings(snapshot: PatientSnapshot) -> list[SpecialistFind
         days_ago = None
         if date_str:
             try:
-                from datetime import datetime
                 d = datetime.fromisoformat(date_str[:10]).replace(tzinfo=timezone.utc)
                 days_ago = (datetime.now(timezone.utc) - d).days
             except Exception:
@@ -170,7 +179,7 @@ def build_clearance_output(
         has_insufficient_data,
     )
 
-    risk_level = determine_risk_level(score_result.total_score, bool(score_result.tier1_triggers))
+    risk_level = determine_risk_level(score_result.total_score, score_result.tier1_triggers)
     confidence = compute_confidence(
         score_result.tier1_triggers,
         score_result.total_score,

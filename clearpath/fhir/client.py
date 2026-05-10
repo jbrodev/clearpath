@@ -22,24 +22,27 @@ class FHIRClientError(Exception):
     pass
 
 
-def check_token_expiry(token: str) -> None:
-    """Parse JWT and raise TokenExpiredError if exp claim is in the past."""
+def _is_token_expired(token: str) -> bool:
+    """Return True iff the JWT's exp claim is in the past. Best-effort parse."""
     try:
         parts = token.split(".")
         if len(parts) != 3:
-            return
+            return False
         payload_b64 = parts[1]
         padding = 4 - len(payload_b64) % 4
         if padding != 4:
             payload_b64 += "=" * padding
         payload = json.loads(b64decode(payload_b64).decode("utf-8"))
         exp = payload.get("exp")
-        if exp and time.time() > exp:
-            raise TokenExpiredError("FHIR access token has expired (exp claim)")
-    except TokenExpiredError:
-        raise
+        return bool(exp and time.time() > exp)
     except Exception:
-        pass
+        return False
+
+
+def check_token_expiry(token: str) -> None:
+    """Raise TokenExpiredError if the JWT exp claim is in the past."""
+    if _is_token_expired(token):
+        raise TokenExpiredError("FHIR access token has expired (exp claim)")
 
 
 class FHIRClient:
@@ -47,15 +50,41 @@ class FHIRClient:
         self.base_url = context.fhirUrl.rstrip("/")
         self.token = context.fhirToken
         self.patient_id = context.patientId
+        self.refresh_token = context.fhirRefreshToken
+        self.refresh_url = context.fhirRefreshTokenUrl
 
-        if self.token:
+        # Only enforce expiry up-front when we have no way to recover.
+        # If refresh creds are present, we'll try to refresh in fetch_all().
+        if self.token and not (self.refresh_token and self.refresh_url):
             check_token_expiry(self.token)
 
+        self._set_headers()
+
+    def _set_headers(self) -> None:
         headers = {"Accept": "application/fhir+json"}
         if self.token:
             headers["Authorization"] = f"Bearer {self.token}"
-
         self._headers = headers
+
+    async def _refresh_token_if_expired(self, client: httpx.AsyncClient) -> None:
+        """If the access token is expired and we have refresh credentials, swap it in place."""
+        if not self.token or not _is_token_expired(self.token):
+            return
+        if not (self.refresh_token and self.refresh_url):
+            raise TokenExpiredError("FHIR access token has expired (exp claim)")
+        resp = await client.post(
+            self.refresh_url,
+            json={"refreshToken": self.refresh_token},
+            timeout=10.0,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        new_access = data.get("accessToken")
+        if not new_access:
+            raise FHIRClientError("refresh response missing accessToken")
+        self.token = new_access
+        self.refresh_token = data.get("refreshToken", self.refresh_token)
+        self._set_headers()
 
     async def _get(self, client: httpx.AsyncClient, path: str) -> dict:
         url = f"{self.base_url}/{path.lstrip('/')}"
@@ -86,6 +115,8 @@ class FHIRClient:
         twelve_mo = self._twelve_months_ago()
 
         async with httpx.AsyncClient() as client:
+            await self._refresh_token_if_expired(client)
+
             import asyncio
             results = await asyncio.gather(
                 self._get(client, f"Patient/{pid}"),

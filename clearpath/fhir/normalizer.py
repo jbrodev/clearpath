@@ -348,7 +348,6 @@ def build_snapshot(fhir_data: dict) -> PatientSnapshot:
         recent_vitals=vitals,
         recent_labs=labs,
         pcp_note_raw=pcp_note_raw,
-        pcp_note_summary=None,
         specialist_notes=[
             {"specialty": sp, "notes": notes}
             for sp, notes in specialist_note_data.items()

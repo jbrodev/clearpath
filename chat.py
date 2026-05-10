@@ -1,6 +1,6 @@
 """
-ClearPath interactive terminal chat.
-Simulates how a clinician would query the agent from Prompt Opinion.
+ClearPath interactive agent.
+Type a patient name or ask a question to get started.
 """
 
 import asyncio
@@ -32,19 +32,23 @@ LEGACY_KEYS = {
 BANNER = """
 ==========================================
   ClearPath  -  Pre-Op Clearance Agent
-  Local test console  |  localhost:8000
 ==========================================
 
-Type a patient name to load them:
-  "John Doe"                  search by name
-  "John Doe 03/15/1952"       search by name + DOB
-  "John Doe dob 1952-03-15"   alternate DOB format
+Ask about any patient by name:
 
-Or use shortcuts:  patient a / patient b / patient e
-After a clearance report, ask follow-up questions freely.
-Type  'refresh'  for a new full assessment on the current patient.
-Type  'clear'    to switch patients.
-Type  'quit'     to exit.
+  "Is Maria Gonzalez cleared for surgery?"
+  "Run a clearance check on Robert Chen"
+  "What are John Doe's anesthesia risks?"
+
+Once a patient is loaded, keep asking:
+
+  "What does her COPD mean for recovery?"
+  "Explain his blood thinner in plain terms"
+  "Should she stop her metformin before the procedure?"
+
+Type  'patients'  to see who is available.
+Type  'help'      to see this message again.
+Type  'quit'      to exit.
 """
 
 # --- Patient registry ---
@@ -192,9 +196,44 @@ def load_patient_file(path: Path) -> dict | None:
 def _entry_label(entry: dict) -> str:
     first = entry["first_name"] or ""
     last = entry["last_name"] or ""
-    dob = entry["birth_date"] or "DOB unknown"
-    gender = entry["gender"].capitalize()
     return f"{first} {last}".strip() or entry["patient_id"]
+
+
+# --- Startup helpers ---
+
+def _show_patients(registry: list[dict]) -> None:
+    if not registry:
+        print("  No patients found.\n")
+        return
+    print("  Available patients:\n")
+    for entry in registry:
+        name = _entry_label(entry)
+        dob = entry["birth_date"] or "DOB unknown"
+        gender = entry["gender"].capitalize()
+        print(f"    {name:<24}  DOB: {dob}  |  {gender}")
+    print()
+
+def _check_api_key() -> bool:
+    key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+    if not key:
+        print("  Warning: ANTHROPIC_API_KEY is not set.")
+        print("  Add it to your .env file to enable clearance assessments.\n")
+        return False
+    return True
+
+
+# --- Natural language command detection ---
+
+_QUIT_WORDS = {"quit", "exit", "q", "bye", "goodbye", "done", "stop"}
+_CLEAR_WORDS = {"clear", "switch", "new patient", "change patient", "start over",
+                "different patient", "another patient", "load another"}
+_REFRESH_WORDS = {"refresh", "redo", "reassess", "re-run", "rerun", "run again",
+                  "new assessment", "redo assessment"}
+_PATIENTS_WORDS = {"patients", "list", "list patients", "show patients", "who", "available"}
+_HELP_WORDS = {"help", "?"}
+
+# Explicit patient-switch prefixes the user must type when a patient is already loaded.
+_SWITCH_PREFIXES = ("load ", "switch to ", "switch patient to ", "open ", "pull up ", "look up ")
 
 
 # --- Pipeline ---
@@ -227,6 +266,8 @@ async def run_pipeline_on_fhir(fhir_data: dict, query: str):
 async def main():
     print(BANNER)
     registry = build_registry()
+    _check_api_key()
+    _show_patients(registry)
 
     current_patient = None
     current_label = None
@@ -251,31 +292,42 @@ async def main():
         if not line:
             continue
 
-        low = line.lower()
+        low = line.lower().strip()
 
-        if low in ("quit", "exit", "q"):
+        # --- Meta commands ---
+
+        if low in _QUIT_WORDS:
             print("Goodbye.")
             break
 
-        if low == "clear":
+        if low in _HELP_WORDS:
+            print(BANNER)
+            continue
+
+        if low in _PATIENTS_WORDS:
+            _show_patients(registry)
+            continue
+
+        if low in _CLEAR_WORDS:
             current_patient = None
             current_label = None
             _reset_conversation()
-            print("\n  Patient cleared.\n")
+            print("\n  Patient cleared. Type a name or ask about someone new.\n")
             continue
 
-        if low == "refresh":
+        if low in _REFRESH_WORDS:
             if current_patient is None:
-                print("\n  No patient loaded. Load a patient first.\n")
+                print("\n  No patient loaded. Ask about a patient to get started.\n")
                 continue
             _reset_conversation()
-            print(f"\n  Refreshing assessment for {current_label}...")
+            print(f"\n  Re-running assessment for {current_label}...")
             print("  " + "-" * 54)
             md, current_output, current_snapshot = await run_pipeline_on_fhir(current_patient, "Full clearance assessment")
             conversation_history = [{"q": "refresh", "a": md}]
             for out_line in md.splitlines():
                 print("  " + out_line)
             print()
+            print("  You can now ask follow-up questions about this patient.\n")
             continue
 
         # Legacy letter shortcuts: "patient a", "a", "load a"
@@ -293,15 +345,26 @@ async def main():
                     given = (ne.get("given") or [""])[0]
                     last = ne.get("family", "")
                     current_label = f"{given} {last}".strip() or key.upper()
-                    print(f"\n  Patient loaded: {current_label}\n")
+                    print(f"\n  Patient loaded: {current_label}. Ask a question or request a clearance check.\n")
                 matched_legacy = True
                 break
 
         if matched_legacy:
             continue
 
-        # Name-based lookup
-        if _looks_like_name_query(line):
+        # Explicit patient switch when a patient is already loaded.
+        if current_patient is not None:
+            switch_match = next((p for p in _SWITCH_PREFIXES if low.startswith(p)), None)
+            if switch_match:
+                line = line[len(switch_match):].strip()
+                low = line.lower().strip()
+                current_patient = None
+                current_label = None
+                _reset_conversation()
+                # fall through to name-lookup branch below
+
+        # Name-only lookup. Only runs when no patient is loaded — otherwise treat input as follow-up.
+        if current_patient is None and _looks_like_name_query(line):
             name_str, dob = _extract_dob(line)
             name_str = name_str.strip()
             if name_str:
@@ -310,7 +373,7 @@ async def main():
                 if not matches:
                     dob_hint = f" (DOB {dob})" if dob else ""
                     print(f"\n  No patient found matching '{name_str}'{dob_hint}.\n"
-                          f"  Try including a date of birth, e.g. \"John Doe 03/15/1952\"\n")
+                          f"  Type 'patients' to see who is available.\n")
                     continue
 
                 if len(matches) == 1:
@@ -319,7 +382,8 @@ async def main():
                         current_patient = data
                         _reset_conversation()
                         current_label = _entry_label(matches[0])
-                        print(f"\n  Patient loaded: {current_label}  (DOB: {matches[0]['birth_date']})\n")
+                        print(f"\n  Patient loaded: {current_label}  (DOB: {matches[0]['birth_date']})")
+                        print(f"  Ask a question or say \"run clearance\" to start the assessment.\n")
                     continue
 
                 # Multiple matches — disambiguate
@@ -338,7 +402,8 @@ async def main():
                             current_patient = data
                             _reset_conversation()
                             current_label = _entry_label(chosen)
-                            print(f"\n  Patient loaded: {current_label}  (DOB: {chosen['birth_date']})\n")
+                            print(f"\n  Patient loaded: {current_label}  (DOB: {chosen['birth_date']})")
+                            print(f"  Ask a question or say \"run clearance\" to start the assessment.\n")
                     else:
                         print("\n  Invalid selection.\n")
                 except (ValueError, EOFError, KeyboardInterrupt):
@@ -350,12 +415,13 @@ async def main():
             inline_matches = find_patient_in_query(registry, line)
 
             if not inline_matches:
-                print("\n  No patient loaded. Type a patient name (e.g. \"John Doe\") to load one.\n")
+                print("\n  I don't have a patient loaded yet. Ask about someone by name,")
+                print("  or type 'patients' to see who is available.\n")
                 continue
 
             # Disambiguate if multiple
             if len(inline_matches) > 1:
-                print(f"\n  Multiple patients found in your query — please select:\n")
+                print(f"\n  Multiple patients found in your question — please select:\n")
                 for i, entry in enumerate(inline_matches, 1):
                     name = _entry_label(entry)
                     print(f"  [{i}]  {name:<20}  DOB: {entry['birth_date']}  {entry['gender'].capitalize()}")
@@ -374,7 +440,6 @@ async def main():
             else:
                 chosen = inline_matches[0]
 
-            # Confirm with user before proceeding
             label = _entry_label(chosen)
             dob = chosen["birth_date"]
             gender = chosen["gender"].capitalize()
@@ -395,29 +460,31 @@ async def main():
             current_patient = data
             _reset_conversation()
             current_label = label
-            print(f"\n  Patient confirmed: {current_label}\n")
+            # Fall through — run the pipeline with the original question
 
         # Clinical query dispatch
         if current_output is None:
             # First query — run full pipeline
-            print(f"\n  Running clearance evaluation for {current_label}...")
+            print(f"\n  Running clearance assessment for {current_label}...")
             print("  " + "-" * 54)
             md, current_output, current_snapshot = await run_pipeline_on_fhir(current_patient, line)
             conversation_history = [{"q": line, "a": md}]
             for out_line in md.splitlines():
                 print("  " + out_line)
             print()
+            print("  You can now ask follow-up questions about this patient.\n")
         else:
-            # Follow-up — LLM answers from cached assessment + full patient record
-            from clearpath.reasoning.engine import answer_followup
-            print(f"\n  ClearPath thinking...")
-            answer = await answer_followup(current_output, current_snapshot, line, conversation_history)
-            conversation_history.append({"q": line, "a": answer})
-            print()
-            print("  ClearPath >")
-            for out_line in answer.splitlines():
-                print("  " + out_line)
-            print()
+            # Follow-up — streamed, with prompt caching on system + chart context
+            from clearpath.reasoning.engine import stream_followup
+            print(f"\n  ClearPath >")
+            print("  ", end="", flush=True)
+            accumulated = ""
+            async for chunk in stream_followup(current_output, current_snapshot, line, conversation_history):
+                accumulated += chunk
+                # Maintain the 2-space left indent across streamed newlines.
+                print(chunk.replace("\n", "\n  "), end="", flush=True)
+            print("\n")
+            conversation_history.append({"q": line, "a": accumulated})
 
 
 asyncio.run(main())

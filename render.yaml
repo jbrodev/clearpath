@@ -7,6 +7,4 @@ services:
     envVars:
       - key: ANTHROPIC_API_KEY
         sync: false
-      - key: CLEARPATH_BASE_URL
-        sync: false
     healthCheckPath: /health

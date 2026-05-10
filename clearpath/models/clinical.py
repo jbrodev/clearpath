@@ -75,7 +75,6 @@ class PatientSnapshot(BaseModel):
     active_medications: list[Medication] = Field(default_factory=list)
     recent_vitals: VitalSigns | None = None
     recent_labs: list[LabResult] = Field(default_factory=list)
-    pcp_note_summary: str | None = None
     pcp_note_raw: str | None = None
     specialist_notes: list[dict[str, Any]] = Field(default_factory=list)
     recent_procedures: list[str] = Field(default_factory=list)
@@ -117,7 +116,6 @@ class ClearanceOutput(BaseModel):
     recommended_next_steps: list[str] = Field(default_factory=list)
     specialist_findings: list[SpecialistFinding] = Field(default_factory=list)
     missing_information: list[str] = Field(default_factory=list)
-    office_rule_matches: list[str] = Field(default_factory=list)
     schema_version: str = "1.0"
     model_version: str = "clearpath-v1"
     generated_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat() + "Z")
@@ -128,67 +126,26 @@ class ClearanceOutput(BaseModel):
             "specialist_required", "anesthesia_review_required", "clearance_recommended"
         ):
             specs = ", ".join(s.title() for s in self.recommended_specialties)
-            disposition_label += f": {specs}"
+            disposition_label += f" — {specs}"
 
         lines = [
-            f"## ClearPath Pre-Op Clearance Assessment",
-            f"",
-            f"**Disposition:** {disposition_label}",
-            f"**Risk Level:** {self.risk_level.value.upper()}",
-            f"**Confidence:** {int(self.confidence * 100)}%",
-            f"",
-            f"### Clinical Summary",
+            f"**{disposition_label}** | Risk: {self.risk_level.value.upper()} | RCRI {self.rcri_score}/6",
+            "",
             self.clinical_summary,
         ]
 
-        if self.active_medications:
-            if len(self.active_medications) == 1:
-                lines += ["", f"**Active Medications:** {self.active_medications[0]}"]
-            else:
-                meds_list = "\n".join(f"- {m}" for m in self.active_medications)
-                lines += [
-                    "",
-                    f"<details><summary>Active Medications ({len(self.active_medications)})</summary>\n\n{meds_list}\n\n</details>"
-                ]
-
         if self.triggering_factors:
-            lines += ["", "### Triggering Factors"]
+            lines += ["", "**Flags**"]
             for f in self.triggering_factors:
                 lines.append(f"- {f}")
 
-        if self.recommended_specialties:
-            lines += ["", "### Recommended Specialties"]
-            findings_by_specialty = {sf.specialty.lower(): sf for sf in self.specialist_findings}
-            for s in self.recommended_specialties:
-                sf = findings_by_specialty.get(s.lower())
-                if sf and sf.doctor_name:
-                    days = f", last seen {sf.last_visit_days_ago} days ago" if sf.last_visit_days_ago else ""
-                    lines.append(f"- **{s.title()}** — {sf.doctor_name}{days}")
-                elif sf:
-                    days = f" (last seen {sf.last_visit_days_ago} days ago)" if sf.last_visit_days_ago else ""
-                    lines.append(f"- **{s.title()}**{days}")
-                else:
-                    lines.append(f"- **{s.title()}** — no prior specialist on file")
-
-        if self.specialist_findings:
-            lines += ["", "### Specialist History"]
-            for sf in self.specialist_findings:
-                doctor = f"{sf.doctor_name} — " if sf.doctor_name else ""
-                lines.append(f"- **{sf.specialty.title()}**: {doctor}{sf.summary} ({sf.status})")
-
         if self.recommended_next_steps:
-            lines += ["", "### Recommended Next Steps"]
+            lines += ["", "**Next Steps**"]
             for i, step in enumerate(self.recommended_next_steps, 1):
                 lines.append(f"{i}. {step}")
 
         if self.missing_information:
-            lines += ["", "### Missing Information"]
-            for m in self.missing_information:
-                lines.append(f"- {m}")
+            missing = "; ".join(self.missing_information[:3])
+            lines += ["", f"*Missing: {missing}*"]
 
-        lines += [
-            "",
-            "---",
-            f"*ClearPath v{self.schema_version} | {self.generated_at[:10]} | For clinician review only*"
-        ]
         return "\n".join(lines)

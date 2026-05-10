@@ -14,14 +14,15 @@ import traceback
 import uuid
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from clearpath.agent_card import get_agent_card
 from clearpath.models.a2a import (
     JSONRPCRequest, JSONRPCResponse, JSONRPCError,
-    A2ATask, A2ATaskStatus, A2AArtifact
+    A2ATask, A2ATaskStatus, A2AArtifact,
+    FHIR_CONTEXT_EXTENSION_URI,
 )
 from clearpath.pipeline import run_clearance_pipeline
 
@@ -125,6 +126,12 @@ async def a2a_handler(request: Request):
         result_json = clearance_output.model_dump()
         result_md = clearance_output.to_markdown()
 
+        # Propagate inbound FHIR context back on the response so any agent
+        # downstream of ClearPath in a multi-agent chain inherits it.
+        echo_metadata = None
+        if message.metadata and FHIR_CONTEXT_EXTENSION_URI in message.metadata:
+            echo_metadata = {FHIR_CONTEXT_EXTENSION_URI: message.metadata[FHIR_CONTEXT_EXTENSION_URI]}
+
         task = A2ATask(
             id=task_id,
             status=A2ATaskStatus(state="completed"),
@@ -136,7 +143,8 @@ async def a2a_handler(request: Request):
                         {"type": "data", "data": result_json}
                     ]
                 )
-            ]
+            ],
+            metadata=echo_metadata,
         )
 
         return JSONResponse(content={

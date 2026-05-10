@@ -1,10 +1,26 @@
 """
 Serves the A2A Agent Card at /.well-known/agent-card.json.
 This is the first thing Prompt Opinion reads when you register the external agent.
-Must return valid JSON matching A2A v0.3 spec.
+Conforms to A2A v1 (https://docs.promptopinion.ai/a2a-v1-migration):
+  - extensions live under capabilities.extensions[]
+  - no top-level url, preferredTransport, or capabilities.stateTransitionHistory
+  - FHIR context extension declares its required scopes via params.scopes[]
 """
 
-import os
+from clearpath.models.a2a import FHIR_CONTEXT_EXTENSION_URI
+
+
+_FHIR_SCOPES = [
+    {"name": "patient/Patient.rs", "required": True},
+    {"name": "patient/Condition.rs", "required": True},
+    {"name": "patient/MedicationRequest.rs", "required": True},
+    {"name": "patient/Procedure.rs", "required": True},
+    {"name": "patient/DocumentReference.rs", "required": True},
+    {"name": "patient/Observation.rs", "required": True},
+    {"name": "patient/Encounter.rs", "required": False},
+    {"name": "patient/AllergyIntolerance.rs", "required": False},
+]
+
 
 AGENT_CARD = {
     "name": "ClearPath",
@@ -32,33 +48,30 @@ AGENT_CARD = {
             "examples": [
                 "Does this patient need clearance before surgery?",
                 "Review this patient chart for pre-anesthesia clearance requirements",
-                "What specialist clearance is needed before this procedure?"
-            ]
+                "What specialist clearance is needed before this procedure?",
+            ],
         }
     ],
-    "authentication": {
-        "schemes": ["Bearer"]
-    },
-    "extensions": [
-        {
-            "uri": "https://app.promptopinion.ai/schemas/a2a/v1/fhir-context",
-            "description": "FHIR context providing access to patient data from the workspace FHIR server",
-            "required": True
-        }
-    ],
+    "authentication": {"schemes": ["Bearer"]},
     "capabilities": {
         "streaming": False,
         "pushNotifications": False,
-        "stateTransitionHistory": False
+        "extensions": [
+            {
+                "uri": FHIR_CONTEXT_EXTENSION_URI,
+                "description": (
+                    "FHIR context allowing the agent to query a patient's chart on the workspace "
+                    "FHIR server. Required: ClearPath cannot perform a clearance assessment without it."
+                ),
+                "required": True,
+                "params": {"scopes": _FHIR_SCOPES},
+            }
+        ],
     },
     "defaultInputModes": ["text"],
-    "defaultOutputModes": ["text"]
+    "defaultOutputModes": ["text"],
 }
 
 
 def get_agent_card() -> dict:
-    card = dict(AGENT_CARD)
-    base_url = os.environ.get("CLEARPATH_BASE_URL", "").rstrip("/")
-    if base_url:
-        card["url"] = base_url
-    return card
+    return dict(AGENT_CARD)

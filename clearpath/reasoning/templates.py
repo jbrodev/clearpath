@@ -5,18 +5,32 @@ The decision is already made by the deterministic engine.
 """
 
 
-SYSTEM_PROMPT = """You are ClearPath, a clinical decision support tool that helps medical staff prepare pre-operative clearance documentation.
+SYSTEM_PROMPT = """You are ClearPath. You help medical staff prepare a pre-op clearance summary that is also readable by the patient.
 
-Your role is ONLY to:
-1. Write a concise clinical summary (2-4 sentences) of the patient's relevant clinical picture
-2. Write 2-5 specific, actionable next steps appropriate to the disposition
+Ground every recommendation in recognized industry standards: ACC/AHA perioperative cardiovascular guidelines, ASA preoperative evaluation, RCRI for cardiac risk, STOP-BANG for OSA, ARISCAT for pulmonary risk, FDA drug labeling, and the most recent specialty-society guidelines. Do not invent thresholds or recommendations.
 
-You do NOT make the clearance decision — that has already been determined by validated clinical rules.
-You do NOT practice medicine or give medical advice.
-All output is for review by a licensed clinician before any action is taken.
-Always use clinical, professional language.
-Never include em dashes. Use commas or colons instead.
-Be concise. Bullet points for next steps."""
+Write only:
+1. A clinical_summary in plain English (1-3 short sentences). Lead with the bottom line. If a clinical term is necessary, define it in the same sentence (e.g., "atrial fibrillation, an irregular heartbeat").
+2. 2-4 specific next steps, one short line each.
+
+Rules for next steps:
+- Base next steps STRICTLY on the Tier 1 triggers and Tier 2 factors listed in the prompt.
+- Do NOT recommend specialist evaluation, clearance, or workup for any specialty not explicitly listed in the Tier 1 triggers.
+- Do NOT add cardiac workup or cardiology referral unless a cardiac Tier 1 trigger is present.
+- Do NOT add general anesthesia or surgical risk steps beyond what the flagged triggers require.
+- If the procedure is low-risk (colonoscopy, endoscopy, cataract, minor skin procedure), calibrate accordingly.
+
+Specialist scope:
+- Cardiology owns cardiac drugs and AFib/ischemia management.
+- Endocrinology owns diabetes and thyroid drugs.
+- Pulmonology owns inhalers, oxygen, and OSA.
+- The PCP is the default prescriber and manager for everything not explicitly owned by a specialist.
+- Do NOT attribute the full medication list to a single specialist whose note happens to be in the chart.
+
+You do NOT make the clearance decision: validated rules already did.
+You do NOT practice medicine or give medical advice. Output is for licensed clinician review.
+Avoid em dashes; use commas or colons.
+Be brief. No preamble. No filler."""
 
 
 def build_reasoning_prompt(
@@ -68,9 +82,9 @@ def build_reasoning_prompt(
 
     pcp_excerpt = pcp_summary[:600].strip() if pcp_summary else "No PCP note available"
 
-    return f"""The deterministic clinical rule engine has completed its evaluation. Your task is to write the clinical summary and next steps fields only.
+    return f"""The clinical rule engine has determined the disposition. Write only the patient-facing summary and next steps.
 
-DISPOSITION ALREADY DETERMINED: {disposition.replace('_', ' ').upper()}
+DISPOSITION: {disposition.replace('_', ' ').upper()}
 RISK LEVEL: {risk_level.upper()}
 RISK SCORE: {risk_score}/15
 RCRI SCORE: {rcri_score}/6
@@ -81,10 +95,10 @@ Active conditions: {conditions_text}
 Active medications: {meds_text}
 Recent vitals: {vitals_text}
 
-TIER 1 TRIGGERS (hard escalation flags):
+TIER 1 TRIGGERS:
 {triggers_text}
 
-TIER 2 CONTRIBUTING FACTORS:
+TIER 2 FACTORS:
 {tier2_text}
 
 RECENT SPECIALIST HISTORY:
@@ -100,15 +114,14 @@ ORIGINAL CLINICAL QUERY:
 {user_query}
 
 ---
-Write ONLY the following two fields. Do not restate the disposition or scores.
+Write ONLY these two fields. Do not restate the disposition or scores.
 
-CLINICAL_SUMMARY: (2-4 sentences. State the most clinically relevant context that explains why this disposition was reached. Be specific about the key findings.)
+CLINICAL_SUMMARY: (1-3 short sentences in plain English. Lead with the bottom line: why this disposition. If you must use a clinical term, define it in the same sentence.)
 
 NEXT_STEPS:
-1. (most urgent action)
-2. (second action)
-3. (third action if applicable)
-4. (fourth action if applicable)
-5. (fifth action if applicable, else omit)
+1. (most urgent action, one short line)
+2. (next action, one short line)
+3. (third if needed, else omit)
+4. (fourth if needed, else omit)
 
-Use only these two sections. Professional, concise clinical language."""
+Plain English. Brief. No preamble."""

@@ -1,7 +1,8 @@
 """
-A2A v0.3 protocol models for ClearPath.
-Prompt Opinion uses JSON-RPC 2.0 over HTTP with A2A v0.3.
-FHIR context arrives in message.metadata under the extension URI.
+A2A protocol models for ClearPath.
+JSON-RPC 2.0 over HTTP; agent card follows Prompt Opinion's A2A v1 schema
+(https://docs.promptopinion.ai/a2a-v1-migration). FHIR context arrives in
+message.metadata keyed by FHIR_CONTEXT_EXTENSION_URI.
 """
 
 from typing import Any
@@ -15,6 +16,8 @@ class FHIRContext(BaseModel):
     fhirUrl: str
     fhirToken: str | None = None
     patientId: str | None = None
+    fhirRefreshToken: str | None = None
+    fhirRefreshTokenUrl: str | None = None
 
 
 class A2AMessage(BaseModel):
@@ -70,6 +73,7 @@ class A2ATask(BaseModel):
     id: str
     status: A2ATaskStatus = Field(default_factory=A2ATaskStatus)
     artifacts: list[A2AArtifact] = Field(default_factory=list)
+    metadata: dict[str, Any] | None = None
 
 
 class JSONRPCResponse(BaseModel):
