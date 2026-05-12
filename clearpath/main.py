@@ -138,7 +138,7 @@ async def a2a_handler(request: Request):
         # A2A v1 parts use the field name as discriminator (no "type" field).
         task = A2ATask(
             id=task_id,
-            status=A2ATaskStatus(state="completed"),
+            status=A2ATaskStatus(state="TASK_STATE_COMPLETED"),
             artifacts=[
                 A2AArtifact(
                     name="clearance_assessment",

@@ -61,7 +61,7 @@ class JSONRPCError(BaseModel):
 
 
 class A2ATaskStatus(BaseModel):
-    state: str = "completed"
+    state: str = "TASK_STATE_COMPLETED"
 
 
 class A2AArtifact(BaseModel):
