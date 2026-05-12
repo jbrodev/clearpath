@@ -24,12 +24,13 @@ def _get_entries(bundle: dict) -> list:
 
 
 def _extract_patient(patient_resource: dict) -> dict:
-    result = {"age": None, "sex": None, "first_name": None, "last_name": None}
+    result = {"age": None, "sex": None, "first_name": None, "last_name": None, "birth_date": None}
     if not patient_resource or patient_resource.get("resourceType") != "Patient":
         return result
 
     dob = patient_resource.get("birthDate")
     if dob:
+        result["birth_date"] = dob
         try:
             birth = datetime.fromisoformat(dob[:10]).replace(tzinfo=timezone.utc)
             today = datetime.now(timezone.utc)
@@ -324,6 +325,8 @@ def build_snapshot(fhir_data: dict) -> PatientSnapshot:
     parsed_notes = parse_documents(fhir_data.get("documents", {}))
     pcp_note_raw = get_most_recent_pcp_text(parsed_notes)
     all_note_text = get_all_note_text(parsed_notes)
+    pcp_notes_list = parsed_notes.get("pcp_notes", [])
+    pcp_doctor_name = pcp_notes_list[0].get("doctor_name") if pcp_notes_list else None
 
     if not pcp_note_raw:
         warnings.append("No PCP or primary care notes found")
@@ -343,11 +346,13 @@ def build_snapshot(fhir_data: dict) -> PatientSnapshot:
         sex=patient_info["sex"],
         first_name=patient_info["first_name"],
         last_name=patient_info["last_name"],
+        birth_date=patient_info.get("birth_date"),
         active_conditions=conditions,
         active_medications=[Medication(name=n) for n in raw_med_names],
         recent_vitals=vitals,
         recent_labs=labs,
         pcp_note_raw=pcp_note_raw,
+        pcp_doctor_name=pcp_doctor_name,
         specialist_notes=[
             {"specialty": sp, "notes": notes}
             for sp, notes in specialist_note_data.items()

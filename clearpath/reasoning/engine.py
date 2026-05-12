@@ -184,19 +184,34 @@ _LETTER_SYSTEM_PROMPT = (
     "Use a standard clinical referral letter format. Keep it under 250 words.\n\n"
     "Required structure:\n"
     "- [Date] placeholder line\n"
-    "- 'To: [Consulting Specialist]' (fill with the recommended specialty if known, else placeholder)\n"
-    "- 'RE: Pre-operative Clearance Request — [Patient Name], DOB [DOB]'\n"
+    "- 'To:' line — use the CONSULTING SPECIALTY/PROVIDER value provided in the user prompt VERBATIM. Do not leave it blank.\n"
+    "- 'RE: Pre-operative Clearance Request — [Patient Name], DOB [DOB]' — use the actual patient name and DOB from the prompt; do not bracket them if they are provided.\n"
+    "- Greeting: 'Dear Dr. [Last Name],' if a consulting provider name is given, else address the department (e.g., 'Dear Neurology Team,').\n"
     "- One short paragraph stating the scheduled procedure and the clinical reason clearance is being requested\n"
     "- A short bulleted list of the specific issues you want the consultant to evaluate (drawn from the triggering factors)\n"
     "- Brief closing line requesting their recommendations prior to surgery\n"
-    "- '[Referring Provider]' signature placeholder\n\n"
+    "- Signature: use the REFERRING PROVIDER value from the prompt VERBATIM. If it is a real name, use it; if it is the literal string '[Referring Provider]', leave the placeholder.\n\n"
     "Rules:\n"
-    "- Use placeholders in square brackets for anything not in the chart (date of surgery, referring provider name, facility).\n"
+    "- Fill in every field that the prompt provides as a real value. Only use bracket placeholders for fields the prompt explicitly leaves blank (e.g. date of surgery, facility).\n"
+    "- Never write 'Dear Colleague' if a specialty or provider name is provided.\n"
     "- Do NOT invent dates, doctor names, facility names, or guideline citations.\n"
     "- Plain prose. No preamble, no commentary, no 'Here is the letter:'. Output the letter directly.\n"
     "- Do NOT use markdown headers (no `#`, `##`, `###`). Use bold (`**`) only for the field labels like RE: and To:.\n"
     "- For clinician review only. This is a draft, not signed medical correspondence."
 )
+
+
+# Map detected major procedure category → default consulting specialty when
+# the deterministic engine hasn't already picked one from Tier 1 triggers.
+_PROCEDURE_CONSULTANT = {
+    "cardiac surgery": "Cardiology",
+    "major vascular surgery": "Vascular Surgery / Cardiology",
+    "neurosurgery": "Neurology",
+    "major thoracic surgery": "Pulmonology",
+    "major abdominal surgery": "Internal Medicine",
+    "organ transplant": "Transplant Medicine",
+    "major orthopedic surgery": "Internal Medicine",
+}
 
 
 async def generate_clearance_letter(
@@ -210,18 +225,29 @@ async def generate_clearance_letter(
         client = _get_client()
 
         name = " ".join(p for p in [snapshot.first_name or "", snapshot.last_name or ""] if p).strip() or "[Patient Name]"
+        dob = snapshot.birth_date or "[DOB]"
         conditions = ", ".join(c.display for c in snapshot.active_conditions[:6]) or "none documented"
         meds = ", ".join(m.name for m in snapshot.active_medications[:6]) or "none documented"
         triggers = "\n".join(f"- {t}" for t in output.triggering_factors[:6]) or "- (no specific triggers — institutional protocol)"
-        specialty = output.recommended_specialties[0].title() if output.recommended_specialties else "Internal Medicine / Primary Care"
+
+        if output.recommended_specialties:
+            consultant = output.recommended_specialties[0].title()
+        elif current_procedure and current_procedure in _PROCEDURE_CONSULTANT:
+            consultant = _PROCEDURE_CONSULTANT[current_procedure]
+        else:
+            consultant = "Internal Medicine / Primary Care"
+
+        referring_provider = snapshot.pcp_doctor_name or "[Referring Provider]"
         procedure = current_procedure or "[scheduled procedure]"
 
         user_prompt = f"""Draft the clearance request letter using these chart facts.
 
-PATIENT: {name}
+PATIENT NAME: {name}
+DOB: {dob}
 AGE/SEX: {snapshot.age or '[age]'} / {snapshot.sex or '[sex]'}
 SCHEDULED PROCEDURE: {procedure}
-RECOMMENDED CONSULTANT: {specialty}
+CONSULTING SPECIALTY/PROVIDER (use VERBATIM in the To: line and greeting): {consultant}
+REFERRING PROVIDER (use VERBATIM in the signature): {referring_provider}
 
 Active conditions: {conditions}
 Active medications: {meds}

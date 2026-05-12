@@ -71,11 +71,13 @@ class PatientSnapshot(BaseModel):
     sex: str | None = None
     first_name: str | None = None
     last_name: str | None = None
+    birth_date: str | None = None
     active_conditions: list[Condition] = Field(default_factory=list)
     active_medications: list[Medication] = Field(default_factory=list)
     recent_vitals: VitalSigns | None = None
     recent_labs: list[LabResult] = Field(default_factory=list)
     pcp_note_raw: str | None = None
+    pcp_doctor_name: str | None = None
     specialist_notes: list[dict[str, Any]] = Field(default_factory=list)
     recent_procedures: list[str] = Field(default_factory=list)
     known_implants: list[str] = Field(default_factory=list)
