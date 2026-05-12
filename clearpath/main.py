@@ -124,6 +124,8 @@ async def a2a_handler(request: Request):
     task_id = str(uuid.uuid4())
     context_id = getattr(params, "sessionId", None) or str(uuid.uuid4())
 
+    print(f"[clearpath] received query (len={len(user_query)}): {user_query[:300]}")
+
     try:
         clearance_output = await run_clearance_pipeline(fhir_context, user_query)
 

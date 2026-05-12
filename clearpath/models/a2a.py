@@ -26,9 +26,20 @@ class A2AMessage(BaseModel):
     metadata: dict[str, Any] | None = None
 
     def get_text(self) -> str:
+        """Extract text content from A2A message parts.
+
+        Handles both A2A v1 (field-name discriminator: {"text": "..."}) and the
+        legacy A2A v0.3 format ({"type": "text", "text": "..."}). Without this
+        tolerance, v1 callers like Prompt Opinion deliver empty strings and the
+        agent loses all procedure context.
+        """
         texts = []
         for part in self.parts:
-            if isinstance(part, dict) and part.get("type") == "text":
+            if not isinstance(part, dict):
+                continue
+            if "text" in part and isinstance(part["text"], str):
+                texts.append(part["text"])
+            elif part.get("type") == "text":
                 texts.append(part.get("text", ""))
         return " ".join(texts).strip()
 
