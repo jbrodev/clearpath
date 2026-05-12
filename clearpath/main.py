@@ -122,6 +122,7 @@ async def a2a_handler(request: Request):
     user_query = message.get_text() or "Review this patient for pre-operative anesthesia clearance"
     fhir_context = message.get_fhir_context()
     task_id = str(uuid.uuid4())
+    context_id = getattr(params, "sessionId", None) or str(uuid.uuid4())
 
     try:
         clearance_output = await run_clearance_pipeline(fhir_context, user_query)
@@ -138,14 +139,15 @@ async def a2a_handler(request: Request):
         # A2A v1 parts use the field name as discriminator (no "type" field).
         task = A2ATask(
             id=task_id,
+            contextId=context_id,
             status=A2ATaskStatus(state="TASK_STATE_COMPLETED"),
             artifacts=[
                 A2AArtifact(
                     artifactId=str(uuid.uuid4()),
                     name="clearance_assessment",
                     parts=[
-                        {"text": result_md},
-                        {"data": result_json},
+                        {"text": result_md, "mediaType": "text/markdown"},
+                        {"data": result_json, "mediaType": "application/json"},
                     ],
                 )
             ],

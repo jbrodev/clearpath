@@ -72,8 +72,10 @@ class A2AArtifact(BaseModel):
 
 class A2ATask(BaseModel):
     id: str
+    contextId: str
     status: A2ATaskStatus = Field(default_factory=A2ATaskStatus)
     artifacts: list[A2AArtifact] = Field(default_factory=list)
+    history: list[dict[str, Any]] = Field(default_factory=list)
     metadata: dict[str, Any] | None = None
 
 
