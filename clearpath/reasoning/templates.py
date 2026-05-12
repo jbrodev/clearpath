@@ -28,6 +28,7 @@ Rules for next steps:
 - Do NOT add cardiac workup or cardiology referral unless a cardiac Tier 1 trigger is present.
 - Do NOT add general anesthesia or surgical risk steps beyond what the flagged triggers require.
 - If the procedure is low-risk (colonoscopy, endoscopy, cataract, minor skin procedure), calibrate accordingly.
+- The operating team (the team performing the surgery) is REQUESTING the clearance. Do NOT recommend scheduling a visit or consultation with that team — that's redundant. Pre-op evaluation visits are PCP-led medical clearance visits, not visits with the operating surgeons.
 
 Specialist scope:
 - Cardiology owns cardiac drugs and AFib/ischemia management.

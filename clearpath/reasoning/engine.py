@@ -197,6 +197,8 @@ _LETTER_SYSTEM_PROMPT = (
     "- The letter is FROM the surgical/referring office TO the PCP. Do NOT flip the direction.\n"
     "- Fill in every field that the prompt provides as a real value. Only use bracket placeholders for fields the prompt explicitly leaves blank (e.g. date of surgery, facility, surgeon name).\n"
     "- If a specialist consult is recommended (e.g. cardiology for anticoagulation review), name it in the body as something the PCP should coordinate, NOT as the letter's addressee.\n"
+    "- Do NOT suggest the PCP 'schedule a visit with' or 'coordinate with' the team performing the surgery — that team is the one requesting the clearance and does not need to be visited again. The pre-operative evaluation is a PCP-led medical clearance, performed by the PCP.\n"
+    "- When asking for a pre-op visit, frame it as a PCP visit for medical clearance (e.g., 'Conduct a brief pre-operative evaluation in your office'), not as scheduling with the surgical team.\n"
     "- Do NOT invent dates, doctor names, facility names, or guideline citations.\n"
     "- Plain prose. No preamble, no commentary, no 'Here is the letter:'. Output the letter directly.\n"
     "- Do NOT use markdown headers (no `#`, `##`, `###`). Use bold (`**`) only for the field labels like RE: and To:.\n"
@@ -237,12 +239,14 @@ async def generate_clearance_letter(
         # placeholder if no PCP doctor name is available).
         pcp_recipient = snapshot.pcp_doctor_name or "Primary Care Provider"
 
-        # Recommended specialist consult (if any) goes in the BODY as something
-        # the PCP should coordinate — NOT in the To: line.
+        # Recommended specialist consult — only populated when a Tier-1 trigger
+        # genuinely requires a different specialty's input (e.g., cardiology for
+        # anticoag review before colonoscopy). For pure institutional-protocol
+        # escalations (e.g., healthy patient going for neurosurgery), no extra
+        # consult is needed: the operating team IS the operating team, the PCP
+        # just provides medical clearance.
         if output.recommended_specialties:
             specialist_consult = output.recommended_specialties[0].title()
-        elif current_procedure and current_procedure in _PROCEDURE_CONSULTANT:
-            specialist_consult = _PROCEDURE_CONSULTANT[current_procedure]
         else:
             specialist_consult = ""
 
