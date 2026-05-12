@@ -112,6 +112,7 @@ async def enrich_with_reasoning(
     tier2_factors: list,
     user_query: str,
     current_procedure: str | None = None,
+    tier1_triggers: list | None = None,
 ) -> ClearanceOutput:
     """
     Call the LLM to generate clinical_summary and recommended_next_steps.
@@ -219,47 +220,47 @@ _PROCEDURE_CONSULTANT = {
 }
 
 
-async def generate_clearance_letter(
+_SPECIALIST_LETTER_SYSTEM_PROMPT = (
+    "You are ClearPath. Draft a concise, professional pre-operative clearance "
+    "request letter FROM the surgical/referring office TO a SPECIFIC SPECIALIST "
+    "(e.g., Cardiology, Hematology, Pulmonology). The surgical office needs that "
+    "specialist's clearance specifically for the issues in their clinical domain. "
+    "Keep it under 250 words.\n\n"
+    "Required structure:\n"
+    "- [Date] placeholder line\n"
+    "- 'To:' line — use the SPECIALTY value provided in the user prompt VERBATIM (e.g., 'Cardiology Department').\n"
+    "- 'RE: Pre-operative [Specialty] Clearance Request — [Patient Name], DOB [DOB]' — use the actual patient name/DOB if provided.\n"
+    "- Greeting: 'Dear [Specialty] Team,'. Never write 'Dear Colleague'.\n"
+    "- One short paragraph stating the scheduled procedure and requesting this specialist's clearance specifically for the issues in their domain.\n"
+    "- A short bulleted list of the SPECIFIC clinical issues in THIS specialist's domain that need their assessment (drawn from the SPECIALTY-RELEVANT TRIGGERS in the prompt).\n"
+    "- Brief closing line requesting their clearance and any recommendations prior to surgery.\n"
+    "- Signature: use the REFERRING PROVIDER value from the prompt VERBATIM.\n\n"
+    "Rules:\n"
+    "- The letter is FROM the surgical/referring office TO this specialist. Focus ONLY on clinical issues in THIS specialist's clinical domain. Do NOT list issues that belong to other specialists.\n"
+    "- Fill in every field the prompt provides as a real value. Use bracket placeholders only for fields the prompt explicitly leaves blank.\n"
+    "- Do NOT invent dates, doctor names, facility names, or guideline citations.\n"
+    "- Plain prose. No preamble, no commentary. Output the letter directly.\n"
+    "- Do NOT use markdown headers. Use bold (`**`) only for field labels.\n"
+    "- For clinician review only. This is a draft."
+)
+
+
+async def _generate_pcp_letter(
     output: ClearanceOutput,
     snapshot: PatientSnapshot,
     current_procedure: str | None,
     user_query: str,
+    name: str,
+    dob: str,
+    conditions: str,
+    meds: str,
+    triggers: str,
 ) -> str | None:
-    """Generate a draft pre-op clearance request letter. Returns None on failure."""
     try:
-        client = _get_client()
-
-        name = " ".join(p for p in [snapshot.first_name or "", snapshot.last_name or ""] if p).strip() or "[Patient Name]"
-        dob = snapshot.birth_date or "[DOB]"
-        conditions = ", ".join(c.display for c in snapshot.active_conditions[:6]) or "none documented"
-        meds = ", ".join(m.name for m in snapshot.active_medications[:6]) or "none documented"
-        triggers = "\n".join(f"- {t}" for t in output.triggering_factors[:6]) or "- (no specific triggers — institutional protocol)"
-
-        # Who is the letter addressed TO: the PCP (or a generic primary care
-        # placeholder if no PCP doctor name is available).
+        client = _get_async_client()
         pcp_recipient = snapshot.pcp_doctor_name or "Primary Care Provider"
-
-        # Recommended specialist consult — only populated when a Tier-1 trigger
-        # genuinely requires a different specialty's input (e.g., cardiology for
-        # anticoag review before colonoscopy). For pure institutional-protocol
-        # escalations (e.g., healthy patient going for neurosurgery), no extra
-        # consult is needed: the operating team IS the operating team, the PCP
-        # just provides medical clearance.
-        if output.recommended_specialties:
-            specialist_consult = output.recommended_specialties[0].title()
-        else:
-            specialist_consult = ""
-
-        # Letter is signed by the surgical/referring office — placeholder by
-        # default since we don't know who's running ClearPath.
         signing_office = "[Surgical Office / Referring Surgeon]"
         procedure = current_procedure or "[scheduled procedure]"
-
-        specialist_line = (
-            f"Specialist consultation the PCP should coordinate (mention in body, not as addressee): {specialist_consult}"
-            if specialist_consult
-            else "Specialist consultation needed: None — PCP clearance alone is sufficient"
-        )
 
         user_prompt = f"""Draft the clearance request letter using these chart facts.
 
@@ -268,7 +269,7 @@ DOB: {dob}
 AGE/SEX: {snapshot.age or '[age]'} / {snapshot.sex or '[sex]'}
 SCHEDULED PROCEDURE: {procedure}
 PCP (the letter is addressed TO this person — use VERBATIM in the To: line and greeting): {pcp_recipient}
-{specialist_line}
+Specialist consultation needed: None — PCP clearance alone is sufficient
 REFERRING PROVIDER / SIGNATURE (use VERBATIM at the bottom): {signing_office}
 
 Active conditions: {conditions}
@@ -282,23 +283,131 @@ User's request that triggered this letter: {user_query}
 
 Output the letter directly. No preamble."""
 
-        loop = asyncio.get_event_loop()
-        response = await loop.run_in_executor(
-            None,
-            lambda: client.messages.create(
-                model="claude-sonnet-4-6",
-                max_tokens=500,
-                system=_LETTER_SYSTEM_PROMPT,
-                messages=[{"role": "user", "content": user_prompt}],
-                timeout=30.0,
-            )
+        response = await client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=500,
+            system=_LETTER_SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": user_prompt}],
+            timeout=30.0,
         )
         text = response.content[0].text.strip() if response.content else ""
         return text or None
 
     except Exception as e:
-        print(f"[clearpath] letter generation failed: {type(e).__name__}: {e}")
+        print(f"[clearpath] PCP letter generation failed: {type(e).__name__}: {e}")
         return None
+
+
+async def _generate_specialist_letter(
+    output: ClearanceOutput,
+    snapshot: PatientSnapshot,
+    current_procedure: str | None,
+    user_query: str,
+    name: str,
+    dob: str,
+    conditions: str,
+    meds: str,
+    specialty: str,
+    relevant_trigger_labels: list[str],
+) -> str | None:
+    try:
+        client = _get_async_client()
+        signing_office = "[Surgical Office / Referring Surgeon]"
+        procedure = current_procedure or "[scheduled procedure]"
+
+        relevant_triggers_text = (
+            "\n".join(f"- {t}" for t in relevant_trigger_labels)
+            if relevant_trigger_labels
+            else f"- General {specialty.title()} pre-operative assessment for this procedure"
+        )
+
+        user_prompt = f"""Draft the clearance request letter using these chart facts.
+
+PATIENT NAME: {name}
+DOB: {dob}
+AGE/SEX: {snapshot.age or '[age]'} / {snapshot.sex or '[sex]'}
+SCHEDULED PROCEDURE: {procedure}
+SPECIALTY (the letter is addressed TO this specialty — use VERBATIM in To: line, RE: line, and greeting): {specialty.title()}
+REFERRING PROVIDER / SIGNATURE (use VERBATIM at the bottom): {signing_office}
+
+Active conditions: {conditions}
+Active medications: {meds}
+Risk level: {output.risk_level.value.upper()} | RCRI: {output.rcri_score}/6
+
+SPECIALTY-RELEVANT TRIGGERS (these are the ONLY issues to address in this letter — they are in {specialty.title()}'s clinical domain):
+{relevant_triggers_text}
+
+User's request that triggered this letter: {user_query}
+
+Output the letter directly. No preamble."""
+
+        response = await client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=500,
+            system=_SPECIALIST_LETTER_SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": user_prompt}],
+            timeout=30.0,
+        )
+        text = response.content[0].text.strip() if response.content else ""
+        return text or None
+
+    except Exception as e:
+        print(f"[clearpath] {specialty} letter generation failed: {type(e).__name__}: {e}")
+        return None
+
+
+async def generate_clearance_letter(
+    output: ClearanceOutput,
+    snapshot: PatientSnapshot,
+    current_procedure: str | None,
+    user_query: str,
+    tier1_triggers: list | None = None,
+) -> str | None:
+    """Generate one or more draft pre-op clearance request letters.
+
+    - No specialist triggers (e.g. healthy patient under institutional protocol):
+      single letter TO the PCP requesting medical clearance.
+    - Specialist triggers present: one letter per recommended specialty, each
+      addressed directly to that specialist and focused only on issues in their
+      clinical domain. Letters generated in parallel, concatenated with separators.
+    """
+    tier1_triggers = tier1_triggers or []
+    name = " ".join(p for p in [snapshot.first_name or "", snapshot.last_name or ""] if p).strip() or "[Patient Name]"
+    dob = snapshot.birth_date or "[DOB]"
+    conditions = ", ".join(c.display for c in snapshot.active_conditions[:6]) or "none documented"
+    meds = ", ".join(m.name for m in snapshot.active_medications[:6]) or "none documented"
+    triggers = "\n".join(f"- {t}" for t in output.triggering_factors[:6]) or "- (no specific triggers — institutional protocol)"
+
+    if not output.recommended_specialties:
+        return await _generate_pcp_letter(
+            output, snapshot, current_procedure, user_query,
+            name, dob, conditions, meds, triggers,
+        )
+
+    coros = []
+    for specialty in output.recommended_specialties:
+        relevant_labels = [
+            t.label for t in tier1_triggers
+            if hasattr(t, "specialties") and specialty in t.specialties
+        ]
+        coros.append(_generate_specialist_letter(
+            output, snapshot, current_procedure, user_query,
+            name, dob, conditions, meds,
+            specialty, relevant_labels,
+        ))
+
+    results = await asyncio.gather(*coros, return_exceptions=True)
+    labeled_letters: list[str] = []
+    for specialty, result in zip(output.recommended_specialties, results):
+        if isinstance(result, str) and result:
+            labeled_letters.append(f"**Letter to {specialty.title()}:**\n\n{result}")
+
+    if not labeled_letters:
+        return None
+    if len(labeled_letters) == 1:
+        return labeled_letters[0].split("\n\n", 1)[1]
+
+    return "\n\n---\n\n".join(labeled_letters)
 
 
 def _build_chart_context(output: ClearanceOutput, snapshot: PatientSnapshot) -> str:

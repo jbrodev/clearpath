@@ -131,14 +131,18 @@ async def run_clearance_pipeline(
     # Enrich with LLM reasoning. Pass the detected procedure separately so
     # Claude anchors on the current request, not stale history in the query.
     output = await enrich_with_reasoning(
-        output, snapshot, tier2_factors, user_query, current_procedure
+        output, snapshot, tier2_factors, user_query, current_procedure,
+        tier1_triggers=tier1_triggers,
     )
 
     # If the user explicitly asked for a clearance letter / referral note,
-    # generate one and attach it. The standard structured assessment remains.
+    # generate one (or one per specialist when multiple Tier-1 triggers map to
+    # different specialties — e.g., Linda needing cardiology + hematology +
+    # pulmonology clearance for her hip replacement).
     if _is_letter_request(user_query):
         letter = await generate_clearance_letter(
-            output, snapshot, current_procedure, user_query
+            output, snapshot, current_procedure, user_query,
+            tier1_triggers=tier1_triggers,
         )
         if letter:
             output.clearance_letter = letter
