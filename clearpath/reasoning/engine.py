@@ -180,20 +180,23 @@ async def enrich_with_reasoning(
 
 _LETTER_SYSTEM_PROMPT = (
     "You are ClearPath. Draft a concise, professional pre-operative clearance "
-    "request letter from the referring clinician to the consulting specialist. "
-    "Use a standard clinical referral letter format. Keep it under 250 words.\n\n"
+    "request letter FROM the surgical office TO the patient's primary care "
+    "provider (PCP). The PCP is the one who follows the patient longitudinally "
+    "and will coordinate clearance (including any specialist consults). Use a "
+    "standard clinical referral letter format. Keep it under 250 words.\n\n"
     "Required structure:\n"
     "- [Date] placeholder line\n"
-    "- 'To:' line — use the CONSULTING SPECIALTY/PROVIDER value provided in the user prompt VERBATIM. Do not leave it blank.\n"
+    "- 'To:' line — use the PCP value provided in the user prompt VERBATIM. Do not leave it blank.\n"
     "- 'RE: Pre-operative Clearance Request — [Patient Name], DOB [DOB]' — use the actual patient name and DOB from the prompt; do not bracket them if they are provided.\n"
-    "- Greeting: 'Dear Dr. [Last Name],' if a consulting provider name is given, else address the department (e.g., 'Dear Neurology Team,').\n"
-    "- One short paragraph stating the scheduled procedure and the clinical reason clearance is being requested\n"
-    "- A short bulleted list of the specific issues you want the consultant to evaluate (drawn from the triggering factors)\n"
-    "- Brief closing line requesting their recommendations prior to surgery\n"
-    "- Signature: use the REFERRING PROVIDER value from the prompt VERBATIM. If it is a real name, use it; if it is the literal string '[Referring Provider]', leave the placeholder.\n\n"
+    "- Greeting: 'Dear Dr. [PCP Last Name],' if a PCP name is given, else 'Dear Primary Care Provider,'. Never write 'Dear Colleague'.\n"
+    "- One short paragraph stating the scheduled procedure, that the surgical office is requesting pre-operative medical clearance, and the clinical rationale (e.g. institutional protocol for major procedures, or specific Tier 1 triggers).\n"
+    "- A short bulleted list of what the surgical office is asking the PCP to do: confirm clearance, coordinate any required specialist consults (name them if applicable), document any relevant findings.\n"
+    "- Brief closing line requesting the completed clearance prior to surgery.\n"
+    "- Signature: use the REFERRING PROVIDER value from the prompt VERBATIM. Typically this will be a surgical office or referring surgeon placeholder.\n\n"
     "Rules:\n"
-    "- Fill in every field that the prompt provides as a real value. Only use bracket placeholders for fields the prompt explicitly leaves blank (e.g. date of surgery, facility).\n"
-    "- Never write 'Dear Colleague' if a specialty or provider name is provided.\n"
+    "- The letter is FROM the surgical/referring office TO the PCP. Do NOT flip the direction.\n"
+    "- Fill in every field that the prompt provides as a real value. Only use bracket placeholders for fields the prompt explicitly leaves blank (e.g. date of surgery, facility, surgeon name).\n"
+    "- If a specialist consult is recommended (e.g. cardiology for anticoagulation review), name it in the body as something the PCP should coordinate, NOT as the letter's addressee.\n"
     "- Do NOT invent dates, doctor names, facility names, or guideline citations.\n"
     "- Plain prose. No preamble, no commentary, no 'Here is the letter:'. Output the letter directly.\n"
     "- Do NOT use markdown headers (no `#`, `##`, `###`). Use bold (`**`) only for the field labels like RE: and To:.\n"
@@ -230,15 +233,29 @@ async def generate_clearance_letter(
         meds = ", ".join(m.name for m in snapshot.active_medications[:6]) or "none documented"
         triggers = "\n".join(f"- {t}" for t in output.triggering_factors[:6]) or "- (no specific triggers — institutional protocol)"
 
-        if output.recommended_specialties:
-            consultant = output.recommended_specialties[0].title()
-        elif current_procedure and current_procedure in _PROCEDURE_CONSULTANT:
-            consultant = _PROCEDURE_CONSULTANT[current_procedure]
-        else:
-            consultant = "Internal Medicine / Primary Care"
+        # Who is the letter addressed TO: the PCP (or a generic primary care
+        # placeholder if no PCP doctor name is available).
+        pcp_recipient = snapshot.pcp_doctor_name or "Primary Care Provider"
 
-        referring_provider = snapshot.pcp_doctor_name or "[Referring Provider]"
+        # Recommended specialist consult (if any) goes in the BODY as something
+        # the PCP should coordinate — NOT in the To: line.
+        if output.recommended_specialties:
+            specialist_consult = output.recommended_specialties[0].title()
+        elif current_procedure and current_procedure in _PROCEDURE_CONSULTANT:
+            specialist_consult = _PROCEDURE_CONSULTANT[current_procedure]
+        else:
+            specialist_consult = ""
+
+        # Letter is signed by the surgical/referring office — placeholder by
+        # default since we don't know who's running ClearPath.
+        signing_office = "[Surgical Office / Referring Surgeon]"
         procedure = current_procedure or "[scheduled procedure]"
+
+        specialist_line = (
+            f"Specialist consultation the PCP should coordinate (mention in body, not as addressee): {specialist_consult}"
+            if specialist_consult
+            else "Specialist consultation needed: None — PCP clearance alone is sufficient"
+        )
 
         user_prompt = f"""Draft the clearance request letter using these chart facts.
 
@@ -246,14 +263,15 @@ PATIENT NAME: {name}
 DOB: {dob}
 AGE/SEX: {snapshot.age or '[age]'} / {snapshot.sex or '[sex]'}
 SCHEDULED PROCEDURE: {procedure}
-CONSULTING SPECIALTY/PROVIDER (use VERBATIM in the To: line and greeting): {consultant}
-REFERRING PROVIDER (use VERBATIM in the signature): {referring_provider}
+PCP (the letter is addressed TO this person — use VERBATIM in the To: line and greeting): {pcp_recipient}
+{specialist_line}
+REFERRING PROVIDER / SIGNATURE (use VERBATIM at the bottom): {signing_office}
 
 Active conditions: {conditions}
 Active medications: {meds}
 Risk level: {output.risk_level.value.upper()} | RCRI: {output.rcri_score}/6
 
-Reason clearance is being requested (use these as the bulleted items):
+Reason clearance is being requested (use these as the bulleted items the surgical office wants the PCP to address):
 {triggers}
 
 User's request that triggered this letter: {user_query}
