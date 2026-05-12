@@ -11,20 +11,56 @@ from clearpath.engines.decision import build_clearance_output, detect_major_proc
 from clearpath.reasoning.engine import enrich_with_reasoning, generate_clearance_letter
 
 
-_LETTER_REQUEST_KEYWORDS = (
+_LETTER_REQUEST_EXPLICIT = (
+    # explicit letter phrasing
     "clearance letter", "referral letter", "approval letter",
-    "clearance note", "referral note", "clearance request",
+    "clearance request letter", "letter requesting",
     "write a letter", "draft a letter", "write me a letter",
-    "draft a note", "write a note", "generate a letter",
-    "compose a letter", "letter requesting", "note requesting",
+    "generate a letter", "compose a letter", "create a letter",
+    "draft me a letter",
+    # explicit note phrasing
+    "clearance note", "referral note", "clinical note",
+    "preop note", "pre-op note", "preoperative note", "pre-operative note",
+    "pcp note", "medical note",
+    "write a note", "draft a note", "write me a note",
+    "generate a note", "compose a note", "create a note",
+    "draft me a note", "note requesting", "summary note",
+    # explicit request phrasing
+    "clearance request", "request for clearance",
+)
+
+_VERBS = ("write", "draft", "compose", "generate", "create", "prepare", "produce")
+_DOCS = ("letter", "note", "memo", "correspondence", "summary")
+_CONTEXTS = (
+    "pcp", "primary care", "clearance", "preop", "pre-op",
+    "pre-operative", "preoperative", "surgical", "surgery",
+    "anesthesia", "perioperative", "consultation",
 )
 
 
 def _is_letter_request(query: str) -> bool:
+    """Detect any of: explicit letter/note phrases; a verb+doc near a clinical
+    context; or "[doc] for/to [provider]" phrasing common in clinician requests."""
     if not query:
         return False
     q = query.lower()
-    return any(kw in q for kw in _LETTER_REQUEST_KEYWORDS)
+
+    if any(kw in q for kw in _LETTER_REQUEST_EXPLICIT):
+        return True
+
+    has_verb = any(v in q for v in _VERBS)
+    has_doc = any(d in q for d in _DOCS)
+    has_context = any(c in q for c in _CONTEXTS)
+    if has_verb and has_doc and has_context:
+        return True
+
+    # "...note/letter/summary for/to the pcp/primary care/specialist..."
+    if has_doc and (" for the pcp" in q or " for the primary care" in q
+                    or " to the pcp" in q or " to the primary care" in q
+                    or " for her pcp" in q or " for his pcp" in q):
+        return True
+
+    return False
 from clearpath.models.a2a import FHIRContext
 from clearpath.models.clinical import (
     ClearanceOutput, Disposition, RiskLevel, PatientSnapshot,
