@@ -39,6 +39,16 @@ def _get_async_client() -> anthropic.AsyncAnthropic:
     return _async_client
 
 
+def _demote_headers(text: str) -> str:
+    """Replace any markdown headers (# ## ### ####) with bold inline emphasis
+    so the rendered output stays compact and doesn't blow up section labels
+    into huge headings."""
+    def _replace(match: re.Match) -> str:
+        label = match.group(2).strip().rstrip(":")
+        return f"**{label}:**"
+    return re.sub(r"^(#{1,6})\s+(.+)$", _replace, text, flags=re.MULTILINE)
+
+
 def _parse_llm_output(text: str) -> tuple[str, list[str]]:
     """Extract clinical_summary and next_steps from LLM output."""
     summary = ""
@@ -46,13 +56,13 @@ def _parse_llm_output(text: str) -> tuple[str, list[str]]:
 
     summary_match = re.search(r"CLINICAL_SUMMARY:\s*(.+?)(?=NEXT_STEPS:|$)", text, re.DOTALL | re.IGNORECASE)
     if summary_match:
-        summary = summary_match.group(1).strip()
+        summary = _demote_headers(summary_match.group(1).strip())
 
     steps_match = re.search(r"NEXT_STEPS:\s*(.+?)$", text, re.DOTALL | re.IGNORECASE)
     if steps_match:
         steps_text = steps_match.group(1).strip()
         step_lines = re.findall(r"^\d+\.\s*(.+)$", steps_text, re.MULTILINE)
-        steps = [s.strip() for s in step_lines if s.strip()]
+        steps = [_demote_headers(s).strip() for s in step_lines if s.strip()]
 
     return summary, steps
 
@@ -101,6 +111,7 @@ async def enrich_with_reasoning(
     snapshot: PatientSnapshot,
     tier2_factors: list,
     user_query: str,
+    current_procedure: str | None = None,
 ) -> ClearanceOutput:
     """
     Call the LLM to generate clinical_summary and recommended_next_steps.
@@ -137,6 +148,7 @@ async def enrich_with_reasoning(
             ],
             missing_info=output.missing_information,
             user_query=user_query,
+            current_procedure=current_procedure,
         )
 
         loop = asyncio.get_event_loop()
@@ -164,6 +176,81 @@ async def enrich_with_reasoning(
     output.clinical_summary = summary
     output.recommended_next_steps = steps
     return output
+
+
+_LETTER_SYSTEM_PROMPT = (
+    "You are ClearPath. Draft a concise, professional pre-operative clearance "
+    "request letter from the referring clinician to the consulting specialist. "
+    "Use a standard clinical referral letter format. Keep it under 250 words.\n\n"
+    "Required structure:\n"
+    "- [Date] placeholder line\n"
+    "- 'To: [Consulting Specialist]' (fill with the recommended specialty if known, else placeholder)\n"
+    "- 'RE: Pre-operative Clearance Request — [Patient Name], DOB [DOB]'\n"
+    "- One short paragraph stating the scheduled procedure and the clinical reason clearance is being requested\n"
+    "- A short bulleted list of the specific issues you want the consultant to evaluate (drawn from the triggering factors)\n"
+    "- Brief closing line requesting their recommendations prior to surgery\n"
+    "- '[Referring Provider]' signature placeholder\n\n"
+    "Rules:\n"
+    "- Use placeholders in square brackets for anything not in the chart (date of surgery, referring provider name, facility).\n"
+    "- Do NOT invent dates, doctor names, facility names, or guideline citations.\n"
+    "- Plain prose. No preamble, no commentary, no 'Here is the letter:'. Output the letter directly.\n"
+    "- Do NOT use markdown headers (no `#`, `##`, `###`). Use bold (`**`) only for the field labels like RE: and To:.\n"
+    "- For clinician review only. This is a draft, not signed medical correspondence."
+)
+
+
+async def generate_clearance_letter(
+    output: ClearanceOutput,
+    snapshot: PatientSnapshot,
+    current_procedure: str | None,
+    user_query: str,
+) -> str | None:
+    """Generate a draft pre-op clearance request letter. Returns None on failure."""
+    try:
+        client = _get_client()
+
+        name = " ".join(p for p in [snapshot.first_name or "", snapshot.last_name or ""] if p).strip() or "[Patient Name]"
+        conditions = ", ".join(c.display for c in snapshot.active_conditions[:6]) or "none documented"
+        meds = ", ".join(m.name for m in snapshot.active_medications[:6]) or "none documented"
+        triggers = "\n".join(f"- {t}" for t in output.triggering_factors[:6]) or "- (no specific triggers — institutional protocol)"
+        specialty = output.recommended_specialties[0].title() if output.recommended_specialties else "Internal Medicine / Primary Care"
+        procedure = current_procedure or "[scheduled procedure]"
+
+        user_prompt = f"""Draft the clearance request letter using these chart facts.
+
+PATIENT: {name}
+AGE/SEX: {snapshot.age or '[age]'} / {snapshot.sex or '[sex]'}
+SCHEDULED PROCEDURE: {procedure}
+RECOMMENDED CONSULTANT: {specialty}
+
+Active conditions: {conditions}
+Active medications: {meds}
+Risk level: {output.risk_level.value.upper()} | RCRI: {output.rcri_score}/6
+
+Reason clearance is being requested (use these as the bulleted items):
+{triggers}
+
+User's request that triggered this letter: {user_query}
+
+Output the letter directly. No preamble."""
+
+        loop = asyncio.get_event_loop()
+        response = await loop.run_in_executor(
+            None,
+            lambda: client.messages.create(
+                model="claude-sonnet-4-6",
+                max_tokens=500,
+                system=_LETTER_SYSTEM_PROMPT,
+                messages=[{"role": "user", "content": user_prompt}],
+                timeout=30.0,
+            )
+        )
+        text = response.content[0].text.strip() if response.content else ""
+        return text or None
+
+    except Exception as e:
+        print(f"[clearpath] letter generation failed: {type(e).__name__}: {e}")
+        return None
 
 
 def _build_chart_context(output: ClearanceOutput, snapshot: PatientSnapshot) -> str:
@@ -303,6 +390,7 @@ _FOLLOWUP_SYSTEM = (
     "Format rules:\n"
     "- Lead with the direct answer in the first sentence.\n"
     "- 1 to 3 short sentences total, or up to 4 tight bullets. No preamble.\n"
+    "- Do NOT use markdown headers (no `#`, `##`, `###`, etc.). Use inline bold (`**text**`) for emphasis only. Keep the response compact: no large section headings like 'What It Does' or 'Key Points'.\n"
     "- Inline-link any guideline, study, or drug label, e.g. 'per the [2022 ACC/AHA guidelines](https://...)'. "
     "Do NOT add a Sources section at the end.\n"
     "- When citing chart data, name the source briefly (e.g., 'per Dr. Liu's cardiology note').\n"

@@ -116,6 +116,7 @@ class ClearanceOutput(BaseModel):
     recommended_next_steps: list[str] = Field(default_factory=list)
     specialist_findings: list[SpecialistFinding] = Field(default_factory=list)
     missing_information: list[str] = Field(default_factory=list)
+    clearance_letter: str | None = None
     schema_version: str = "1.0"
     model_version: str = "clearpath-v1"
     generated_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat() + "Z")
@@ -128,7 +129,19 @@ class ClearanceOutput(BaseModel):
             specs = ", ".join(s.title() for s in self.recommended_specialties)
             disposition_label += f" — {specs}"
 
-        lines = [
+        lines = []
+
+        if self.clearance_letter:
+            lines += [
+                "**Clearance Request Letter (draft, for clinician review):**",
+                "",
+                self.clearance_letter,
+                "",
+                "---",
+                "",
+            ]
+
+        lines += [
             f"**{disposition_label}** | Risk: {self.risk_level.value.upper()} | RCRI {self.rcri_score}/6",
             "",
             self.clinical_summary,

@@ -7,8 +7,24 @@ from clearpath.fhir.client import FHIRClient, TokenExpiredError
 from clearpath.fhir.normalizer import build_snapshot
 from clearpath.engines.medications import classify_medications
 from clearpath.engines.triggers import evaluate_tier1_triggers, evaluate_tier2_factors, compute_rcri
-from clearpath.engines.decision import build_clearance_output
-from clearpath.reasoning.engine import enrich_with_reasoning
+from clearpath.engines.decision import build_clearance_output, detect_major_procedure
+from clearpath.reasoning.engine import enrich_with_reasoning, generate_clearance_letter
+
+
+_LETTER_REQUEST_KEYWORDS = (
+    "clearance letter", "referral letter", "approval letter",
+    "clearance note", "referral note", "clearance request",
+    "write a letter", "draft a letter", "write me a letter",
+    "draft a note", "write a note", "generate a letter",
+    "compose a letter", "letter requesting", "note requesting",
+)
+
+
+def _is_letter_request(query: str) -> bool:
+    if not query:
+        return False
+    q = query.lower()
+    return any(kw in q for kw in _LETTER_REQUEST_KEYWORDS)
 from clearpath.models.a2a import FHIRContext
 from clearpath.models.clinical import (
     ClearanceOutput, Disposition, RiskLevel, PatientSnapshot,
@@ -68,11 +84,28 @@ async def run_clearance_pipeline(
         tier2_factors=tier2_factors,
     )
 
-    # Build deterministic output
-    output = build_clearance_output(snapshot, score_result)
+    # Detect the procedure being asked about NOW (latest mention wins if the
+    # query bundles conversation history).
+    current_procedure = detect_major_procedure(user_query)
 
-    # Enrich with LLM reasoning
-    output = await enrich_with_reasoning(output, snapshot, tier2_factors, user_query)
+    # Build deterministic output (passes user_query so the engine can detect
+    # institutional-mandate procedures like cardiac/transplant surgery).
+    output = build_clearance_output(snapshot, score_result, user_query=user_query)
+
+    # Enrich with LLM reasoning. Pass the detected procedure separately so
+    # Claude anchors on the current request, not stale history in the query.
+    output = await enrich_with_reasoning(
+        output, snapshot, tier2_factors, user_query, current_procedure
+    )
+
+    # If the user explicitly asked for a clearance letter / referral note,
+    # generate one and attach it. The standard structured assessment remains.
+    if _is_letter_request(user_query):
+        letter = await generate_clearance_letter(
+            output, snapshot, current_procedure, user_query
+        )
+        if letter:
+            output.clearance_letter = letter
 
     return output
 

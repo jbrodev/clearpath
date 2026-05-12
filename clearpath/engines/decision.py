@@ -16,6 +16,63 @@ from clearpath.models.clinical import (
 _HIGH_RISK_SPECIALTIES = {"cardiology", "neurology", "pulmonology", "anesthesia", "hematology"}
 
 
+# Procedures that institutional protocols typically require pre-operative
+# medical clearance for, regardless of patient risk profile. Aligned with
+# ACC/AHA perioperative guidelines and standard ASA practice for major surgery.
+_MAJOR_PROCEDURES = {
+    "cardiac surgery": [
+        "cabg", "coronary bypass", "coronary artery bypass",
+        "valve replacement", "valve repair", "open heart",
+        "aortic surgery", "aortic repair", "cardiac surgery", "heart surgery",
+    ],
+    "major vascular surgery": [
+        "aaa repair", "abdominal aortic aneurysm",
+        "carotid endarterectomy", "peripheral bypass", "vascular bypass",
+    ],
+    "neurosurgery": [
+        "craniotomy", "brain surgery", "spinal fusion",
+        "neurosurgery", "spine surgery",
+    ],
+    "major thoracic surgery": [
+        "lobectomy", "pneumonectomy", "esophagectomy", "thoracotomy",
+    ],
+    "major abdominal surgery": [
+        "whipple", "liver resection", "hepatectomy", "gastric bypass",
+        "bowel resection", "colectomy", "pancreatectomy",
+    ],
+    "organ transplant": [
+        "kidney transplant", "liver transplant", "heart transplant",
+        "lung transplant", "organ transplant",
+    ],
+    "major orthopedic surgery": [
+        "total hip replacement", "total knee replacement",
+        "hip arthroplasty", "knee arthroplasty",
+    ],
+}
+
+
+def detect_major_procedure(query: str) -> str | None:
+    """If the query mentions a procedure that institutional protocols require
+    pre-operative clearance for, return its category label.
+
+    When multiple major procedures appear in the query (e.g. Prompt Opinion
+    forwards prior conversation context), the LATEST mention wins. This keeps
+    the assessment anchored on the user's current request, not stale turns.
+    """
+    if not query:
+        return None
+    q = query.lower()
+    best_pos = -1
+    best_category = None
+    for category, keywords in _MAJOR_PROCEDURES.items():
+        for kw in keywords:
+            idx = q.rfind(kw)
+            if idx > best_pos:
+                best_pos = idx
+                best_category = category
+    return best_category
+
+
 def determine_risk_level(score: int, tier1_triggers: list[TriggerResult]) -> RiskLevel:
     has_high_risk_tier1 = any(
         any(s in _HIGH_RISK_SPECIALTIES for s in t.specialties)
@@ -35,6 +92,7 @@ def determine_disposition(
     tier2_score: int,
     snapshot: PatientSnapshot,
     has_insufficient_data: bool,
+    major_procedure_category: str | None = None,
 ) -> Disposition:
     if has_insufficient_data:
         return Disposition.INSUFFICIENT_INFORMATION
@@ -49,6 +107,12 @@ def determine_disposition(
         return Disposition.SPECIALIST_REQUIRED
     if tier2_score >= 3:
         return Disposition.CLEARANCE_RECOMMENDED
+
+    # Institutional protocols mandate pre-op clearance for major procedures
+    # regardless of individual patient risk profile.
+    if major_procedure_category:
+        return Disposition.CLEARANCE_RECOMMENDED
+
     return Disposition.NO_CLEARANCE_NEEDED
 
 
@@ -169,14 +233,17 @@ def _build_missing_info_list(snapshot: PatientSnapshot, missing_from_data: list[
 def build_clearance_output(
     snapshot: PatientSnapshot,
     score_result: ScoreResult,
+    user_query: str = "",
 ) -> ClearanceOutput:
     has_insufficient_data, missing_from_data = _check_insufficient_data(snapshot)
+    major_procedure = detect_major_procedure(user_query)
 
     disposition = determine_disposition(
         score_result.tier1_triggers,
         score_result.total_score,
         snapshot,
         has_insufficient_data,
+        major_procedure,
     )
 
     risk_level = determine_risk_level(score_result.total_score, score_result.tier1_triggers)
@@ -191,6 +258,10 @@ def build_clearance_output(
 
     triggering_factors = [t.label for t in score_result.tier1_triggers]
     triggering_factors += [t.label for t in score_result.tier2_factors if score_result.total_score >= 3]
+    if major_procedure and not score_result.tier1_triggers and score_result.total_score < 3:
+        triggering_factors.append(
+            f"Institutional protocol: {major_procedure} typically requires pre-operative clearance regardless of patient risk profile (ACC/AHA, ASA standard practice)"
+        )
 
     specialist_findings = _build_specialist_findings(snapshot)
     missing_info = _build_missing_info_list(snapshot, missing_from_data)

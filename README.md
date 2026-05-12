@@ -52,9 +52,16 @@ cp .env.example .env
 uvicorn clearpath.main:app --reload
 ```
 
-Agent card available at:
+Agent card available locally at:
 ```
 GET http://localhost:8000/.well-known/agent-card.json
+```
+
+### Live deployment
+
+ClearPath is deployed at:
+```
+https://clearpath-htiy.onrender.com/.well-known/agent-card.json
 ```
 
 ---
