@@ -141,6 +141,7 @@ async def a2a_handler(request: Request):
             status=A2ATaskStatus(state="TASK_STATE_COMPLETED"),
             artifacts=[
                 A2AArtifact(
+                    artifactId=str(uuid.uuid4()),
                     name="clearance_assessment",
                     parts=[
                         {"text": result_md},

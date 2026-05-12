@@ -65,6 +65,7 @@ class A2ATaskStatus(BaseModel):
 
 
 class A2AArtifact(BaseModel):
+    artifactId: str
     name: str | None = None
     parts: list[dict[str, Any]] = Field(default_factory=list)
 
