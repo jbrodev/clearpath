@@ -315,11 +315,26 @@ async def _generate_specialist_letter(
         signing_office = "[Surgical Office / Referring Surgeon]"
         procedure = current_procedure or "[scheduled procedure]"
 
-        relevant_triggers_text = (
-            "\n".join(f"- {t}" for t in relevant_trigger_labels)
-            if relevant_trigger_labels
-            else f"- General {specialty.title()} pre-operative assessment for this procedure"
-        )
+        if relevant_trigger_labels:
+            relevant_triggers_text = "\n".join(f"- {t}" for t in relevant_trigger_labels)
+            triggers_block = (
+                f"SPECIALTY-RELEVANT TRIGGERS (these are the issues that fired in the rule "
+                f"engine for {specialty.title()} — address these in the letter):\n"
+                f"{relevant_triggers_text}"
+            )
+        else:
+            triggers_block = (
+                f"SPECIALTY DOMAIN GUIDANCE: The rule engine did not tag specific triggers for "
+                f"{specialty.title()}, but the surgical office is specifically requesting "
+                f"{specialty.title()} clearance. Review the Active conditions and Active medications "
+                f"above and identify the clinical items that fall within {specialty.title()}'s "
+                f"domain (e.g. for cardiology: atrial fibrillation, hypertension, anticoagulants, "
+                f"cardiac history; for hematology: anticoagulants, bleeding disorders, anemia; "
+                f"for pulmonology: COPD, asthma, OSA, oxygen use; for neurology: stroke, TIA, "
+                f"seizure, neuropathy). Build the bulleted issues list from those chart items. "
+                f"If nothing in the chart falls within this specialty's domain, ask for a brief "
+                f"general pre-operative assessment from that specialty."
+            )
 
         user_prompt = f"""Draft the clearance request letter using these chart facts.
 
@@ -334,8 +349,7 @@ Active conditions: {conditions}
 Active medications: {meds}
 Risk level: {output.risk_level.value.upper()} | RCRI: {output.rcri_score}/6
 
-SPECIALTY-RELEVANT TRIGGERS (these are the ONLY issues to address in this letter — they are in {specialty.title()}'s clinical domain):
-{relevant_triggers_text}
+{triggers_block}
 
 User's request that triggered this letter: {user_query}
 
@@ -362,14 +376,18 @@ async def generate_clearance_letter(
     current_procedure: str | None,
     user_query: str,
     tier1_triggers: list | None = None,
+    requested_specialty: str | None = None,
 ) -> str | None:
     """Generate one or more draft pre-op clearance request letters.
 
-    - No specialist triggers (e.g. healthy patient under institutional protocol):
-      single letter TO the PCP requesting medical clearance.
-    - Specialist triggers present: one letter per recommended specialty, each
-      addressed directly to that specialist and focused only on issues in their
-      clinical domain. Letters generated in parallel, concatenated with separators.
+    Routing logic:
+    - User explicitly named a specialty (e.g. 'letter for his cardiologist'):
+      generate ONLY that one letter, even if it isn't in recommended_specialties.
+      Claude pulls relevant context from conditions/medications.
+    - User explicitly named the PCP: generate a PCP letter only.
+    - Neither, AND no specialist triggers fired: single PCP letter (institutional
+      protocol case).
+    - Neither, with specialist triggers: one letter per recommended specialty.
     """
     tier1_triggers = tier1_triggers or []
     name = " ".join(p for p in [snapshot.first_name or "", snapshot.last_name or ""] if p).strip() or "[Patient Name]"
@@ -377,6 +395,23 @@ async def generate_clearance_letter(
     conditions = ", ".join(c.display for c in snapshot.active_conditions[:6]) or "none documented"
     meds = ", ".join(m.name for m in snapshot.active_medications[:6]) or "none documented"
     triggers = "\n".join(f"- {t}" for t in output.triggering_factors[:6]) or "- (no specific triggers — institutional protocol)"
+
+    if requested_specialty == "pcp":
+        return await _generate_pcp_letter(
+            output, snapshot, current_procedure, user_query,
+            name, dob, conditions, meds, triggers,
+        )
+
+    if requested_specialty:
+        relevant_labels = [
+            t.label for t in tier1_triggers
+            if hasattr(t, "specialties") and requested_specialty in t.specialties
+        ]
+        return await _generate_specialist_letter(
+            output, snapshot, current_procedure, user_query,
+            name, dob, conditions, meds,
+            requested_specialty, relevant_labels,
+        )
 
     if not output.recommended_specialties:
         return await _generate_pcp_letter(

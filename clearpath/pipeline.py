@@ -37,6 +37,43 @@ _CONTEXTS = (
     "anesthesia", "perioperative", "consultation",
 )
 
+# Maps specialty keywords in the user query to canonical specialty names so
+# we can override the engine-derived recommended specialties when the user
+# explicitly names a recipient (e.g. "letter for his cardiologist").
+_SPECIALTY_KEYWORDS = {
+    "cardiology": ("cardiologist", "cardiology", "cardiac specialist", "heart specialist"),
+    "neurology": ("neurologist", "neurology", "neuro specialist", "brain specialist"),
+    "pulmonology": ("pulmonologist", "pulmonology", "lung specialist"),
+    "hematology": ("hematologist", "hematology", "blood specialist"),
+    "anesthesia": ("anesthesiologist", "anesthesia", "anesthesiology"),
+    "endocrinology": ("endocrinologist", "endocrinology"),
+    "nephrology": ("nephrologist", "nephrology", "kidney specialist"),
+    "gastroenterology": ("gastroenterologist", "gastroenterology"),
+    "rheumatology": ("rheumatologist", "rheumatology"),
+}
+
+_PCP_KEYWORDS = (
+    "pcp", "primary care", "family doctor", "family physician",
+    "general practitioner", "her pcp", "his pcp",
+)
+
+
+def _detect_requested_specialty(query: str) -> str | None:
+    """If the user named a specific specialist as the letter recipient, return
+    the canonical specialty key. If they named the PCP, return 'pcp'.
+    Returns None when no specific recipient is named."""
+    if not query:
+        return None
+    q = query.lower()
+    for specialty, keywords in _SPECIALTY_KEYWORDS.items():
+        for kw in keywords:
+            if kw in q:
+                return specialty
+    for kw in _PCP_KEYWORDS:
+        if kw in q:
+            return "pcp"
+    return None
+
 
 def _is_letter_request(query: str) -> bool:
     """Detect any of: explicit letter/note phrases; a verb+doc near a clinical
@@ -138,11 +175,15 @@ async def run_clearance_pipeline(
     # If the user explicitly asked for a clearance letter / referral note,
     # generate one (or one per specialist when multiple Tier-1 triggers map to
     # different specialties — e.g., Linda needing cardiology + hematology +
-    # pulmonology clearance for her hip replacement).
+    # pulmonology clearance for her hip replacement). If the user named a
+    # specific recipient ("for his cardiologist", "to her PCP"), only generate
+    # that letter, regardless of which specialties the engine recommended.
     if _is_letter_request(user_query):
+        requested_specialty = _detect_requested_specialty(user_query)
         letter = await generate_clearance_letter(
             output, snapshot, current_procedure, user_query,
             tier1_triggers=tier1_triggers,
+            requested_specialty=requested_specialty,
         )
         if letter:
             output.clearance_letter = letter
