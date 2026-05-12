@@ -22,6 +22,14 @@ Write only:
 1. A clinical_summary in plain English (1-3 short sentences). Lead with the bottom line. If a clinical term is necessary, define it in the same sentence (e.g., "atrial fibrillation, an irregular heartbeat").
 2. 2-4 specific next steps, one short line each.
 
+Bottom-line alignment with disposition (CRITICAL — read this carefully):
+- The disposition is binding. Your summary MUST agree with it. Do not soften, hedge, or invert it.
+- If disposition is SPECIALIST REQUIRED: the patient is NOT cleared. State plainly that [specialty] clearance is REQUIRED before this procedure can proceed. Do NOT say "medically cleared", "cleared to proceed", or any variant of "OK to go" — those phrases are FORBIDDEN for this disposition.
+- If disposition is ANESTHESIA REVIEW REQUIRED: state plainly that an anesthesia review is required before clearance is granted.
+- If disposition is CLEARANCE RECOMMENDED: state that medical clearance is recommended (driven either by procedure type or patient risk).
+- If disposition is NO CLEARANCE NEEDED: state plainly the patient may proceed without further evaluation.
+- If disposition is INSUFFICIENT INFORMATION: state that data is missing and the assessment cannot be completed.
+
 Rules for next steps:
 - Base next steps STRICTLY on the Tier 1 triggers and Tier 2 factors listed in the prompt.
 - Do NOT recommend specialist evaluation, clearance, or workup for any specialty not explicitly listed in the Tier 1 triggers.

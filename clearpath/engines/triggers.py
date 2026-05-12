@@ -105,14 +105,21 @@ def evaluate_tier1_triggers(snapshot: PatientSnapshot, classified_meds: list[Med
             evidence=f"Medication: {', '.join(immunosuppressant_meds[:2])}"
         ))
 
-    # Anticoagulant
+    # Anticoagulant — specialty depends on the indication. AFib/valvular causes
+    # are managed by cardiology (they own the perioperative hold decision).
+    # Thromboembolic causes (DVT/PE/thrombophilia) are managed by hematology.
     if has_anticoagulant(classified_meds):
         ac_names = [m.name for m in classified_meds if m.flag == "active_anticoagulation"]
+        condition_text_lower = condition_displays.lower()
+        cardiac_indication = any(kw in condition_text_lower for kw in (
+            "atrial fibrillation", "afib", "a-fib", "atrial flutter",
+            "valvular", "prosthetic valve", "mechanical valve",
+        ))
         triggers.append(TriggerResult(
             trigger_id="active_anticoagulation",
             label="Active anticoagulation therapy",
             tier=1,
-            specialties=["hematology"],
+            specialties=["cardiology"] if cardiac_indication else ["hematology"],
             evidence=f"Medication: {', '.join(ac_names)}"
         ))
 
@@ -126,10 +133,31 @@ def evaluate_tier1_triggers(snapshot: PatientSnapshot, classified_meds: list[Med
             evidence="Two or more antiplatelet/anticoagulant agents detected"
         ))
 
-    # Recent stroke / TIA
+    # Recent stroke / TIA — must filter out the AFib management phrase "stroke
+    # prevention" (and similar). A patient on anticoagulation for AFib commonly
+    # has "stroke prevention" / "prophylaxis" in their notes, which is NOT a
+    # history of stroke. Only fire if (a) an ICD code matches, or (b) the
+    # keyword appears outside a prevention/prophylaxis context.
     stroke_rule = next(r for r in rules["tier1_triggers"] if r["id"] == "recent_stroke_tia")
-    stroke_kw = _keywords_in_text(stroke_rule["keywords"], note_text + " " + condition_displays)
     stroke_icd = _icd_match(stroke_rule.get("icd_codes", []), snapshot.active_conditions)
+    combined_text = note_text + " " + condition_displays
+    stroke_kw = _keywords_in_text(stroke_rule["keywords"], combined_text)
+
+    if stroke_kw and not stroke_icd:
+        # Remove all prevention/prophylaxis phrases from the text and re-check
+        # whether a stroke keyword still appears. If not, treat as false positive.
+        sanitized = combined_text.lower()
+        for phrase in (
+            "stroke prevention", "stroke prophylaxis",
+            "prevent stroke", "preventing stroke", "for stroke risk",
+            "stroke risk reduction", "anticoagulation for stroke",
+            "afib stroke", "atrial fibrillation stroke",
+        ):
+            sanitized = sanitized.replace(phrase, "")
+        stroke_kw_after = _keywords_in_text(stroke_rule["keywords"], sanitized)
+        if not stroke_kw_after:
+            stroke_kw = None  # only mentions were prevention-context — drop
+
     if stroke_kw or stroke_icd:
         evidence = f"Found: '{stroke_kw or stroke_icd}'"
         triggers.append(TriggerResult(
